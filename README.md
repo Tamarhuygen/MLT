@@ -1,6 +1,6 @@
 # MLT
-Homework for machine learning theory. <br />
-Please only upload the .tex files of the homework sets and not the .aux, .log, etc.<br />
+Homework for Machine Learning Theory. <br />
+Please only upload the .tex files of the latex documents and not the .aux, .log, etc. If you want you can upload your code.<br />
 You can make a .gitignore to make it easier. <br />
 Mine looks like this: <br />
 .gitignore <br />
