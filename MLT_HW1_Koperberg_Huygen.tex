@@ -1,0 +1,277 @@
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo}
+\usepackage{euler}
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
+\renewcommand{\P}{\ensuremath{\mathbf{P}}}
+\newcommand{\Ev}{\ensuremath{\mathbf{E}}}
+\newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\begin{document}
+\begin{center}
+  {\huge\bf Measure learning theory}\\
+  {\large\sc Homework 1 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId (Leiden)\\
+  \email\text{}\\ \smallskip
+  Tamar \textsc{ Huygen}, UvA: 109097483, VU: 2556474\\
+  tamar@huygen.nl \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+\end{center}
+
+\section*{Exercise 1}
+Determine (prove or disprove) whether the following losses are proper.
+\subsection*{(a)}
+Take $\ell(0,q)=q$ and $\ell(1,q)=1-q$.
+\begin{solution}
+The associated risk function is given by
+\begin{equation*}
+L(p,q)=(1-p)q+p(1-q).
+\end{equation*}
+Take $p=\tfrac{1}{4}$ and $q=0$. Then we have that $L(p,p)=\tfrac{3}{8}$, but that $L(p,q)=\tfrac{1}{4}$.
+Therefore, $\ell$ is not a proper loss function.
+\end{solution}
+
+\subsection*{(b)}
+Take $\ell(0,q)=q^2$ and $\ell(1,q)=(1-q)^2$.
+\begin{solution}
+The associated risk function is given by
+\begin{equation*}
+L(p,q)=(1-p)q^2+p(1-q)^2.
+\end{equation*}
+Fix $p$ and consider $L_p(q)=L(p,q)$ as a function of $q$.
+The derivative of $L_p$ is given by
+\begin{equation*}
+L_p'(q)=2q-2p.
+\end{equation*}
+Setting this derivative equal to $0$ yields $q=p$, so $L_p$ has an extremum at the point $q=p$.
+The second derivative of $L_p$ is given by $L''(q)=2$.
+As this is positive, the extremum at $q=p$ is a minimum. 
+As this holds for all $p \in [0,1]$, this shows that $L(p,p) \leq L(p,q)$ for all $p,q \in [0,1]$.
+Therefore, $\ell$ is a proper loss function.
+\end{solution}
+
+\subsection*{(c)}
+Take $\ell(0,q)=\sqrt{\frac{q}{1-q}}$ and $\ell(1,q)=\sqrt{\frac{1-q}{q}}$.
+\begin{solution}
+The associated risk function is given by
+\begin{equation*}
+L(p,q)=(1-p)\sqrt{\frac{q}{1-q}}+p\sqrt{\frac{1-q}{q}}.
+\end{equation*}
+
+\TODO
+\end{solution}
+
+\subsection*{(d)}
+Take $\ell(0,q)=\sqrt{q}$ and $\ell(1,q)=\sqrt{1-q}$.
+\begin{solution}
+The associated risk function is given by
+\begin{equation*}
+L(p,q)=(1-p)\sqrt{q}+p\sqrt{1-q}.
+\end{equation*}
+Take $p=\tfrac{1}{3}$ and $q=\tfrac{1}{4}$. Then $L(p,p)= \tfrac{1}{9}(2+\sqrt{2})\sqrt{3}\approx 0.657$.
+However, we have that $L(p,q)=\tfrac{1}{3}+\tfrac{1}{6}\sqrt{3} \approx 0.622$.
+Therefore, $\ell$ is not a proper loss function.
+\end{solution}
+
+\section*{Exercise 2}
+Let $\varphi$ be any differentiable convex function.
+\subsection*{(a)}
+Show that $B_{\phi}(x,x)=0$.
+\begin{solution}
+As $\ip{0,x}=0$ for any $x \in  \R^k$, we have that
+\begin{align*}
+  B_{\phi}(x,x)&=\phi(x)-\phi(x)-\ip{x-x,\nabla \phi(y)} \\
+  &=-\ip{0,\nabla \phi(y)} \\
+  &=0.
+\end{align*}
+\end{solution}
+
+\subsection*{(b)}
+Show that $B_{\varphi}(x,y)\geq 0$.
+\begin{solution}
+For fixed $y$, the function $l_y(x)=\phi(y)+\ip{x-y, \nabla \phi(y)}$ denotes the linearization of $\phi$ at the point $y$.
+As $\phi$ is convex we have that $\phi(x)\geq l_y(x)$ for all $x,y \in \R^k$. 
+It follows that 
+\begin{align*}
+ B_{\phi}(x,y)&=\phi(x)-\phi(y)-\ip{x-y, \nabla \phi(y)} \\
+ &=\phi(x)-l_y(x) \\
+ &\geq0.
+\end{align*}
+\end{solution}
+
+\subsection*{(c)}
+Show that $B_{\varphi}(x,y)$ is convex in $x$.
+\begin{solution}
+\TODO 
+\end{solution}
+
+
+\section*{Exercise 5}
+A final grade between $1$ and $10$ is composed of $40\%$ homework
+and $60\%$ exams. There are $13$ homework sets of $5$ questions each. For
+each homework set, one question is selected uniformly at random and is
+graded. There are $2$ exams with $5$ questions each, which are all graded.
+Every graded question receives a binary grade: full points or no points.
+Imagine a student that hands in all homeworks and exams, and that answers 
+each question correctly independently at random with probability $p = 0.8$.
+\subsection*{(a)}
+What is the probability that the student gets at least grade $7.5$.
+Calculate $3$ significant digits.
+\begin{solution}
+Let $X_1,X_2,\ldots$ be i.i.d. Bernoulli random variables with $\P(X_1=1)=\tfrac{4}{5}$.
+Let $B_{13}=\sum_{n=1}^{13}X_n$ and $B_{10}=\sum_{n=14}^{23} X_n$.
+Then $B_{13}$ is distributed as a Binomial distribution with parameters $n=13$ and $p=\tfrac{4}{5}$,
+and $B_{10}$ is distributed as a Binomial distribution with parameters $n=10$ and $p=\tfrac{4}{5}$.
+Note that $B_{13}$ and $B_{10}$ are independent.
+We can ommit any non graded homework questions, so the final grade is distributed as 
+\begin{equation*}
+F=\max\cbrac*{\frac{4}{13}B_{13}+\frac{3}{5} B_{10},1}. 
+\end{equation*}
+Thus we have that 
+\begin{equation}\label{eq:prob_a}
+\begin{aligned}
+  \P(F \geq 7.5)&=\P(B_{10} = 10)\P(B_{13} \geq 5)+\P(B_{10} = 9)\P(B_{13} \geq 7) \\
+ & \hspace{1 em} +\P(B_{10} = 8)\P(B_{13} \geq 9)+\P(B_{10} = 7)\P(B_{13} \geq 11) \\
+ & \hspace{1 em} +\P(B_{10} = 6)\P(B_{13} \geq 13).
+ \end{aligned}
+\end{equation}
+We have that 
+\begin{equation*}
+\P(B_{10} = k)=\binom{10}{k}\paren*{\tfrac{4}{5}}^{k}\paren*{\tfrac{1}{5}}^{10-k} 
+\end{equation*}
+and that 
+\begin{equation*}
+\P(B_{13} \geq k)=\sum_{i=k}^{13}\binom{13}{i}\paren*{\tfrac{4}{5}}^{i}\paren*{\tfrac{1}{5}}^{13-i}. 
+\end{equation*}
+Substituting these expressions in \cref{eq:prob_a} allows for the numerical evaluation of $\P(F \geq 7.5)$.
+This yields that $\P(F \geq 7.5)\approx 0.752$.
+\end{solution}
+
+\subsection*{(b)}
+In an ideal world all questions would be graded. Calculate the probability 
+that the same student gets at least grade $7.5$. Calculate $3$
+significant digits.
+\begin{solution}
+ 
+
+If every homework question is graded, then the final grade is distributed as
+\begin{equation*}
+F=\max\cbrac*{\frac{4}{65}B_{65}+\frac{3}{5}B_{10},1}, 
+\end{equation*}
+where $B_{65}\sim B(65, \tfrac{4}{5})$.
+Thus we have that 
+\begin{equation}\label{eq:prob_b}
+\begin{aligned}
+  \P(F \geq 7.5)&=\P(B_{10} = 10)\P(B_{65} \geq 25)+\P(B_{10} = 9)\P(B_{65} \geq 35) \\
+ & \hspace{1 em} +\P(B_{10} = 8)\P(B_{65} \geq 44)+\P(B_{10} = 7)\P(B_{65} \geq 54) \\
+ & \hspace{1 em} +\P(B_{10} = 6)\P(B_{65} \geq 64).
+ \end{aligned}
+\end{equation}
+Evaluating this expression gives $\P(F \geq 7.5)=0.742$.
+\end{solution}
+
+
+\section*{Appendix}
+This is the R-code used in exercise 5(a).
+\begin{verbatim}
+# Exercise 5 (a)
+P <- 0
+for(i in 6:10){
+  h <- 0
+  for(j in (25-2*i):13){
+    h <- h + choose(13, j) * 0.8^j * 0.2^(13-j)
+  }
+  P <- P + (choose(10, i) * 0.8^i * 0.2^(10-i)) * h
+}
+cat(P)
+
+# Exercise 5 (b)
+P <- 0
+for(i in 6:10){
+  h <- 0
+  for(j in (124-10*i):65){
+    h <- h + choose(65, j) * 0.8^j * 0.2^(65-j)
+  }
+  if(i == 10){
+    h <- h - choose(65, 24) * 0.8^24 * 0.2^(65-24)
+  }
+  P <- P + (choose(10, i) * 0.8^i * 0.2^(10-i)) * h
+}
+cat(P)
+\end{verbatim}
+
+
+
+\end{document}
+
+
