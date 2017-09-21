@@ -4,11 +4,11 @@ Please only upload the .tex files of the homework sets and not the .aux, .log, e
 You can make a .gitignore to make it easier. <br />
 Mine looks like this: <br />
 .gitignore <br />
-# tex shit # <br />
+&#35; tex shit &#35; <br />
 *.log <br />
 *.aux <br />
 *~ <br />
 <br />
-# pdf's # <br />
+&#35; pdf's &#35; <br />
 MLT_HW1_Koperberg_Huygen.pdf <br />
 MLT_HW2_Koperberg_Huygen.pdf <br />
