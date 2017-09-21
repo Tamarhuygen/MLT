@@ -1,0 +1,101 @@
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo}
+\usepackage{euler}
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
+\renewcommand{\P}{\ensuremath{\mathbf{P}}}
+\newcommand{\Ev}{\ensuremath{\mathbf{E}}}
+\newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\newcommand{\firstNameII}  {Tamar}
+\newcommand{\lastNameII}   {Huygen}
+\newcommand{\studIdII}     {10907483 (UvA)}
+\newcommand{\studIdIII}    {2556474 (VU)}
+\newcommand{\emailII}     {tamar@huygen.nl}
+
+\begin{document}
+\begin{center}
+  {\huge\bf Measure learning theory}\\
+  {\large\sc Homeworkset 2 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId (Leiden)\\
+  \email\text{}\\ \smallskip
+  \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
+  \emailII \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+\end{center}
+
+
+
+\end{document}
+
+
