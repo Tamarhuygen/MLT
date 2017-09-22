@@ -94,7 +94,40 @@
   \bigskip
 \end{center}
 
-\section*{Release the KRAKEN}
+\section*{Exercise 2.1}
+We have shown that the predictor defined in Equation (2.3) leads to overfitting. 
+While this predictor seems to be very unnatural, the goal of this exercise is to show 
+that it can be described as a thresholded polynomial. 
+That is, show that given a training set 
+\begin{equation*}
+S = \cbrac{(x_i, f(x_i))}_{i=1}^{m} \se (\R^d \times \cbrac{0,1})^m, 
+\end{equation*}
+there exists a polynomial $p_S$ such that $h_S(x) = 1$ if and only if $p_S(x)\geq 0$, 
+where $h_S$ is as defined in Equation (2.3). It follows that learning the class of all 
+thresholded polynomials using the ERM rule may lead to overfitting.
+\begin{solution}
+Let $h_S:\R^d\to\cbrac{0,1}$ be given by
+\begin{equation*}
+ h_S(x)=
+ \begin{cases}
+  f(x_i) & \text{ if there exists }i \in [m] \text{ such that } x=x_i, \\
+  0 & \text{ otherwise.} \\  
+ \end{cases}
+\end{equation*}
+
+Consider the polynomial $p_S:\R^d \to \R$ given by
+\begin{equation*}
+ p_S(x^1,x^2,\ldots,x^d)=-\prod_{i=1}^{m}\paren*{(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2},
+\end{equation*}
+where $x^j$ denotes the $j$-th component of $x \in \R^d$.
+
+Note that $(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2 \geq 0$ for all $i \in [m]$.
+This means that $p_{S}(x)\leq 0$ for all $x \in \R^d$. Also we have that $p_S(x)=0$ if and only if there exists an 
+$x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if and only if $h_S(x)=1$.
+\end{solution}
+
+\section*{Exercise 2.2}
+\TODO
 
 \end{document}
 
