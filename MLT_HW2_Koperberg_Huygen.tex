@@ -50,12 +50,13 @@
 \newcommand{\Ind}{\ensuremath{\mathbb{1}}}
 \newcommand{\im}{\ensuremath{\mathbf{i}}}
 
+\newcommand{\argmin}{\operatorname*{argmin}}
 % \renewcommand\qedsymbol{\rule{1ex}{1ex}}
 
 % course specifics
 \newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
-\renewcommand{\P}{\ensuremath{\mathbf{P}}}
-\newcommand{\Ev}{\ensuremath{\mathbf{E}}}
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}}
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}}
 \newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
 \newcommand{\sgn}{\mathrm{sgn}}
 
@@ -127,7 +128,86 @@ $x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if 
 \end{solution}
 
 \section*{Exercise 2.2}
+Let $\mathcal{H}$ be a class of binary classifiers over a domain $\mathcal{X}$. 
+Let $\mathcal{D}$ be an unknown distribution over $\mathcal{X}$, and let $f$ be the target hypothesis in $\mathcal{H}$. 
+Fix some $h \in \mathcal{H}$. Show that the expected value of $L_S(h)$ over the choice of $S|_x$ equals $L_{(\mathcal{D},f)}(h)$,
+namely,
+\begin{equation*}
+\Ev_{S|_{x}\sim \mathcal{D}^m} [L_S(h)]=L_{(\mathcal{D},f)}(h).
+\end{equation*}
+\begin{solution}
+Let $X_1, X_2, \ldots, X_m$ be $\mathcal{X}$-valued i.i.d. random variables with distribution $\mathcal{D}$ and 
+let $S=(X_1, X_2, \ldots, X_m)$. Let $Z$ be a random variable with uniform distribution on $[m]$.
+Then we also have that $X_{Z}$ is distributed according to $\mathcal{D}$.
+
+Note that 
+\begin{align*}
+L_{S}(h)&=\frac{\abs{y \in S|_{x} \c h(y)\neq f(y)}}{\abs{S|_{x}}} \\
+&=\P_{X_{Z} \sim \mathcal{D}}(h(X_Z)\neq f(X_Z)|S|_{x}=S).
+\end{align*}
+
+Assume that $\mathcal{X}$ is countable. 
+Then we have that
+\begin{align*}
+\Ev_{S|_{x}\sim \mathcal{D}^m} [L_S(h)]&=\sum_{\mathbf{x} \in \mathcal{X}^m}L_{\mathbf{x}}(h)\mathcal{D}^m(\mathbf{x}) \\
+\end{align*}
+
+Then do something with the law of total probability.
+
 \TODO
+
+\end{solution}
+
+
+\section*{Exercise 2.3}
+An axis aligned rectangle classifier in the plane is a classifier that assigns the value $1$ to a point 
+if and only if it is inside a certain rectangle. 
+Formally, given real numbers $a_1 \leq b_1$, $a_2 \leq b_2$, define the classifier $h_{(a_1, b_1, a_2, b_2)}:\R^2\to\cbrac{0,1}$ by
+\begin{equation*}
+h_{(a_1, b_1, a_2, b_2)}(x, y)=
+\begin{cases}
+ 1 & \text{ if }x \in [a_1, b_1], \ y \in [a_2, b_2], \\
+ 0 & \text{ otherwise}.
+\end{cases}
+\end{equation*}
+
+The class of all axis aligned rectangles in the plane is defined as
+\begin{equation*}
+\mathcal{H}^2_{rec}=\cbrac{h_{(a_1, b_1, a_2, b_2)} \c a_1 \leq b_1 \text{ and } a_2 \leq b_2}.
+\end{equation*}
+Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
+
+\subsection*{$1$}
+\begin{solution}
+By the realizability assumption, there exists a rectangle 
+\begin{equation*}
+R^*(a_1^*,b_1^*,a_2^*,b_2^*)=\cbrac{(x,y)\in \R^2 \c x \in [a_1^*,b_1^*] \text{ and }y \in [a_2^*, b_2^*]}
+\end{equation*}
+such that for all $(x, y) \in \R^2$ we have that
+$h_{R^*}(x, y)=f(x, y)$. Let $S$ be a given training set and let $R(S)$ be the rectangle returned by algorithm $A$. 
+Let $S|_{\mathbf{x}}=(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_m)$ denote the sequence of instances in the training set.
+
+If there exists an $\mathbf{x}_i \in \R^2 \setminus R(S)$, then by construction we have that $f(\mathbf{x}_i)=0$.
+Also, as $R(S)$ is the smallest rectangle containing all $\mathbf{x}_i$ with $f(\mathbf{x}_i)=1$,
+we have that $R(S)\se R^*$. It follows that $h_{R(S)}(\mathbf{x}_i)=f(\mathbf{x}_i)$ for all $i \in [m]$.
+Thus we have that $L_S(h_{R(S)})=0$, so that $h_{R(S)} \in \argmin_{h \in \mathcal{H}^2_{rec}}L_S(h)$.
+Therefore, $A$ is an ERM.
+\end{solution}
+
+\subsection*{$2$}
+\TODO
+\subsection*{$3$}
+\TODO
+
+\section*{Exercise 15.1}
+
+\section*{Exercise 15.4}
+Show that for any function $f$ of two vector variables $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{Y}$, it holds that
+\begin{equation*}
+ \min_{\mathbf{x} \in \mathcal{X}} \max_{\mathbf{y} \in \mathcal{Y}} f(\mathbf{x}, \mathbf{y}) \geq
+ \max_{\mathbf{y} \in \mathcal{Y}} \min_{\mathbf{x} \in \mathcal{X}} f(\mathbf{x}, \mathbf{y}).
+\end{equation*}
+Let $\mathbf{x}^* \in \mathcal{X}$ be given. 
 
 \end{document}
 
