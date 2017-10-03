@@ -1,0 +1,225 @@
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo}
+\usepackage{euler}
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}}
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}}
+\newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309 (Leiden)}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\newcommand{\firstNameII}  {Tamar}
+\newcommand{\lastNameII}   {Huygen}
+\newcommand{\studIdII}     {10907483 (UvA)}
+\newcommand{\studIdIII}    {2556474 (VU)}
+\newcommand{\emailII}     {tamar@huygen.nl}
+
+\begin{document}
+\begin{center}
+  {\huge\bf Measure learning theory}\\
+  {\large\sc Homeworkset 2 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId \\
+  \email\text{}\\ \smallskip
+  \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
+  \emailII \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+\end{center}
+
+\section*{Exercise 3.1}
+Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppose that $\mathcal{H}$ is PAC learnable and its sample complexity given by $m_{\mathcal{H}}(\cdot,\cdot)$.
+Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\epsilon_1 \leq \epsilon_2<1$, we have that $m_{\mathcal{H}}(\epsilon_1, \delta) \geq m_{\mathcal{H}}(\epsilon_2, delta)$. Similarly, show that given $\epsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\epsilon, \delta_1) \geq m_{\mathcal{H}}(\epsilon, \delta_2)$.
+\begin{solution}
+Let $h_S:\R^d\to\cbrac{0,1}$ be given by
+\begin{equation*}
+ h_S(x)=
+ \begin{cases}
+  f(x_i) & \text{ if there exists }i \in [m] \text{ such that } x=x_i, \\
+  0 & \text{ otherwise.} \\  
+ \end{cases}
+\end{equation*}
+
+Consider the polynomial $p_S:\R^d \to \R$ given by
+\begin{equation*}
+ p_S(x^1,x^2,\ldots,x^d)=-\prod_{i=1}^{m}\paren*{(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2},
+\end{equation*}
+where $x^j$ denotes the $j$-th component of $x \in \R^d$.
+
+Note that $(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2 \geq 0$ for all $i \in [m]$.
+This means that $p_{S}(x)\leq 0$ for all $x \in \R^d$. Also we have that $p_S(x)=0$ if and only if there exists an 
+$x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if and only if $h_S(x)=1$.
+\end{solution}
+
+\section*{Exercise 2.2}
+Let $\mathcal{H}$ be a class of binary classifiers over a domain $\mathcal{X}$. 
+Let $\mathcal{D}$ be an unknown distribution over $\mathcal{X}$, and let $f$ be the target hypothesis in $\mathcal{H}$. 
+Fix some $h \in \mathcal{H}$. Show that the expected value of $L_S(h)$ over the choice of $S|_x$ equals $L_{(\mathcal{D},f)}(h)$,
+namely,
+\begin{equation*}
+\Ev_{S|_{x}\sim \mathcal{D}^m} [L_S(h)]=L_{(\mathcal{D},f)}(h).
+\end{equation*}
+\begin{solution}
+Let $X_1, X_2, \ldots, X_m$ be $\mathcal{X}$-valued i.i.d. random variables with distribution $\mathcal{D}$ and 
+let $S=(X_1, X_2, \ldots, X_m)$. Let $Z$ be a random variable with uniform distribution on $[m]$.
+Then we also have that $X_{Z}$ is distributed according to $\mathcal{D}$.
+
+Note that 
+\begin{align*}
+L_{S}(h)&=\frac{\abs{y \in S|_{x} \c h(y)\neq f(y)}}{\abs{S|_{x}}} \\
+&=\P_{X_{Z} \sim \mathcal{D}}(h(X_Z)\neq f(X_Z)|S|_{x}=S).
+\end{align*}
+
+Assume that $\mathcal{X}$ is countable. 
+Then we have that
+\begin{align*}
+\Ev_{S|_{x}\sim \mathcal{D}^m} [L_S(h)]&=\sum_{\mathbf{x} \in \mathcal{X}^m}L_{\mathbf{x}}(h)\mathcal{D}^m(\mathbf{x}) \\
+\end{align*}
+
+Then do something with the law of total probability.
+
+\TODO
+
+\end{solution}
+
+
+\section*{Exercise 2.3}
+An axis aligned rectangle classifier in the plane is a classifier that assigns the value $1$ to a point 
+if and only if it is inside a certain rectangle. 
+Formally, given real numbers $a_1 \leq b_1$, $a_2 \leq b_2$, define the classifier $h_{(a_1, b_1, a_2, b_2)}:\R^2\to\cbrac{0,1}$ by
+\begin{equation*}
+h_{(a_1, b_1, a_2, b_2)}(x, y)=
+\begin{cases}
+ 1 & \text{ if }x \in [a_1, b_1], \ y \in [a_2, b_2], \\
+ 0 & \text{ otherwise}.
+\end{cases}
+\end{equation*}
+
+The class of all axis aligned rectangles in the plane is defined as
+\begin{equation*}
+\mathcal{H}^2_{rec}=\cbrac{h_{(a_1, b_1, a_2, b_2)} \c a_1 \leq b_1 \text{ and } a_2 \leq b_2}.
+\end{equation*}
+Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
+
+\subsection*{$1$}
+\begin{solution}
+By the realizability assumption, there exists a rectangle 
+\begin{equation*}
+R^*(a_1^*,b_1^*,a_2^*,b_2^*)=\cbrac{(x,y)\in \R^2 \c x \in [a_1^*,b_1^*] \text{ and }y \in [a_2^*, b_2^*]}
+\end{equation*}
+such that for all $(x, y) \in \R^2$ we have that
+$h_{R^*}(x, y)=f(x, y)$. Let $S$ be a given training set and let $R(S)$ be the rectangle returned by algorithm $A$. 
+Let $S|_{\mathbf{x}}=(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_m)$ denote the sequence of instances in the training set.
+
+If there exists an $\mathbf{x}_i \in \R^2 \setminus R(S)$, then by construction we have that $f(\mathbf{x}_i)=0$.
+Also, as $R(S)$ is the smallest rectangle containing all $\mathbf{x}_i$ with $f(\mathbf{x}_i)=1$,
+we have that $R(S)\se R^*$. It follows that $h_{R(S)}(\mathbf{x}_i)=f(\mathbf{x}_i)$ for all $i \in [m]$.
+Thus we have that $L_S(h_{R(S)})=0$, so that $h_{R(S)} \in \argmin_{h \in \mathcal{H}^2_{rec}}L_S(h)$.
+Therefore, $A$ is an ERM.
+\end{solution}
+
+\subsection*{$2$}
+\TODO
+\subsection*{$3$}
+\TODO
+
+\section*{Exercise 15.1}
+Show the hard-SVM rule, namely,
+\begin{equation*}
+  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]}|\langle \mathbf{w}, \mathbf{x}_i \rangle + b |
+  \text{ s.t. } \forall i, y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ) > 0,
+\end{equation*}
+is equivalent to the following formulation:
+\begin{equation*}
+  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]} y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ).
+\end{equation*}
+\textit{Hint:} Define $\mathcal{G}={}$
+\subsection*{1}
+Show that 
+\section*{Exercise 15.4}
+Show that for any function $f$ of two vector variables $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{Y}$, it holds that
+\begin{equation*}
+ \min_{\mathbf{x} \in \mathcal{X}} \max_{\mathbf{y} \in \mathcal{Y}} f(\mathbf{x}, \mathbf{y}) \geq
+ \max_{\mathbf{y} \in \mathcal{Y}} \min_{\mathbf{x} \in \mathcal{X}} f(\mathbf{x}, \mathbf{y}).
+\end{equation*}
+\begin{solution}
+\TODO
+
+Iets leuks.
+\end{solution}
+
+
+
+
+\end{document}
+
+
