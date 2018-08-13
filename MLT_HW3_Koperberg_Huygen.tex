@@ -100,24 +100,47 @@
 Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppose that $\mathcal{H}$ is PAC learnable and its sample complexity given by $m_{\mathcal{H}}(\cdot,\cdot)$.
 Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\epsilon_1 \leq \epsilon_2<1$, we have that $m_{\mathcal{H}}(\epsilon_1, \delta) \geq m_{\mathcal{H}}(\epsilon_2, delta)$. Similarly, show that given $\epsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\epsilon, \delta_1) \geq m_{\mathcal{H}}(\epsilon, \delta_2)$.
 \begin{solution}
-Let $h_S:\R^d\to\cbrac{0,1}$ be given by
-\begin{equation*}
- h_S(x)=
- \begin{cases}
-  f(x_i) & \text{ if there exists }i \in [m] \text{ such that } x=x_i, \\
-  0 & \text{ otherwise.} \\  
- \end{cases}
-\end{equation*}
+% Let $h_S:\R^d\to\cbrac{0,1}$ be given by
+% \begin{equation*}
+%  h_S(x)=
+%  \begin{cases}
+%   f(x_i) & \text{ if there exists }i \in [m] \text{ such that } x=x_i, \\
+%   0 & \text{ otherwise.} \\  
+%  \end{cases}
+% \end{equation*}
 
-Consider the polynomial $p_S:\R^d \to \R$ given by
-\begin{equation*}
- p_S(x^1,x^2,\ldots,x^d)=-\prod_{i=1}^{m}\paren*{(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2},
-\end{equation*}
-where $x^j$ denotes the $j$-th component of $x \in \R^d$.
+% Consider the polynomial $p_S:\R^d \to \R$ given by
+% \begin{equation*}
+%  p_S(x^1,x^2,\ldots,x^d)=-\prod_{i=1}^{m}\paren*{(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2},
+% \end{equation*}
+% where $x^j$ denotes the $j$-th component of $x \in \R^d$.
 
-Note that $(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2 \geq 0$ for all $i \in [m]$.
-This means that $p_{S}(x)\leq 0$ for all $x \in \R^d$. Also we have that $p_S(x)=0$ if and only if there exists an 
-$x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if and only if $h_S(x)=1$.
+% Note that $(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2 \geq 0$ for all $i \in [m]$.
+% This means that $p_{S}(x)\leq 0$ for all $x \in \R^d$. Also we have that $p_S(x)=0$ if and only if there exists an 
+% $x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if and only if $h_S(x)=1$.
+  The more samples we pick, the smaller the chance of failure of the learner becomes.
+  Let $\delta \in (0,1)$ and $0<\epsilon_1 \leq \epsilon_2<1$.
+  Let $m_1$ be the minimal integer that satisfies 
+  \begin{equation*}
+     m_1 \geq \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1},
+  \end{equation*}
+  because $m_1$ is the minimal integer that satisfies it,
+  \begin{equation*}
+     m_1 \geq \left\lceil frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1}\right\rceil,
+  \end{equation*}
+  and let $m_2$ be the minimal integer that satisfies
+  \begin{equation*}
+    m_2 \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_2}\right\rceil.
+  \end{equation*}
+  Because
+  \begin{equation*}
+   \left \lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1} \right\rceil \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_2} \right\rceil,
+  \end{equation*}
+  and $m_1\geq m_2$
+  Since $\mathcal{H}$ is PAC learnable, we know that if $\mathcal{H}$ is finite,
+  $m_{\mathcal{H}}(\epsilon_1,\delta) \leq \lceil \frac{log(|\mathcal{H}| / \delta)}{\epsilon_1} $
+
+    Let $\delta \in (0,1)$ and $0<\epsilon_1 \leq \epsilon_2<1$. Since $\mathcal{H}$ is PAC learnable, we 
 \end{solution}
 
 \section*{Exercise 2.2}

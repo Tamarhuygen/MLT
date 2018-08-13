@@ -51,6 +51,7 @@
 \newcommand{\im}{\ensuremath{\mathbf{i}}}
 
 \newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
 % \renewcommand\qedsymbol{\rule{1ex}{1ex}}
 
 % course specifics
@@ -200,9 +201,18 @@ Therefore, $A$ is an ERM.
 \TODO
 
 \section*{Exercise 15.1}
-\TODO
-
-
+Show the hard-SVM rule, namely,
+\begin{equation*}
+  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]}|\langle \mathbf{w}, \mathbf{x}_i \rangle + b |
+  \text{ s.t. } \forall i, y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ) > 0,
+\end{equation*}
+is equivalent to the following formulation:
+\begin{equation*}
+  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]} y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ).
+\end{equation*}
+\textit{Hint:} Define $\mathcal{G}={}$
+\subsection*{1}
+Show that 
 \section*{Exercise 15.4}
 Show that for any function $f$ of two vector variables $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{Y}$, it holds that
 \begin{equation*}
