@@ -89,6 +89,10 @@
 \end{center}
 
 \section*{Exercise 1}
+In this question we are following the common special-case notation for $2$ outcomes, 
+where outcomes are $\cbrac{0, 1}$ and distributions on these $2$ outcomes are parametrised by the probability 
+$q \in [0, 1]$ of observing the outcome $1$.
+
 Determine (prove or disprove) whether the following losses are proper.
 \subsection*{(a)}
 Take $\ell(0,q)=q$ and $\ell(1,q)=1-q$.
@@ -127,8 +131,12 @@ The associated risk function is given by
 \begin{equation*}
 L(p,q)=(1-p)\sqrt{\frac{q}{1-q}}+p\sqrt{\frac{1-q}{q}}.
 \end{equation*}
-
-\TODO
+Fix $p$ and consider $L_p(q)=L(p,q)$ as a function of $q$.
+The derivative of $L_p$ is given by
+\begin{equation*}
+L_p'(q)=\frac{q-p}{2(q-q^2)^{\tfrac{3}{2}}}. \TODO
+\end{equation*}
+We see that $L_p'(p)=0$, so $L_p$ has an extremum at the point $q=p$. \TODO
 \end{solution}
 
 \subsection*{(d)}
@@ -144,7 +152,7 @@ Therefore, $\ell$ is not a proper loss function.
 \end{solution}
 
 \section*{Exercise 2}
-Let $\varphi$ be any differentiable convex function.
+Let $\phi$ be any differentiable convex function.
 \subsection*{(a)}
 Show that $B_{\phi}(x,x)=0$.
 \begin{solution}
