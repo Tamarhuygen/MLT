@@ -194,6 +194,47 @@ Show that $B_{\varphi}(x,y)$ is convex in $x$.
 \TODO 
 \end{solution}
 
+\section*{Exercise 3}
+Consider a differentiable convex function $\phi: \triangle_k\rightarrow \mathbb{R}$. Let $\delta^i$ be the $i^{\text{th}}$ standard basis vector (i.e. $\delta^i_i = 1$ and $\delta^i_j = 0$ for $j\neq i$), Define the loss function $\ell_{\phi}:[k]\times \triangle_k \rightarrow \mathbb{R}$ by:
+\begin{equation*}
+  \ell_{\phi}(i,q) = B_{\phi}\left(\delta^{i},q\right)
+\end{equation*}
+Show that $\ell$ is proper.
+\begin{solution}
+We can see that the risk now becomes:
+\begin{equation*}
+  L(p,q) = \sum^{k}_{i=1}p_iB_{\phi} \left(\delta^{i},q\right)
+\end{equation*}
+From the definition we know that:
+\begin{equation*}
+  L(p,q) = \sum^{k}_{i=1}p_i\left(\phi(\delta^i)-\phi(q)-\ip{\delta^i-q,\nabla \phi(q)} \right)
+\end{equation*}
+Because this function is linear, we can see that
+
+\begin{equation*}
+  L(p,q) = \left(\sum^{k}_{i=1}p_i\phi(\delta^i)\right)-\left(\sum^{k}_{i=1}p_i\phi(q)\right)-\left(\ip{\sum^{k}_{i=1}p_i\left(\delta^i-q\right),\nabla \phi(q)}\right)
+\end{equation*}
+And because $\sum^{k}_{i=1}p_i\delta^i = p$ and $\sum^{k}_{i=1}p_i = 1$ we get that:
+\begin{equation*}
+  L(p,q)= \left(\sum^{k}_{i=1}p_i\phi(\delta^i)\right) - \phi(q) - \ip{p-q,\nabla \phi(q)}
+\end{equation*}
+We can also see that:
+\begin{align*}
+  L(p,p) &=  \left(\sum^{k}_{i=1}p_i\phi(\delta^i)\right) - \phi(p) - \ip{p-p,\nabla \phi(p)}\\
+  &=  \left(\sum^{k}_{i=1}p_i\phi(\delta^i)\right) - \phi(p)
+\end{align*}
+We know that:
+\begin{equation*}
+  L(p,p)\leq L(p,q) \implies 0\leq L(p,q) - L(p,p)
+\end{equation*}
+and
+\begin{equation*}
+  L(p,q) - L(p,p) = \phi(p)-\phi(q)-\ip{p-q,\nabla \phi(q)} = B_{\phi}(p,q) \geq 0
+\end{equation*}
+Here we recognize the \textit{Bregman Divergence} and we know from exercise 2b that $B_{\phi}(p,q) \geq 0$.
+
+
+\end{solution}
 
 \section*{Exercise 5}
 A final grade between $1$ and $10$ is composed of $40\%$ homework
