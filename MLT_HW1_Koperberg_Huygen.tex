@@ -4,7 +4,7 @@
 %\usepackage[utf8x]{inputenc}
 \usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
 \usepackage{mathtools} 
-
+\usepackage{natbib}
 \usepackage{enumerate}
 
 \usepackage[noabbrev]{cleveref}
@@ -236,6 +236,11 @@ Here we recognize the \textit{Bregman Divergence} and we know from exercise 2b t
 
 \end{solution}
 
+\section*{Exercise 4}
+Ok, ik heb een artikel \citep{frigyik2008functional} toegevoegd waarin dit bewezen wordt. Ik zal het uitpluizen en hier een bewijs geven.
+
+
+
 \section*{Exercise 5}
 A final grade between $1$ and $10$ is composed of $40\%$ homework
 and $60\%$ exams. There are $13$ homework sets of $5$ questions each. For
@@ -330,7 +335,8 @@ for(i in 6:10){
 cat(P)
 \end{verbatim}
 
-
+\bibliographystyle{plainnat}
+\bibliography{MLT} 
 
 \end{document}
 
