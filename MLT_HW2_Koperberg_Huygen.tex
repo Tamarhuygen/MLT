@@ -207,38 +207,6 @@ Show that if $A$ receives a training set of size $\geq \frac{4 \log (4/\delta)}{
 
 % Let $x$ be a sample from sample set $S$, we have that $f(x)=1 \implies x\in R^* \wedge x\in R(S)$. And since A returns the minimal rectangle that encloses all positive examples in $S$, this rectangle must lie within $R^*$.
 
-% Let $R(S)=R(a_1', a_2',b_1',b_2')$, then for all samples $x=(x_1,x_2)\in S$, if $f(x)=1 \implies (a_1^*\leq x_1\leq \leq b_1^* \wedge a_2^*\leq x_2 \leq b_2^*)$. 
-% \TODO
-\subsection*{$3$}
-\TODO
-
-\section*{Exercise 15.1}
-Show the hard-SVM rule, namely,
-\begin{equation*}
-  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]}|\langle \mathbf{w}, \mathbf{x}_i \rangle + b |
-  \text{ s.t. } \forall i, y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ) > 0,
-\end{equation*}
-is equivalent to the following formulation:
-\begin{equation*}
-  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]} y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ).
-\end{equation*}
-\textit{Hint:} Define $\mathcal{G}={}$
-\subsection*{1}
-Show that 
-\section*{Exercise 15.4}
-Show that for any function $f$ of two vector variables $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{Y}$, it holds that
-\begin{equation*}
- \min_{\mathbf{x} \in \mathcal{X}} \max_{\mathbf{y} \in \mathcal{Y}} f(\mathbf{x}, \mathbf{y}) \geq
- \max_{\mathbf{y} \in \mathcal{Y}} \min_{\mathbf{x} \in \mathcal{X}} f(\mathbf{x}, \mathbf{y}).
-\end{equation*}
-\begin{solution}
-\TODO
-
-Iets leuks.
-\end{solution}
-
-
-
 
 \end{document}
 

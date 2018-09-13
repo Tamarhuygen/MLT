@@ -205,6 +205,8 @@ Note that this is an infinite size hypothesis class. Throughout this exercise we
 
 \subsection*{$1$}
 \begin{solution}
+We assume that algorithm $A$ returns $\Ind_{\varnothing}$ if no positive instances have been sampled.
+
 By the realizability assumption, there exists a rectangle 
 \begin{equation*}
 R^*(a_1^*,b_1^*,a_2^*,b_2^*)=\cbrac{(x,y)\in \R^2 \c x \in [a_1^*,b_1^*] \text{ and }y \in [a_2^*, b_2^*]}
@@ -213,7 +215,8 @@ such that for all $(x, y) \in \R^2$ we have that
 $h_{R^*}(x, y)=f(x, y)$. Let $S$ be a given training set and let $R(S)$ be the rectangle returned by algorithm $A$. 
 Let $S|_{\mathbf{x}}=(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_m)$ denote the sequence of instances in the training set.
 
-If there exists an $\mathbf{x}_i \in \R^2 \setminus R(S)$, then by construction we have that $f(\mathbf{x}_i)=0$.
+If there exists an instance $\mathbf{x}_i$ in $S|_{x}$ with $\mathbf{x}_i \notin R(S)$, 
+then by construction we have that $f(\mathbf{x}_i)=0$.
 Also, as $R(S)$ is the smallest rectangle containing all $\mathbf{x}_i$ with $f(\mathbf{x}_i)=1$,
 we have that $R(S)\se R^*$. It follows that $h_{R(S)}(\mathbf{x}_i)=f(\mathbf{x}_i)$ for all $i \in [m]$.
 Thus we have that $L_S(h_{R(S)})=0$, so that $h_{R(S)} \in \argmin\limits_{h \in \mathcal{H}^2_{rec}}L_S(h)$.
@@ -222,9 +225,14 @@ Therefore, $A$ is an ERM.
 
 \subsection*{$2$}
 Show that if $A$ receives a training set of size $\geq \frac{4 \log (4/\delta)}{\epsilon}$ then, with probability of at least $1-\delta$ it returns a hypothesis with error  of at most $\epsilon$.\\
+<<<<<<< HEAD
 \textit{Hint:} Fix some distribution
 \textit{Show that $R(S)\subseteq R^*$.}\\
 
+=======
+\textit{Hint:} Fix some distribution $\mathcal{D}$.
+\textit{Show that $R(S)\subseteq R^*$.}
+>>>>>>> d919c531bae589ef03f8810855a2750b9403a5dd
 \begin{solution}
 All positive examples lie within $R^*$. That is, for any point $\mathbf{x} = (x_1,x_2) \in \R^2$ such that $f(\mathbf{x})=1$, it holds that $a_1^*\leq x_1 \leq b_1^*$ and that $a_2^*\leq x_2 \leq b_2^*$. Note that if there exist no $(x_1,x_2) \in S|_x$ such that $f(x_1,x_2)=1$, then $A$ will return $\emptyset \subseteq R^*$. Let $R(S)(a_1',a_2',b_1',b_2')$ be the rectangle that $A$ returns and let $S|_x = {\mathbf{x}^1, \mathbf{x}^2,\ldots, \mathbf{x}^m}$. If there exist points $(x^i_1,x^i_2)\in S|_x$ such that $f(x^i_1,x^i_2)=1$, then the borders of $R(S)$, go through such points within $R^*$, that is $a_1' = \min_{i\in [m]} x^i_1$ and $b_1' = \max_{i\in [m]} x^i_1$, similarly $a_2' = \min_{i\in [m]} \mathbf{x}^i_2$ and $b_2' = \max_{i\in [m]} \mathbf{x}^i_2$. So, it holds that $a_1^*\leq a_1'\leq b_1' \leq b_1^*$ and $a_2^* \leq a_2' \leq b_2' \leq b_2^*$. Now it holds that if a point $\mathbf{x} = (x_1, x_2)\in \R^2$ is an element of $R(S)$, that $a_1^*\leq a_1'\leq x_1 \leq b_1' \leq b_1^*$ and $a_2^* \leq a_2'\leq x_2 \leq b_2' \leq b_2^*$, so then it holds that $(x_1,x_2) \in R^*)$, so $R(S) \subseteq R^*$.\\
 \end{solution}
@@ -232,31 +240,34 @@ All positive examples lie within $R^*$. That is, for any point $\mathbf{x} = (x_
 \subsection*{$3$}
 \TODO
 
-\section*{Exercise 15.1}
-Show the hard-SVM rule, namely,
-\begin{equation*}
-  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]}|\langle \mathbf{w}, \mathbf{x}_i \rangle + b |
-  \text{ s.t. } \forall i, y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ) > 0,
-\end{equation*}
-is equivalent to the following formulation:
-\begin{equation*}
-  \argmax_{(\mathbf{w},b):||\mathbf{w}||=1} \min_{i \in [m]} y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle ).
-\end{equation*}
-\textit{Hint:} Define $\mathcal{G}={}$
-\subsection*{1}
-Show that 
-\section*{Exercise 15.4}
-Show that for any function $f$ of two vector variables $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{Y}$, it holds that
-\begin{equation*}
- \min_{\mathbf{x} \in \mathcal{X}} \max_{\mathbf{y} \in \mathcal{Y}} f(\mathbf{x}, \mathbf{y}) \geq
- \max_{\mathbf{y} \in \mathcal{Y}} \min_{\mathbf{x} \in \mathcal{X}} f(\mathbf{x}, \mathbf{y}).
-\end{equation*}
-\begin{solution}
-\TODO
 
-Iets leuks.
+
+\section*{Exercise 4}
+Let $a, b \in \R^n$. 
+Show that the set of points that are closer to point $a$ than to point $b$ in Euclidean norm, 
+i.e. the set $\cbrac{x \in \R^n \c \nrm{x-a}_2 \leq \nrm{x-b}_2}$, is a half space. 
+Rewrite the half space in the form presented in the lecture: $w^T x \leq c$.
+
+\begin{solution}
+ Take $w=a-b$ and $c=\tfrac{1}{2}(\nrm{a}_2-\nrm{b}_2)$. Let $x \in \R^n$ be given.
+ Then we have that 
+ \begin{align*}
+ \nrm{a-x}_2^2 -\nrm{b-x}_2^2 &= \ip{a-x, a-x}-\ip{b-x, b-x} \\
+ &= \ip{a,a}-2\ip{a,x}-\ip{b,b} + 2\ip{b,x} \\
+ &= \ip{a,a}-\ip{b,b} + 2\ip{b-a,x} \\
+ &= \nrm{a}_2^2-\nrm{b}_2^2 + 2\ip{b-a,x} \\
+ &= 2c - 2\ip{w,x}.
+ \end{align*}
+ It follows that $2c - 2\ip{w,x} \geq 0$ if and only if $x$ is closer to $a$ than $b$.
+ Therefore, we have that 
+ \begin{equation*}
+  \cbrac{x \in \R^n \c \nrm{x-a}_2 \leq \nrm{x-b}_2}=\cbrac{x \in \R^n \c \ip{a-b,x} \leq \tfrac{1}{2}(\nrm{a}_2-\nrm{b}_2)}.
+ \end{equation*}
+
+ 
 \end{solution}
 
+ 
 
 
 
