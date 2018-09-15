@@ -188,7 +188,7 @@ Because $\Ind_{\cbrac{h(x_i)\neq y_i}} = 1$ when  $h(x_i)\neq y_i$ and $0$ other
 \end{align*}
 And because $f(x_i) = y_i$, and because all the examples in the training set are i.i.d., we have that
 \begin{align*}
-  \frac{1}{m}\sum_{i=1}^m 1\P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)\neq y_i}}
+  \frac{1}{m}\sum_{i=1}^m \P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)\neq y_i}}
  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{x_i \sim \mathcal{D}}\paren*{\cbrac{h(x_i)\neq y_i}} \\
  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{x_i \sim \mathcal{D}}\paren*{\cbrac{h(x_i)\neq f(x_i)}} \\
  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{x \sim \mathcal{D}}\paren*{\cbrac{h(x)\neq f(x)}} \\
@@ -333,20 +333,20 @@ i.e. the set $\cbrac{x \in \R^n \c \nrm{x-a}_2 \leq \nrm{x-b}_2}$, is a half spa
 Rewrite the half space in the form presented in the lecture: $w^T x \leq c$.
 
 \begin{solution}
- Take $w=a-b$ and $c=\tfrac{1}{2}(\nrm{a}_2-\nrm{b}_2)$. Let $x \in \R^n$ be given.
+ Take $w=b-a$ and $c=\tfrac{1}{2}(\nrm{b}_2-\nrm{a}_2)$. Let $x \in \R^n$ be given.
  Then we have that 
  \begin{align*}
- \nrm{a-x}_2^2 -\nrm{b-x}_2^2 &= \ip{a-x, a-x}-\ip{b-x, b-x} \\
- &= \ip{a,a}-2\ip{a,x}-\ip{b,b} + 2\ip{b,x} \\
- &= \ip{a,a}-\ip{b,b} + 2\ip{b-a,x} \\
- &= \nrm{a}_2^2-\nrm{b}_2^2 + 2\ip{b-a,x} \\
+ \nrm{b-x}_2^2 -\nrm{a-x}_2^2 &= \ip{b-x, b-x}-\ip{a-x, a-x} \\
+ &= \ip{b,b}-2\ip{b,x}-\ip{a,a} + 2\ip{a,x} \\
+ &= \ip{b,b}-\ip{a,a} + 2\ip{a-b,x} \\
+ &= \nrm{b}_2^2-\nrm{a}_2^2 + 2\ip{a-b,x} \\
  &= 2c - 2\ip{w,x}.
  \end{align*}
  It follows that $2c - 2\ip{w,x} \geq 0$ if and only if $x$ is closer to $a$ than $b$.
  Therefore, we have that 
  \begin{equation*}
-  \cbrac{x \in \R^n \c \nrm{x-a}_2 \leq \nrm{x-b}_2}=\cbrac{x \in \R^n \c \ip{a-b,x} \leq \tfrac{1}{2}(\nrm{a}_2-\nrm{b}_2)}.
- \end{equation*}
+  \cbrac{x \in \R^n \c \nrm{x-a}_2 \leq \nrm{x-b}_2}=\cbrac{x \in \R^n \c \ip{b-a,x} \leq \tfrac{1}{2}(\nrm{b}_2-\nrm{a}_2)}.
+\end{equation*}
 
  
 \end{solution}
