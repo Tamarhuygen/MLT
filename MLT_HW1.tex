@@ -179,7 +179,7 @@ We have that
  &=\P\limits_{x \sim \mathcal{D}}\paren*{\cbrac{h(x)\neq f(x)}} \\
  &=L_{(\mathcal{D},f)}(h).
 \end{align*}
-\TODO Leg uit wat hier gebeurt.
+
 
 
 \end{solution}
@@ -225,17 +225,39 @@ Therefore, $A$ is an ERM.
 
 \subsection*{$2$}
 Show that if $A$ receives a training set of size $\geq \frac{4 \log (4/\delta)}{\epsilon}$ then, with probability of at least $1-\delta$ it returns a hypothesis with error  of at most $\epsilon$.\\
-<<<<<<< HEAD
-\textit{Hint:} Fix some distribution
-\textit{Show that $R(S)\subseteq R^*$.}\\
-
-\textit{Hint:} Fix some distribution $\mathcal{D}$.
+\textit{Hint:} Fix some distribution $\mathcal{D}$ over $\mathcal{X}$, let $R^* = R(a_1^*,b_1^*,a_2^*,b_2^*)$ be the rectangle that generates the labels and let $f$ be the corresponding hypothesis. Let $a_1 \geq a_1^*$ be a number such that the probability mass (with respect to $\mathcal{D}$) of the rectangle $R_1 = R(a_1^*,a_1,a_2^*,b_2^*)$ is exactly $\epsilon/4$. Similarly, let $b_1$, $a_2$, $b_2$ be numbers such that the probability masses of the rectangles $R_2 = R(b_1,b_1^*,a_2^*,b_2^*)$, $R_3 =  R(a_1^*,b_1^*,a_2^*,a_2$, $R_4 =  R(a_1^*,b_1^*,b_2,b_2^*$ are all exactly $\epsilon/4$. Let $R(S)$ be the rectangle returned by $A$.\\
 \textit{Show that $R(S)\subseteq R^*$.}
 \begin{solution}
 All positive examples lie within $R^*$. That is, for any point $\mathbf{x} = (x_1,x_2) \in \R^2$ such that $f(\mathbf{x})=1$, it holds that $a_1^*\leq x_1 \leq b_1^*$ and that $a_2^*\leq x_2 \leq b_2^*$. Note that if there exist no $(x_1,x_2) \in S|_x$ such that $f(x_1,x_2)=1$, then $A$ will return $\emptyset \subseteq R^*$. Let $R(S)(a_1',a_2',b_1',b_2')$ be the rectangle that $A$ returns and let $S|_x = {\mathbf{x}^1, \mathbf{x}^2,\ldots, \mathbf{x}^m}$. If there exist points $(x^i_1,x^i_2)\in S|_x$ such that $f(x^i_1,x^i_2)=1$, then the borders of $R(S)$, go through such points within $R^*$, that is $a_1' = \min_{i\in [m]} x^i_1$ and $b_1' = \max_{i\in [m]} x^i_1$, similarly $a_2' = \min_{i\in [m]} \mathbf{x}^i_2$ and $b_2' = \max_{i\in [m]} \mathbf{x}^i_2$. So, it holds that $a_1^*\leq a_1'\leq b_1' \leq b_1^*$ and $a_2^* \leq a_2' \leq b_2' \leq b_2^*$. Now it holds that if a point $\mathbf{x} = (x_1, x_2)\in R(S)$, that $a_1^*\leq a_1'\leq x_1 \leq b_1' \leq b_1^*$ and $a_2^* \leq a_2'\leq x_2 \leq b_2' \leq b_2^*$, so then it holds that $(x_1,x_2) \in R^*)$, so $R(S) \subseteq R^*$.\\
 \end{solution}
-\textit{Show that if $S$ contains (positive) examples in all of the rectangles, $R_1, R_2, R_3, R_4$, then the hypothesis, returned by $A$ has error of at most $\epsilon$.}
+\textit{Show that if $S$ contains (positive) examples in all of the rectangles, $R_1, R_2, R_3, R_4$, then the hypothesis, returned by $A$ has error of at most $\epsilon$.} \\
+\begin{solution}
+  Let $h'_{(a_1',b_1',a_2',b_2')}$ be the hypothesis that $A$ returns. $R(S)\subseteq R^*$, so for all freshly drawn examples $\mathbf{x} \in \R^2/R^*$,  it holds that $f(\mathbf{x})=h^*(\mathbf{x}) = h'(\mathbf{x}) = 0$. And because $R(S)\subseteq R^*$, for all freshly drawn examples $\mathbf{x} \in R(S)$, it holds that $f(\mathbf{x})=h^*(\mathbf{x}) = h'(\mathbf{x}) = 1$. This means that the error on all examples drawn outside of $R^*/R(S)$ equals $0$. For examples $\mathbf{x}$ drawn within $R^*/R(S)$ it holds that $f(\mathbf{x})=h^*(\mathbf{x}) = 1$ and $h'(\mathbf{x}) = 0$. This means it holds that $L_{(\mathcal{D},f)}(h') = \mathcal{D}(\{\mathbf{x}: f(mathbf{x}) \neq h'(\mathbf{x})\}) = \mathcal{D}(\{\mathbf{x}:\mathbf{x}\in R^*/R(S)\})$. \\
+  At worst, the all the positive examples $\mathbf{x'} = (x_1',x_2') \in S|_x$ within $R_1$ lie on the line $\mathbf{x}=(x_1,x_2):x_1 = a_1$. That is, at worst, if $f(\mathbf{x'} = 1)$, it holds that $a_1\leq x_1' \leq b_2^*$. Because then the border of $R(S)$, will lie on the line $\mathbf{x} = (x_1,x_2) \in \R^2: x_1 = a_1$, that is $R(S) = R(a_1,b_1',a_2',b_2')$. Because then $R_{1}/{\mathbf{x}:x_1=a_1} \subseteq R^*/R(S)$ and all freshly drawn examples from $R_{1}/{\mathbf{x}:x_1=a_1}$ will be falsely classified. The chance that $\mathbf{x} = (x_1,x_2) \in S|_x$ is drawn from $R_1$ is $\frac{\epsilon}{4}$. Now we have that $\mathcal{D}(\{\mathbf{x}: \mathbf{x} \in R_{1}/\{\mathbf{x}:x_1=a_1\}\}) \leq \mathcal{D}(\{\mathbf{x}: mathbf{x} \in R_{1}\}) = \frac{\epsilon}{4}$.\\
+  Similar arguments hold for $R_2$, $R_3$ and $R_4$. We can see that at worst $R(S) = R(a_1,b_1,a_2,b_2)$ and so $R^*/R(S) \subseteq R_1 \cup R_2 \cup R_3 \cup R_4$. Now it holds that
+\begin{align*}
+  L_{\mathcal{D},f}(h') & = \mathcal{D}(\leq R^*/R(S)) \\
+                      & \leq \mathcal{D}(R_1 \cup R_2 \cup R_3 \cup R_4) \\
+                      & \leq \mathcal{D}(R_1) + \mathcal{D}(R_2) + \mathcal{D}(R_3) + \mathcal{D}(R_4)\\
+ & = \frac{4\epsilon}{4} = \epsilon \\
+\end{align*}  
+\end{solution}
+\textit{For each $i \in {1,\ldots,4}$, upper bound the probability that $S$ does not contain an example from $R_i$}\\
+\begin{solution}
+  We know that the chance an example $\mathbf{x} \in S|_x$ is drawn from $R_i$ with $i \in \{1,\ldots, 4\}$ equals $\P_{x~\mathcal{D}}(mathbf{x}\in R_i) = \frac{\epsilon}{4}$, so the chance that an example is not drawn from $R_i$ is $\P_{x~\mathcal{D}}(\mathbf{x}\in \R^2/R_i) = 1-\frac{\epsilon}{4}$ This means that the chance that none of the samples in $S|_x$ is drawn from $R_i$ equals $\prod_{i = 1}^m(1-\frac{\epsilon}{4}) = (1-\frac{\epsilon}{4})^m$, with $m$ the size of the training set. Now we use that $(1-\epsilon)\leq e^{-\epsilon}$, to obtain that $(1-\frac{\epsilon}{4})^m \leq e^{- \frac{\epsilon}{4}m}$ and since $m \geq \frac{4\log (4/\delta)}{\epsilon}$, we have that $e^{- \frac{\epsilon}{4}m} \leq e^{-\frac{\epsilon}{4}\frac{4\log (4/\delta)}{\epsilon}}= \frac{\delta}{4}$
+\end{solution}
+\textit{Use the union bound to conclude this argument.} \\
+\begin{solution}
+  It holds for the chance that none of the examples in $S|_x$ are drawn from $\Cup_{i=1}^4 R_i$  that
+\begin{align*}
+  \mathcal{D}(\{\mathbf{x}:\mathbf{x}\in \R^2/(R_1 \cup R_2 \cup R_3 \cup R_4)\}) & \leq \sum_{i=1}^4 \mathcal{D}(\{\mathbf{x}:\mathbf{x}\in \R^2/R_i\}) \\
+                                                                                 & = 4\frac{\delta}{4} = \delta \\
+\end{align*}
+So the chance that there is a positive sample in each of the rectangles is $1-\delta$. So now we can see that $L_{(\mathcal{D},f)}(h')\leq \epsilon$ with probability of at least $1 - \delta$
+\end{solution}
 \subsection*{$3$}
+Repeat the previous question for the class of axis aligned rectangles in $\R^d$
+
 \TODO
 
 
