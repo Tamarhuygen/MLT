@@ -165,14 +165,30 @@ namely,
 % \end{align*}
 % We also have that
 
-We have that
+Because of the linearity of $\Ev$, we have that
 \begin{align*}
  \Ev\limits_{S|_x \sim \mathcal{D}^m}(L_{S}(h)) 
  &=\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\frac{\abs{\cbrac{i\in [m] \c h(x_i) \neq y_i}}}{m}} \\
- &=\frac{1}{m}\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\abs{\cbrac{i\in [m] \c h(x_i) \neq y_i}}} \\
- &=\frac{1}{m}\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\sum_{i=1}^m \Ind_{\cbrac{h(x_i)\neq y_i}}} \\
- &=\frac{1}{m}\sum_{i=1}^m \Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\Ind_{\cbrac{h(x_i)\neq y_i}}} \\
- &=\frac{1}{m}\sum_{i=1}^m \P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)\neq y_i}} \\
+  &=\frac{1}{m}\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\abs{\cbrac{i\in [m] \c h(x_i) \neq y_i}}} \\
+\end{align*}
+Let $\Ind_{\cbrac{h(x_i)\neq y_i }}$ be the indicator function, such that $\Ind(x_i) = 1$ if $h(x_i)\neq y_i$ and $\Ind(x_i) = 0$ otherwise. Then we have that
+\begin{equation*}
+  \frac{1}{m}\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\abs{\cbrac{i\in [m] \c h(x_i) \neq y_i}}} = \frac{1}{m}\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\sum_{i=1}^m \Ind_{\cbrac{h(x_i)\neq y_i}}} \\
+\end{equation*}
+And again because of the linearity of $\Ev$, we have that
+\begin{equation*}
+  \frac{1}{m}\Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\sum_{i=1}^m \Ind_{\cbrac{h(x_i)\neq y_i}}}
+  =\frac{1}{m}\sum_{i=1}^m \Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\Ind_{\cbrac{h(x_i)\neq y_i}}}
+\end{equation*}
+Because $\Ind_{\cbrac{h(x_i)\neq y_i}} = 1$ when  $h(x_i)\neq y_i$ and $0$ otherwise, we can see that 
+\begin{align*}
+ \frac{1}{m}\sum_{i=1}^m \Ev\limits_{S|_x \sim \mathcal{D}^m}\paren*{\Ind_{\cbrac{h(x_i)\neq y_i}}}
+  &=\frac{1}{m}\sum_{i=1}^m 1\P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)\neq y_i}} +0 \P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)= y_i}} \\
+  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)\neq y_i}}
+\end{align*}
+And because $f(x_i) = y_i$, and because all the examples in the training set are i.i.d., we have that
+\begin{align*}
+  \frac{1}{m}\sum_{i=1}^m 1\P\limits_{S|_x \sim \mathcal{D}^m}\paren*{\cbrac{h(x_i)\neq y_i}}
  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{x_i \sim \mathcal{D}}\paren*{\cbrac{h(x_i)\neq y_i}} \\
  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{x_i \sim \mathcal{D}}\paren*{\cbrac{h(x_i)\neq f(x_i)}} \\
  &=\frac{1}{m}\sum_{i=1}^m \P\limits_{x \sim \mathcal{D}}\paren*{\cbrac{h(x)\neq f(x)}} \\
