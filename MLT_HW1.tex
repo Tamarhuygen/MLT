@@ -86,7 +86,7 @@
 \begin{document}
 \begin{center}
   {\huge\bf Machine learning theory}\\
-  {\large\sc Homeworkset 2 }\\ \vspace{1em}
+  {\large\sc Homeworkset 1 }\\ \vspace{1em}
   \firstName \textsc{ \lastName}, {\sc s}\studId \\
   \email\text{}\\ \smallskip
   \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
@@ -249,8 +249,8 @@ All positive examples lie within $R^*$. That is, for any point $\mathbf{x} = (x_
 Show that if $S$ contains (positive) examples in all of the rectangles, $R_1, R_2, R_3, R_4$, then the hypothesis, returned by $A$ has error of at most $\epsilon$. \\
 \begin{solution}
   Let $h'_{(a_1',b_1',a_2',b_2')}$ be the hypothesis that $A$ returns. $R(S)\subseteq R^*$, so for all freshly drawn examples $\mathbf{x} \in \R^2/R^*$,  it holds that $f(\mathbf{x})=h^*(\mathbf{x}) = h'(\mathbf{x}) = 0$. And because $R(S)\subseteq R^*$, for all freshly drawn examples $\mathbf{x} \in R(S)$, it holds that $f(\mathbf{x})=h^*(\mathbf{x}) = h'(\mathbf{x}) = 1$. This means that the error on all examples drawn outside of $R^*/R(S)$ equals $0$. For examples $\mathbf{x}$ drawn within $R^*/R(S)$ it holds that $f(\mathbf{x})=h^*(\mathbf{x}) = 1$ and $h'(\mathbf{x}) = 0$. This means it holds that $L_{(\mathcal{D},f)}(h') = \mathcal{D}(\{\mathbf{x}: f(mathbf{x}) \neq h'(\mathbf{x})\}) = \mathcal{D}(\{\mathbf{x}:\mathbf{x}\in R^*/R(S)\})$. \\
-  At worst, the all the positive examples $\mathbf{x'} = (x_1',x_2') \in S|_x$ within $R_1$ lie on the line $\mathbf{x}=(x_1,x_2):x_1 = a_1$. That is, at worst, if $f(\mathbf{x'} = 1)$, it holds that $a_1\leq x_1' \leq b_1^*$. Because then the border of $R(S)$, will lie on the line $\mathbf{x} = (x_1,x_2) \in \R^2: x_1 = a_1$, that is $R(S) = R(a_1,b_1',a_2',b_2')$. Because then $R_{1}/{\mathbf{x}:x_1=a_1} \subseteq R^*/R(S)$ and all freshly drawn examples from $R_{1}/{\mathbf{x}:x_1=a_1}$ will be falsely classified. The chance that $\mathbf{x} = (x_1,x_2) \in S|_x$ is drawn from $R_1$ is $\frac{\epsilon}{4}$. Now we have that $\mathcal{D}(\{\mathbf{x}: \mathbf{x} \in R_{1}/\{\mathbf{x}:x_1=a_1\}\}) \leq \mathcal{D}(\{\mathbf{x}: mathbf{x} \in R_{1}\}) = \frac{\epsilon}{4}$.\\
-  Similar arguments hold for $R_2$, $R_3$ and $R_4$. We can see that at worst $R(S) = R(a_1,b_1,a_2,b_2)$ and so $R^*/R(S) \subseteq R_1 \cup R_2 \cup R_3 \cup R_4$. Now it holds that
+  At worst, the all the positive examples $\mathbf{x'} = (x_1',x_2') \in S|_x$ within $R_1$ lie on the line $\mathbf{x}=(x_1,x_2):x_1 = a_1$. That is, at worst, if $f(\mathbf{x'} = 1)$, it holds that $a_1\leq x_1' \leq b_1^*$. Because then the border of $R(S)$, will lie on the line $\mathbf{x} = (x_1,x_2) \in \R^2: x_1 = a_1$, that is $R(S) = R(a_1,b_1',a_2',b_2')$. Because then $R_{1}/\{\mathbf{x}:x_1=a_1\} \subseteq R^*/R(S)$ and all freshly drawn examples from $R_{1}/\{\mathbf{x}:x_1=a_1\}$ will be falsely classified. The chance that $\mathbf{x} = (x_1,x_2) \in S|_x$ is drawn from $R_1$ is $\frac{\epsilon}{4}$. Now we have that $\mathcal{D}(\{\mathbf{x}: \mathbf{x} \in R_{1}/\{\mathbf{x}:x_1=a_1\}\}) \leq \mathcal{D}(\{\mathbf{x}: \mathbf{x} \in R_{1}\}) = \frac{\epsilon}{4}$.\\
+  Similar arguments hold for $R_2$, $R_3$ and $R_4$. We can see that at worst $R(S) = R(a_1,b_1,a_2,b_2)$ and so $(R^*/R(S)) \subseteq R_1 \cup R_2 \cup R_3 \cup R_4$. Now it holds that
 \begin{align*}
   L_{\mathcal{D},f}(h') & = \mathcal{D}(\leq R^*/R(S)) \\
                       & \leq \mathcal{D}(R_1 \cup R_2 \cup R_3 \cup R_4) \\
@@ -260,11 +260,11 @@ Show that if $S$ contains (positive) examples in all of the rectangles, $R_1, R_
 \end{solution}
 For each $i \in {1,\ldots,4}$, upper bound the probability that $S$ does not contain an example from $R_i$.\\
 \begin{solution}
-  We know that the chance an example $\mathbf{x} \in S|_x$ is drawn from $R_i$ with $i \in \{1,\ldots, 4\}$ equals $\P_{x~\mathcal{D}}(mathbf{x}\in R_i) = \frac{\epsilon}{4}$, so the chance that an example is not drawn from $R_i$ is $\P_{x~\mathcal{D}}(\mathbf{x}\in \R^2/R_i) = 1-\frac{\epsilon}{4}$ This means that the chance that none of the samples in $S|_x$ is drawn from $R_i$ equals $\prod_{i = 1}^m(1-\frac{\epsilon}{4}) = (1-\frac{\epsilon}{4})^m$, with $m$ the size of the training set. Now we use that $(1-\epsilon)\leq e^{-\epsilon}$, to obtain that $(1-\frac{\epsilon}{4})^m \leq e^{- \frac{\epsilon}{4}m}$ and since $m \geq \frac{4\log (4/\delta)}{\epsilon}$, we have that $e^{- \frac{\epsilon}{4}m} \leq e^{-\frac{\epsilon}{4}\frac{4\log (4/\delta)}{\epsilon}}= \frac{\delta}{4}$
+  We know that the chance an example $\mathbf{x} \in S|_x$ is drawn from $R_i$ with $i \in \{1,\ldots, 4\}$ equals $\P_{x~\mathcal{D}}(\mathbf{x}\in R_i) = \frac{\epsilon}{4}$, so the chance that an example is not drawn from $R_i$ is $\P_{x~\mathcal{D}}(\mathbf{x}\in \R^2/R_i) = 1-\frac{\epsilon}{4}$ This means that the chance that none of the samples in $S|_x$ is drawn from $R_i$ equals $\prod_{i = 1}^m(1-\frac{\epsilon}{4}) = (1-\frac{\epsilon}{4})^m$, with $m$ the size of the training set. Now we use that $(1-\epsilon)\leq e^{-\epsilon}$, to obtain that $(1-\frac{\epsilon}{4})^m \leq e^{- \frac{\epsilon}{4}m}$ and since $m \geq \frac{4\log (4/\delta)}{\epsilon}$, we have that $e^{- \frac{\epsilon}{4}m} \leq e^{-\frac{\epsilon}{4}\frac{4\log (4/\delta)}{\epsilon}}= \frac{\delta}{4}$
 \end{solution}
 Use the union bound to conclude this argument. \\
 \begin{solution}
-  It holds for the chance that none of the examples in $S|_x$ are drawn from $\Cup_{i=1}^4 R_i$  that
+  It holds for the chance that none of the examples in $S|_x$ are drawn from $\cup_{i=1}^4 R_i$  that
 \begin{align*}
   \mathcal{D}(\{\mathbf{x}:\mathbf{x}\in \R^2/(R_1 \cup R_2 \cup R_3 \cup R_4)\}) & \leq \sum_{i=1}^4 \mathcal{D}(\{\mathbf{x}:\mathbf{x}\in \R^2/R_i\}) \\
                                                                                  & = 4\frac{\delta}{4} = \delta \\
@@ -358,3 +358,8 @@ Rewrite the half space in the form presented in the lecture: $w^T x \leq c$.
 \end{document}
 
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
