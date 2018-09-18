@@ -151,7 +151,23 @@ Let $\mathcal{X} = \R^2$, $\mathcal{Y} = \paren*{0,1}$, and let $\mathcal{H}$ be
   m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil .
 \end{equation*}
 \begin{solution}
-\TODO
+  Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of the circle the returned indicator function $A$ returns points at.
+  Let $S|_x \subseteq \R^2 = \mathbf{x}_1,\ldots \mathbf{x}_m$ be the sampled domain points in $S$. Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k|| \leq r^* $. Let $r'$ be a radius such that
+
+  \begin{equation*}
+    \mathcal{D}(\{\mathbf{x} \in \R^2:r' \leq ||x|| \leq r^*\}) = \epsilon
+  \end{equation*}
+  Then it holds that if there exists a positive point $\mathbf{x} \in S|_x$, such that $r' \leq ||\mathbf{x}||\leq r^*$, then it holds that $L_{\mathcal{D},f}(h_S)\leq \epsilon$.\\
+    Note that if $\mathcal{D}(\{\mathcal{x}:||\mathcal{x}||-r^{*}\}) < \epsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{x}:r' \leq ||x|| \leq r^*\}) = \epsilon$, but in that case the error will always be smaller than $\epsilon$.\\
+  The chance that there exists a positive point $\mathbf{x}$ in $r^*$, such that $r' \leq ||\mathbf{x}||\leq r^*$, is at least $\epsilon$. This means that the chance that there exists no such point is at most $(1-\epsilon)^m \leq e^{-\epsilon m}$. Let
+\begin{equation*}
+  m  \geq \frac{\log(1/\delta)}{\epsilon},
+\end{equation*}
+then we can see that $e^{-\epsilon m} \leq e^{-\epsilon \frac{\log(1/\delta)}{\epsilon}} = \delta$. This means that we have with probability $1- \delta$ that there exists such a point and that thus $A$ returns an hypothesis $h_S$ with error $L_{\mathcal{D},f}(h_S) \leq \epsilon$. For this we needed a sample size $m \geq \frac{\log(1/\delta)}{\epsilon}$, so we know that the minimum sample size has an upper bound, namely
+  \begin{equation*}
+    m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil
+  \end{equation*}
+  \TODO Please check \TODO
 \end{solution}
 
 \section*{Exercise 3.6}
@@ -212,3 +228,8 @@ Prove that when the expected losses $L_{\mathcal{D}}(h)$ are bounded, we have
 \end{document}
 
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
