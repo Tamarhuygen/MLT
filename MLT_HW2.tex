@@ -1,0 +1,206 @@
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo}
+\usepackage{euler}
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}}
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}}
+\newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309 (Leiden)}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\newcommand{\firstNameII}  {Tamar}
+\newcommand{\lastNameII}   {Huygen}
+\newcommand{\studIdII}     {10907483 (UvA)}
+\newcommand{\studIdIII}    {2556474 (VU)}
+\newcommand{\emailII}     {tamar@huygen.nl}
+
+\begin{document}
+\begin{center}
+  {\huge\bf Measure learning theory}\\
+  {\large\sc Homeworkset 2 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId \\
+  \email\text{}\\ \smallskip
+  \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
+  \emailII \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+\end{center}
+
+\section*{Exercise 3.1}
+Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppose that $\mathcal{H}$ is PAC learnable and its sample complexity given by $m_{\mathcal{H}}(\cdot,\cdot)$.
+Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\epsilon_1 \leq \epsilon_2<1$, we have that $m_{\mathcal{H}}(\epsilon_1, \delta) \geq m_{\mathcal{H}}(\epsilon_2, delta)$. Similarly, show that given $\epsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\epsilon, \delta_1) \geq m_{\mathcal{H}}(\epsilon, \delta_2)$.
+\begin{solution}
+% Let $h_S:\R^d\to\cbrac{0,1}$ be given by
+% \begin{equation*}
+%  h_S(x)=
+%  \begin{cases}
+%   f(x_i) & \text{ if there exists }i \in [m] \text{ such that } x=x_i, \\
+%   0 & \text{ otherwise.} \\  
+%  \end{cases}
+% \end{equation*}
+
+% Consider the polynomial $p_S:\R^d \to \R$ given by
+% \begin{equation*}
+%  p_S(x^1,x^2,\ldots,x^d)=-\prod_{i=1}^{m}\paren*{(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2},
+% \end{equation*}
+% where $x^j$ denotes the $j$-th component of $x \in \R^d$.
+
+% Note that $(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2 \geq 0$ for all $i \in [m]$.
+% This means that $p_{S}(x)\leq 0$ for all $x \in \R^d$. Also we have that $p_S(x)=0$ if and only if there exists an 
+% $x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if and only if $h_S(x)=1$.
+  The more samples we pick, the smaller the chance of failure of the learner becomes.
+  Let $\delta \in (0,1)$ and $0<\epsilon_1 \leq \epsilon_2<1$.
+  Let $m_1$ be the minimal integer that satisfies 
+  \begin{equation*}
+     m_1 \geq \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1},
+  \end{equation*}
+  because $m_1$ is the minimal integer that satisfies it,
+  \begin{equation*}
+     m_1 \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1}\right\rceil,
+  \end{equation*}
+  and let $m_2$ be the minimal integer that satisfies
+  \begin{equation*}
+    m_2 \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_2}\right\rceil.
+  \end{equation*}
+  Because
+  \begin{equation*}
+   \left \lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1} \right\rceil \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_2} \right\rceil,
+  \end{equation*}
+  and $m_1\geq m_2$
+  Since $\mathcal{H}$ is PAC learnable, we know that if $\mathcal{H}$ is finite,
+  \begin{equation*}
+    m_{\mathcal{H}}(\epsilon_1,\delta) \leq \left\lceil \frac{log(|\mathcal{H}| / \delta)}{\epsilon_1} \right\rceil
+  \end{equation*}
+
+    Let $\delta \in (0,1)$ and $0<\epsilon_1 \leq \epsilon_2<1$. Since $\mathcal{H}$ is PAC learnable, we 
+\end{solution}
+
+\section*{Exercise 3.3}
+Let $\mathcal{X} = \R^2$, $\mathcal{Y} = \paren*{0,1}$, and let $\mathcal{H}$ be the class of concentric circles in the plane, that is, $\mathcal{H}=\paren*{h_r:r \in \R_+}$, where $h_r(x) = \Ind_{||x|| \leq r}$. Prove that $\mathcal{H}$ is PAC learnable (assume realizability), and that its sample complexity is bounded by
+\begin{equation*}
+  m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil .
+\end{equation*}
+\begin{solution}
+
+\end{solution}
+
+\section*{Exercise 3.6}
+Let $\mathcal{H}$ be a hypothesis class of binary classifiers. Show that if $\mathcal{H}$ is agnostic PAC learnable, then $\mathcal{H}$ is PAC learnable as well.
+Furthermore, if $A$ is a successful agnostic PAC learner for $\mathcal{H}$, then $A$ is also a successful PAC learner for $\mathcal{H}$.
+\begin{solution}
+\end{solution}
+
+
+\section*{Exercise 3.7}
+\textbf{The Bayes optimal predictor:} Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $\mathcal{f}_{\mathcal{D}}$ is optimal, in the sense that for every classifier $g$ from $\mathcal{X}$ to $\paren*{0,1}$, $L_{\mathcal{D}}(\mathcal{f}_{\mathcal{D}}) \leq L_{\mathcal{D}}(g)$.
+\begin{solution}
+\end{solution}
+
+
+\section*{Exercise 4.1}
+In this exercise, we show that the $(\epsilon , \delta )$ requirement on the convergence of errors in our definition of PAC learning, is, in fact, quite close to a simpler looking requirement about averages (or expectations). Prove that the following two statements are equivalent (for any learning algorithm $A$, any probability distribution $\mathcal{D}$, and any loss function whose range is $[0,1]$):
+\subsection*{1}
+For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
+\begin{equation*}
+\P_{S \sim \mathcal{D}}[L_{\mathcal{D}}(A(S))>\epsilon]<\delta
+\end{equation*}
+\begin{solution}
+\end{solution}
+
+\subsection*{2}
+For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
+\begin{equation*}
+\lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}[L_{\mathcal{D}}(A(S))] =0
+\end{equation*}
+\begin{solution}
+\end{solution}
+
+\section*{Exercise 4.2}
+\textbf{Bounded loss functions:}
+In corollary 4.6 we assumed that the range of the loss function is $[0,1]$. Prove that if the range of the loss function is $[a,b]$ then the sample complexity satisfies
+\begin{equation*}
+  m_{\mathcal{H}}(\epsilon , \delta) \leq m_{\mathcal{H}}^{\text{UC}}(\epsilon /2, \delta)
+  \leq \left\lceil \frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\epsilon^2} \right\rceil .
+\end{equation*}
+\begin{solution}
+\end{solution}
+
+\section*{Exercise 5}
+Prove that when the expected losses $L_{\mathcal{D}}(h)$ are bounded, we have
+\begin{equation*}
+  L_{\mathcal{D}}(h_S) - \inf_{h\in \mathcal{H}}L_{\mathcal{D}}(h)
+  \leq 2 \sup_{h\in \mathcal{H}}|L_S(h)-L_{\mathcal{D}}(h)|.
+\end{equation*}
+\end{document}
+
+

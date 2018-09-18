@@ -206,9 +206,9 @@ An axis aligned rectangle classifier in the plane is a classifier that assigns t
 if and only if it is inside a certain rectangle. 
 Formally, given real numbers $a_1 \leq b_1$, $a_2 \leq b_2$, define the classifier $h_{(a_1, b_1, a_2, b_2)}:\R^2\to\cbrac{0,1}$ by
 \begin{equation*}
-h_{(a_1, b_1, a_2, b_2)}(x, y)=
+h_{(a_1, b_1, a_2, b_2)}(x_1, x_2)=
 \begin{cases}
- 1 & \text{ if }x \in [a_1, b_1], \ y \in [a_2, b_2], \\
+ 1 & \text{ if }x_1 \in [a_1, b_1], \ x_2 \in [a_2, b_2], \\
  0 & \text{ otherwise}.
 \end{cases}
 \end{equation*}
@@ -220,8 +220,8 @@ The class of all axis aligned rectangles in the plane is defined as
 Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
 
 \subsection*{$1$}
-\TODO Heb wat consistentie toegevoegd aan ons gebruik van het begrip rectangle.
-\TODO
+% \TODO Heb wat consistentie toegevoegd aan ons gebruik van het begrip rectangle.
+% \TODO
 
 
 \begin{solution}
@@ -233,14 +233,14 @@ By the realizability assumption, there exists a rectangle
 \begin{equation*}
 R^*(a_1^*,b_1^*,a_2^*,b_2^*)=\cbrac{(x,y)\in \R^2 \c x \in [a_1^*,b_1^*] \text{ and }y \in [a_2^*, b_2^*]}
 \end{equation*}
-such that for all $(x, y) \in \R^2$ we have that
-$h_{R^*}(x, y)=f(x, y)$. Let $S$ be a given training set and let $R(S)$ be the rectangle returned by algorithm $A$. 
-Let $S|_{\mathbf{x}}=(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_m)$ denote the sequence of instances in the training set.
+such that for all $(x_1, x_2) \in \R^2$ we have that
+$h_{R^*}(x_1, x_2)=f(x_1, x_2)$. Let $S$ be a given training set and let $R(S)$ be the rectangle returned by algorithm $A$. 
+Let $S|_{\mathbf{x}}=(\mathbf{x}^1, \mathbf{x}^2, \ldots, \mathbf{x}^m)$ denote the sequence of instances in the training set.
 
-If there exists an instance $\mathbf{x}_i$ in $S|_{x}$ with $\mathbf{x}_i \notin R(S)$, 
-then by construction we have that $f(\mathbf{x}_i)=0$.
-Also, as $R(S)$ is the smallest rectangle containing all $\mathbf{x}_i$ with $f(\mathbf{x}_i)=1$,
-we have that $R(S)\se R^*$. It follows that $h_{R(S)}(\mathbf{x}_i)=f(\mathbf{x}_i)$ for all $i \in [m]$.
+If there exists an instance $\mathbf{x}^i$ in $S|_{x}$ with $\mathbf{x}^i \notin R(S)$, 
+then by construction we have that $f(\mathbf{x}^i)=0$.
+Also, as $R(S)$ is the smallest rectangle containing all $\mathbf{x}^i$ with $f(\mathbf{x}^i)=1$,
+we have that $R(S)\se R^*$. It follows that $h_{R(S)}(\mathbf{x}^i)=f(\mathbf{x}^i)$ for all $i \in [m]$.
 Thus we have that $L_S(h_{R(S)})=0$, so that $h_{R(S)} \in \argmin\limits_{h \in \mathcal{H}^2_{rec}}L_S(h)$.
 Therefore, $A$ is an ERM.
 \end{solution}
@@ -261,7 +261,7 @@ All positive examples lie within $R^*$. That is, for any point $\mathbf{x} = (x_
 Note that if there exist no $(x_1,x_2) \in S|_x$ such that $f(x_1,x_2)=1$, then we will assume that $A$ will return $\emptyset \subseteq R^*$.\\
 In other cases, let $R(S) = R(a_1',b_1',a_2',b_2')$ be the rectangle that $A$ returns.\\
 Let $p \subseteq [m]$ be the indices of positive points (i.e. $f(\mathbf{x})=1$) in $S|_x$.\\
-If there exist points $(x^k_1,x^k_2)\in S|_x$ such that $f(x^k_1,x^k_2)=1$ with $k \in p$, then the borders of $R(S)$ go through such points within $R^*$, i.e. $a_1' = \min_{k\in p} x^p_1$ and $b_1' = \max_{k\in p} x^k_1$.\\
+If there exist points $(x^k_1,x^k_2)\in S|_x$ such that $f(x^k_1,x^k_2)=1$ with $k \in p$, then the borders of $R(S)$ go through such points within $R^*$, i.e. $a_1' = \min_{k\in p} x^k_1$ and $b_1' = \max_{k\in p} x^k_1$.\\
 Similarly $a_2' = \min_{k\in p} \mathbf{x}^k_2$ and $b_2' = \max_{k\in p} \mathbf{x}^k_2$.\\
 So, it holds that $a_1^*\leq a_1'\leq b_1' \leq b_1^*$ and $a_2^* \leq a_2' \leq b_2' \leq b_2^*$.\\ Now it holds that if a point $\mathbf{x} = (x_1, x_2)\in R(S)$, that $a_1^*\leq a_1'\leq x_1 \leq b_1' \leq b_1^*$ and $a_2^* \leq a_2'\leq x_2 \leq b_2' \leq b_2^*$,\\
 so then it holds that $(x_1,x_2) \in R^*)$, so $R(S) \subseteq R^*$.
