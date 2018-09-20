@@ -102,7 +102,7 @@
 Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppose that $\mathcal{H}$ is PAC learnable and its sample complexity given by $m_{\mathcal{H}}(\cdot,\cdot)$.
 Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\varepsilon_1 \leq \varepsilon_2<1$, we have that $m_{\mathcal{H}}(\varepsilon_1, \delta) \geq m_{\mathcal{H}}(\varepsilon_2, \delta)$. Similarly, show that given $\varepsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\varepsilon, \delta_1) \geq m_{\mathcal{H}}(\varepsilon, \delta_2)$.
 \begin{solution}
-
+\TODO Doet Tamar
   Notes:
 Intu\"itively this is immediately clear; the less examples there are in the sample, the smaller the probability that the learner has a given accuracy, or with a given probability have smaller accuracy.
   
@@ -205,14 +205,20 @@ Furthermore, if $A$ is a successful agnostic PAC learner for $\mathcal{H}$, then
 In the case of PAC learning, we can do the realizability assumption and assume that there exists an $h^* \in \mathcal{H}$ such that $L_{D,f}(h^*) = 0$. In the case of PAC learnability, 
   
     
-  \TODO
+  \TODO Doet Tamar
 \end{solution}
 
 
 \section*{Exercise 3.7}
 \textbf{The Bayes optimal predictor:} Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $f_{\mathcal{D}}$ is optimal, in the sense that for every classifier $g$ from $\mathcal{X}$ to $\paren*{0,1}$, $L_{\mathcal{D}}(f_{\mathcal{D}}) \leq L_{\mathcal{D}}(g)$.
 \begin{solution}
-  \TODO
+\TODO Doet Twan
+ Recall that 
+ \begin{equation*}
+  f_{\mathcal{D}}(x)=\Ind_{\mathcal{D}((x,y)=(x,1))}
+ \end{equation*}
+
+ 
 \end{solution}
 
 
@@ -224,7 +230,7 @@ For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that
 \P_{S \sim \mathcal{D}}[L_{\mathcal{D}}(A(S))>\epsilon]<\delta
 \end{equation*}
 \begin{solution}
-  \TODO
+  \TODO Doet niemand
 \end{solution}
 
 \subsection*{2}
@@ -233,7 +239,7 @@ For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that
 \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}[L_{\mathcal{D}}(A(S))] =0
 \end{equation*}
 \begin{solution}
-  \TODO
+  \TODO Doet niemand
 \end{solution}
 
 \section*{Exercise 4.2}
@@ -244,7 +250,7 @@ In corollary 4.6 we assumed that the range of the loss function is $[0,1]$. Prov
   \leq \left\lceil \frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\epsilon^2} \right\rceil .
 \end{equation*}
 \begin{solution}
-  \TODO
+  \TODO Doet Twan
 \end{solution}
 
 \section*{Exercise 5}
@@ -254,7 +260,7 @@ Prove that when the expected losses $L_{\mathcal{D}}(h)$ are bounded, we have
   \leq 2 \sup_{h\in \mathcal{H}}|L_S(h)-L_{\mathcal{D}}(h)|.
 \end{equation*}
 \begin{solution}
-    \TODO
+    \TODO Doet Twan
 \end{solution}
 \end{document}
 
