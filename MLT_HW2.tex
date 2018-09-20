@@ -100,6 +100,34 @@
 Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppose that $\mathcal{H}$ is PAC learnable and its sample complexity given by $m_{\mathcal{H}}(\cdot,\cdot)$.
 Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\epsilon_1 \leq \epsilon_2<1$, we have that $m_{\mathcal{H}}(\epsilon_1, \delta) \geq m_{\mathcal{H}}(\epsilon_2, delta)$. Similarly, show that given $\epsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\epsilon, \delta_1) \geq m_{\mathcal{H}}(\epsilon, \delta_2)$.
 \begin{solution}
+
+  Notes:
+Intu\"itively this is immediately clear; the less examples there are in the sample, the smaller the chance that the learner has a given accuracy, or with a given chance have smaller accuracy.
+  
+  We know that 
+  \begin{equation*}
+    \Ev_{S}[L_S] = L_{\mathcal{D},f}
+  \end{equation*}
+  
+  When the sample is $\epsilon$-Representative, it holds that
+  \begin{equation*}
+    L_S(h) \leq L_{\mathcal{D},f} +\epsilon
+  \end{equation*}
+  Then it holds that
+  \begin{equation*}
+    L_S(h) \leq L_{\mathcal{D},f} +\epsilon \leq 2\epsilon
+  \end{equation*}
+  By the definition of $L_S(h)$ we can see that
+  \begin{equation*}
+    L_S(h) = \frac{|\{i \in[m]:h(x_i)\neq y_i \}|}{m} \leq 2\epsilon
+  \end{equation*}
+  We can see that $m$ 
+  Now we have that $m$ is inverse proportional to $\epsilon$
+  \begin{equation*}
+    
+  \end{equation*}
+  
+  
 % Let $h_S:\R^d\to\cbrac{0,1}$ be given by
 % \begin{equation*}
 %  h_S(x)=
@@ -118,31 +146,7 @@ Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parame
 % Note that $(1-f(x_i))+\sum_{j=1}^d(x^j-x_i^j)^2 \geq 0$ for all $i \in [m]$.
 % This means that $p_{S}(x)\leq 0$ for all $x \in \R^d$. Also we have that $p_S(x)=0$ if and only if there exists an 
 % $x_i \in S|_x$ such that $x=x_i$ and $f(x_i)=1$. So, we have that $p_S(x)=0$ if and only if $h_S(x)=1$.
-  The more samples we pick, the smaller the chance of failure of the learner becomes.
-  Let $\delta \in (0,1)$ and $0<\epsilon_1 \leq \epsilon_2<1$.
-  Let $m_1$ be the minimal integer that satisfies 
-  \begin{equation*}
-     m_1 \geq \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1},
-  \end{equation*}
-  because $m_1$ is the minimal integer that satisfies it,
-  \begin{equation*}
-     m_1 \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1}\right\rceil,
-  \end{equation*}
-  and let $m_2$ be the minimal integer that satisfies
-  \begin{equation*}
-    m_2 \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_2}\right\rceil.
-  \end{equation*}
-  Because
-  \begin{equation*}
-   \left \lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_1} \right\rceil \geq \left\lceil \frac{log(|\mathcal{H}|/ \delta)}{\epsilon_2} \right\rceil,
-  \end{equation*}
-  and $m_1\geq m_2$.\\
-  Since $\mathcal{H}$ is PAC learnable, we know that if $\mathcal{H}$ is finite,
-  \begin{equation*}
-    m_{\mathcal{H}}(\epsilon_1,\delta) \leq \left\lceil \frac{log(|\mathcal{H}| / \delta)}{\epsilon_1} \right\rceil
-  \end{equation*}
-
-    Let $\delta \in (0,1)$ and $0<\epsilon_1 \leq \epsilon_2<1$. Since $\mathcal{H}$ is PAC learnable, we \TODO
+¶
 \end{solution}
 
 \section*{Exercise 3.3}
@@ -151,35 +155,45 @@ Let $\mathcal{X} = \R^2$, $\mathcal{Y} = \paren*{0,1}$, and let $\mathcal{H}$ be
   m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil .
 \end{equation*}
 \begin{solution}
-  Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of the circle the returned indicator function $A$ returns points at.
-  Let $S|_x \subseteq \R^2 = \mathbf{x}_1,\ldots \mathbf{x}_m$ be the sampled domain points in $S$. Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k|| \leq r^* $. Let $r'$ be a radius such that
-
+  Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of said circle.
+  Let $S|_x  = \mathbf{x}_1,\ldots \mathbf{x}_m$ with $\mathbf{x} \in \R^2$ be the sampled domain points in $S$. 
+  %Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k||  \leq r^* $. 
+  Let $r'$ be a radius such that
   \begin{equation*}
-    \mathcal{D}(\{\mathbf{x} \in \R^2:r' \leq ||x|| \leq r^*\}) = \epsilon
+    \mathcal{D}(\{\mathbf{a} \in \R^2 : r'\leq||\mathbf{a}|| \leq r^*\}) = \epsilon
   \end{equation*}
   Then it holds that if there exists a positive point $\mathbf{x} \in S|_x$, such that $r' \leq ||\mathbf{x}||\leq r^*$, then it holds that $L_{\mathcal{D},f}(h_S)\leq \epsilon$.\\
-    Note that if $\mathcal{D}(\{\mathcal{x}:||\mathcal{x}||-r^{*}\}) < \epsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{x}:r' \leq ||x|| \leq r^*\}) = \epsilon$, but in that case the error will always be smaller than $\epsilon$.\\
-  The chance that there exists a positive point $\mathbf{x}$ in $r^*$, such that $r' \leq ||\mathbf{x}||\leq r^*$, is at least $\epsilon$. This means that the chance that there exists no such point is at most $(1-\epsilon)^m \leq e^{-\epsilon m}$. Let
+Note that if $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||-r^{*}\}) < \epsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{a}:r'\leq||\mathbf{a}|| \leq r^*\}) = \epsilon$, but in that case the error will always be smaller than $\epsilon$.\\
+  The chance that there exists a positive point $\mathbf{x} \in S|_{x}$ in $r^*$, such that $r' \leq ||\mathbf{x}||\leq r^*$, is at least $\epsilon$. This means that the chance that there exists no such point is at most $(1-\epsilon)^m \leq e^{-\epsilon m}$. Let
 \begin{equation*}
-  m  \geq \frac{\log(1/\delta)}{\epsilon},
+  m \geq \frac{\log(1/\delta)}{\epsilon},
 \end{equation*}
-then we can see that $e^{-\epsilon m} \leq e^{-\epsilon \frac{\log(1/\delta)}{\epsilon}} = \delta$. This means that we have with probability $1- \delta$ that there exists such a point and that thus $A$ returns an hypothesis $h_S$ with error $L_{\mathcal{D},f}(h_S) \leq \epsilon$. For this we needed a sample size $m \geq \frac{\log(1/\delta)}{\epsilon}$, so we know that the minimum sample size has an upper bound, namely
+then we can see that $e^{-\epsilon m} \leq e^{-\epsilon \frac{\log(1/\delta)}{\epsilon}} = \delta$. This means that we have with probability of at least $1- \delta$ that there exists such a point and thus that $A$ returns an hypothesis $h_S$ with error $L_{\mathcal{D},f}(h_S) \leq \epsilon$. For this we needed a sample size $m \geq \frac{\log(1/\delta)}{\epsilon}$, so we know that the minimum sample size for which $\mathcal{H}$ is PAC learnable has an upper bound, namely 
   \begin{equation*}
     m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil
   \end{equation*}
   \TODO Please check \TODO
 \end{solution}
 
+
 \section*{Exercise 3.6}
 Let $\mathcal{H}$ be a hypothesis class of binary classifiers. Show that if $\mathcal{H}$ is agnostic PAC learnable, then $\mathcal{H}$ is PAC learnable as well.
 Furthermore, if $A$ is a successful agnostic PAC learner for $\mathcal{H}$, then $A$ is also a successful PAC learner for $\mathcal{H}$.
 \begin{solution}
+  When a hypothesis class is agnostic agnostic  PAC learnable, it means that per definition there exists a function $m_{\mathcal{H}}:(0,1)^2\to \N$ and an algorithm, $A$, that when running on $m\geq m_{H}$ \textit{i.i.d.} examples, generated by $\mathcal{D}$, returns a hypothesis for which
+  with probability $1-\delta$
+  \begin{equation*}
+    L_{\mathcal{D}(h)} \leq \min_{h' \in \mathcal{H}}L_{\mathcal{D}}(h')+\epsilon
+  \end{equation*}
+In the case of PAC learning, we can do the realizability assumption and assume that there exists an $h^* \in \mathcal{H}$ such that $L_{D,f}(h^*) = 0$. In the case of PAC learnability, 
+  \begin{equa}
+    
   \TODO
 \end{solution}
 
 
 \section*{Exercise 3.7}
-\textbf{The Bayes optimal predictor:} Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $\mathcal{f}_{\mathcal{D}}$ is optimal, in the sense that for every classifier $g$ from $\mathcal{X}$ to $\paren*{0,1}$, $L_{\mathcal{D}}(\mathcal{f}_{\mathcal{D}}) \leq L_{\mathcal{D}}(g)$.
+\textbf{The Bayes optimal predictor:} Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $\mathcal{f}_{\mathcal{D}}$ is optimal, in the sense that for every classifier $g$ from $\mathcal{X}$ to $\paren*{0,1}$, $L_{\mathcal{D}}(f_{\mathcal{D}}) \leq L_{\mathcal{D}}(g)$.
 \begin{solution}
   \TODO
 \end{solution}
