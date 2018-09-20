@@ -212,13 +212,42 @@ In the case of PAC learning, we can do the realizability assumption and assume t
 \section*{Exercise 3.7}
 \textbf{The Bayes optimal predictor:} Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $f_{\mathcal{D}}$ is optimal, in the sense that for every classifier $g$ from $\mathcal{X}$ to $\paren*{0,1}$, $L_{\mathcal{D}}(f_{\mathcal{D}}) \leq L_{\mathcal{D}}(g)$.
 \begin{solution}
-\TODO Doet Twan
- Recall that 
- \begin{equation*}
-  f_{\mathcal{D}}(x)=\Ind_{\mathcal{D}((x,y)=(x,1))}
- \end{equation*}
-
- 
+Let $g:\mathcal{X} \to \cbrac{0,1}$ be given.
+Let $A=\cbrac{x \in \mathcal{X} \c f_{\mathcal{D}}(x)=1}$ and $B=\cbrac{x \in \mathcal{X} \c g(x)=1}$.
+By the definition of $f_{\mathcal{D}}$, we then have for all $U\se A$ that
+\begin{align*}
+ \mathcal{D}(U\times\cbrac{1}) & \geq \tfrac{1}{2}\mathcal{D}(U \times \cbrac{0,1}) \\
+ & \geq \mathcal{D}(U\times\cbrac{0})
+\end{align*}
+and for all $W \se A^C$ with $W \neq \varnothing$ that
+\begin{align*}
+ \mathcal{D}(W\times\cbrac{0}) &> \tfrac{1}{2}\mathcal{D}(W \times \cbrac{0,1}) \\
+ &> \mathcal{D}(W\times\cbrac{1}).
+\end{align*}
+We then have that
+\begin{align*}
+ L_{\mathcal{D}}(g)-L_{\mathcal{D}}(f_{\mathcal{D}}) &=
+ \mathcal{D}(\cbrac{(x,y)\in \mathcal{X}\times\cbrac{0,1} \c g(x)\neq y})- 
+ \mathcal{D}(\cbrac{(x,y)\in \mathcal{X}\times\cbrac{0,1} \c f_{\mathcal{D}}(x)\neq y}) \\
+ &= \mathcal{D}(B\times\cbrac{0})+\mathcal{D}(B^C\times\cbrac{1}) - 
+ \mathcal{D}(A\times\cbrac{0})-\mathcal{D}(A^C\times\cbrac{1}) \\
+ &=  \mathcal{D}((B\setminus A)\times\cbrac{0})+ \mathcal{D}((B^C\setminus A^C)\times\cbrac{1})
+- \mathcal{D}((A\setminus B)\times\cbrac{0})- \mathcal{D}((A^C\setminus B^C)\times\cbrac{1}) \\
+&=  \mathcal{D}((B\setminus A)\times\cbrac{0})+ \mathcal{D}((A\setminus B)\times\cbrac{1})
+- \mathcal{D}((A\setminus B)\times\cbrac{0})- \mathcal{D}((B\setminus A)\times\cbrac{1}).
+\end{align*}
+As $(B\setminus A) \se A^C$ and $(A\setminus B) \se A$ we have that
+\begin{equation*}
+\mathcal{D}((B\setminus A)\times\cbrac{0}) \geq \mathcal{D}((B\setminus A)\times\cbrac{1})  
+\end{equation*}
+and 
+\begin{equation*}
+\mathcal{D}((A\setminus B)\times\cbrac{1}) \geq \mathcal{D}((A\setminus B)\times\cbrac{0}).  
+\end{equation*}
+It follows that
+\begin{align*}
+ L_{\mathcal{D}}(g)-L_{\mathcal{D}}(f_{\mathcal{D}}) \geq 0.
+\end{align*}
 \end{solution}
 
 
