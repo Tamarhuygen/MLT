@@ -102,7 +102,9 @@
 Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppose that $\mathcal{H}$ is PAC learnable and its sample complexity given by $m_{\mathcal{H}}(\cdot,\cdot)$.
 Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\varepsilon_1 \leq \varepsilon_2<1$, we have that $m_{\mathcal{H}}(\varepsilon_1, \delta) \geq m_{\mathcal{H}}(\varepsilon_2, \delta)$. Similarly, show that given $\varepsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\varepsilon, \delta_1) \geq m_{\mathcal{H}}(\varepsilon, \delta_2)$.
 \begin{solution}
+When $\mathcal{H}$ is PAC learnable, then it holds that for a given $\delta$ it holds that there exists a function $m_{\mathcal{H}}$
 
+  
   Notes:
 Intu\"itively this is immediately clear; the less examples there are in the sample, the smaller the probability that the learner has a given accuracy, or with a given probability have smaller accuracy.
   
@@ -111,20 +113,20 @@ Intu\"itively this is immediately clear; the less examples there are in the samp
     \Ev_{S}[L_S] = L_{\mathcal{D},f}
   \end{equation*}
   
-  When the sample is $\epsilon$-Representative, it holds that
+  When the sample is $\varepsilon$-Representative, it holds that
   \begin{equation*}
-    L_S(h) \leq L_{\mathcal{D},f} +\epsilon
+    L_S(h) \leq L_{\mathcal{D},f} +\varepsilon
   \end{equation*}
   Then it holds that
   \begin{equation*}
-    L_S(h) \leq L_{\mathcal{D},f} +\epsilon \leq 2\epsilon
+    L_S(h) \leq L_{\mathcal{D},f} +\varepsilon \leq 2\varepsilon
   \end{equation*}
   By the definition of $L_S(h)$ we can see that
   \begin{equation*}
-    L_S(h) = \frac{|\{i \in[m]:h(x_i)\neq y_i \}|}{m} \leq 2\epsilon
+    L_S(h) = \frac{|\{i \in[m]:h(x_i)\neq y_i \}|}{m} \leq 2\varepsilon
   \end{equation*}
   We can see that $m$ 
-  Now we have that $m$ is inverse proportional to $\epsilon$
+  Now we have that $m$ is inverse proportional to $\varepsilon$
   \begin{equation*}
 f    
   \end{equation*}
@@ -154,7 +156,7 @@ f
 \section*{Exercise 3.3}
 Let $\mathcal{X} = \R^2$, $\mathcal{Y} = \paren*{0,1}$, and let $\mathcal{H}$ be the class of concentric circles in the plane, that is, $\mathcal{H}=\paren*{h_r:r \in \R_+}$, where $h_r(x) = \Ind_{\cbrac{x \in \R^2\c\nrm{x} \leq r}}$. Prove that $\mathcal{H}$ is PAC learnable (assume realizability), and that its sample complexity is bounded by
 \begin{equation*}
-  m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil .
+  m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\varepsilon} \right\rceil .
 \end{equation*}
 \begin{solution}
   Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of said circle.
@@ -162,18 +164,18 @@ Let $\mathcal{X} = \R^2$, $\mathcal{Y} = \paren*{0,1}$, and let $\mathcal{H}$ be
   %Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k||  \leq r^* $. 
   Let $r'$ be a radius such that
   \begin{equation*}
-    \mathcal{D}(\{\mathbf{a} \in \R^2 : r'\leq||\mathbf{a}|| \leq r^*\}) = \epsilon
+    \mathcal{D}(\{\mathbf{a} \in \R^2 : r'\leq||\mathbf{a}|| \leq r^*\}) = \varepsilon
   \end{equation*}
-  Then it holds that if there exists a positive point $\mathbf{x} \in S|_x$, such that $r' \leq ||\mathbf{x}||\leq r^*$, then it holds that $L_{\mathcal{D},f}(h_S)\leq \epsilon$.\\
-Note that if $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||-r^{*}\}) < \epsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{a}:r'\leq||\mathbf{a}|| \leq r^*\}) = \epsilon$, but in that case the error will always be smaller than $\epsilon$.\\
-  The probabilty that for a given point $\mathbf{x} \in S|_{x}$ in $r^*$, it holds that $r' \leq ||\mathbf{x}||\leq r^*$, is $\epsilon$. This means that the chance that there exists no such point is at most $(1-\epsilon)^m \leq e^{-\epsilon m}$. Let
+  Then it holds that if there exists a positive point $\mathbf{x} \in S|_x$, such that $r' \leq ||\mathbf{x}||\leq r^*$, then it holds that $L_{\mathcal{D},f}(h_S)\leq \varepsilon$.\\
+Note that if $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||-r^{*}\}) < \varepsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{a}:r'\leq||\mathbf{a}|| \leq r^*\}) = \varepsilon$, but in that case the error will always be smaller than $\varepsilon$.\\
+  The probabilty that for a given point $\mathbf{x} \in S|_{x}$ in $r^*$, it holds that $r' \leq ||\mathbf{x}||\leq r^*$, equals $\varepsilon$. This means that the chance that there exists no such point is at most $(1-\varepsilon)^m \leq e^{-\varepsilon m}$. Let
 
 \begin{equation*}
-  m \geq \frac{\log(1/\delta)}{\epsilon},
+  m \geq \frac{\log(1/\delta)}{\varepsilon},
 \end{equation*}
-then we can see that $e^{-\epsilon m} \leq e^{-\epsilon \frac{\log(1/\delta)}{\epsilon}} = \delta$. This means that we have with probability of at least $1- \delta$ that there exists such a point and thus that $A$ returns an hypothesis $h_S$ with error $L_{\mathcal{D},f}(h_S) \leq \epsilon$. For this we needed a sample size $m \geq \frac{\log(1/\delta)}{\epsilon}$, so we know that the minimum sample size for which $\mathcal{H}$ is PAC learnable has an upper bound, namely 
+then we can see that $e^{-\varepsilon m} \leq e^{-\varepsilon \frac{\log(1/\delta)}{\varepsilon}} = \delta$. This means that we have with probability of at least $1- \delta$ that there exists such a point and thus that $A$ returns an hypothesis $h_S$ with error $L_{\mathcal{D},f}(h_S) \leq \varepsilon$. For this we needed a sample size $m \geq \frac{\log(1/\delta)}{\varepsilon}$, so we know that the minimum sample size for which $\mathcal{H}$ is PAC learnable has an upper bound, namely 
   \begin{equation*}
-    m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\epsilon} \right\rceil
+    m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\varepsilon} \right\rceil
   \end{equation*}
   \TODO Please check \TODO
   
@@ -200,7 +202,7 @@ Furthermore, if $A$ is a successful agnostic PAC learner for $\mathcal{H}$, then
   When a hypothesis class is agnostic agnostic  PAC learnable, it means that by definition there exists a function $m_{\mathcal{H}}:(0,1)^2\to \N$ and an algorithm, $A$, that when running on $m\geq m_{H}$ \textit{i.i.d.} examples, generated by $\mathcal{D}$, returns a hypothesis for which
   with probability $1-\delta$
   \begin{equation*}
-    L_{\mathcal{D}(h)} \leq \min_{h' \in \mathcal{H}}L_{\mathcal{D}}(h')+\epsilon
+    L_{\mathcal{D}(h)} \leq \min_{h' \in \mathcal{H}}L_{\mathcal{D}}(h')+\varepsilon
   \end{equation*}
 In the case of PAC learning, we can do the realizability assumption and assume that there exists an $h^* \in \mathcal{H}$ such that $L_{D,f}(h^*) = 0$. In the case of PAC learnability, 
   
@@ -217,18 +219,18 @@ In the case of PAC learning, we can do the realizability assumption and assume t
 
 
 \section*{Exercise 4.1}
-In this exercise, we show that the $(\epsilon , \delta )$ requirement on the convergence of errors in our definition of PAC learning, is, in fact, quite close to a simpler looking requirement about averages (or expectations). Prove that the following two statements are equivalent (for any learning algorithm $A$, any probability distribution $\mathcal{D}$, and any loss function whose range is $[0,1]$):
+In this exercise, we show that the $(\varepsilon , \delta )$ requirement on the convergence of errors in our definition of PAC learning, is, in fact, quite close to a simpler looking requirement about averages (or expectations). Prove that the following two statements are equivalent (for any learning algorithm $A$, any probability distribution $\mathcal{D}$, and any loss function whose range is $[0,1]$):
 \subsection*{1}
-For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
+For every $\varepsilon , \delta > 0$, there exists $m(\varepsilon , \delta)$ such that $\forall m \leq m(\varepsilon , \delta)$
 \begin{equation*}
-\P_{S \sim \mathcal{D}}[L_{\mathcal{D}}(A(S))>\epsilon]<\delta
+\P_{S \sim \mathcal{D}}[L_{\mathcal{D}}(A(S))>\varepsilon]<\delta
 \end{equation*}
 \begin{solution}
   \TODO
 \end{solution}
 
 \subsection*{2}
-For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
+For every $\varepsilon , \delta > 0$, there exists $m(\varepsilon , \delta)$ such that $\forall m \leq m(\varepsilon , \delta)$
 \begin{equation*}
 \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}[L_{\mathcal{D}}(A(S))] =0
 \end{equation*}
@@ -240,8 +242,8 @@ For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that
 \textbf{Bounded loss functions:}
 In corollary 4.6 we assumed that the range of the loss function is $[0,1]$. Prove that if the range of the loss function is $[a,b]$ then the sample complexity satisfies
 \begin{equation*}
-  m_{\mathcal{H}}(\epsilon , \delta) \leq m_{\mathcal{H}}^{\text{UC}}(\epsilon /2, \delta)
-  \leq \left\lceil \frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\epsilon^2} \right\rceil .
+  m_{\mathcal{H}}(\varepsilon , \delta) \leq m_{\mathcal{H}}^{\text{UC}}(\varepsilon /2, \delta)
+  \leq \left\lceil \frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\varepsilon^2} \right\rceil .
 \end{equation*}
 \begin{solution}
   \TODO
