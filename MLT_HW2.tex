@@ -114,16 +114,62 @@ Let $\mathcal{X} = \R^2$, $\mathcal{Y} = \paren*{0,1}$, and let $\mathcal{H}$ be
   m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\varepsilon} \right\rceil .
 \end{equation*}
 \begin{solution}
+%   Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of said circle.
+%   Let $S|_x  = \mathbf{x}_1,\ldots \mathbf{x}_m$ with $\mathbf{x} \in \R^2$ be the sampled domain points in $S$. 
+%   %Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k||  \leq r^* $. 
+%   Let $r'$ be a radius such that
+%   \begin{equation*}
+%     \mathcal{D}(\{\mathbf{a} \in \R^2 : r'\leq||\mathbf{a}|| \leq r^*\}) = \varepsilon
+%   \end{equation*}
+%   Then it holds that if there exists a positive point $\mathbf{x} \in S|_x$, such that $r' \leq ||\mathbf{x}||\leq r^*$, then it holds that $L_{\mathcal{D},f}(h_S)\leq \varepsilon$.\\
+% Note that if $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||-r^{*}\}) < \varepsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{a}:r'\leq||\mathbf{a}|| \leq r^*\}) = \varepsilon$, but in that case the error will always be smaller than $\varepsilon$.\\
+%   The probabilty that for a given point $\mathbf{x} \in S|_{x}$ in $r^*$, it holds that $r' \leq ||\mathbf{x}||\leq r^*$, equals $\varepsilon$. This means that the chance that there exists no such point is at most $(1-\varepsilon)^m \leq e^{-\varepsilon m}$. Let
+
+% \begin{equation*}
+%   m \geq \frac{\log(1/\delta)}{\varepsilon},
+% \end{equation*}
+% then we can see that $e^{-\varepsilon m} \leq e^{-\varepsilon \frac{\log(1/\delta)}{\varepsilon}} = \delta$. This means that we have with probability of at least $1- \delta$ that there exists such a point and thus that $A$ returns an hypothesis $h_S$ with error $L_{\mathcal{D},f}(h_S) \leq \varepsilon$. For this we needed a sample size $m \geq \frac{\log(1/\delta)}{\varepsilon}$, so we know that the minimum sample size for which $\mathcal{H}$ is PAC learnable has an upper bound, namely 
+%   \begin{equation*}
+%     m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\varepsilon} \right\rceil
+%   \end{equation*}
+%   \TODO Please check \TODO
+  
+%   Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of said circle.
+%   Let $S|_x  = \mathbf{x}_1,\ldots \mathbf{x}_m$ with $\mathbf{x} \in \R^2$ be the sampled domain points in $S$. 
+%   %Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k||  \leq r^* $. 
+%   If $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||\leq r^{*}\}) \leq \varepsilon $, 
+%   then the error will always at most $\varepsilon$.
+%   So, we can assume this is not the case.
+%   Let $r'$ be a radius such that
+%   \begin{equation*}
+%     \mathcal{D}(\{\mathbf{a} \in \R^2 : r' \leq \nrm{\mathbf{a}} \leq r^*\}) \leq \varepsilon, \text{ and }
+%     \inf_{r<r'}\mathcal{D}(\{\mathbf{a} \in \R^2 : r \leq \nrm{\mathbf{a}} \leq r^*\}) \geq \varepsilon.
+%   \end{equation*}
+%   \TODO
+
+    \TODO Please check \TODO
+  The previous solution (commented out) doesn't work when $\mathcal{D}(\{\mathbf{x}\in $B$\})> \varepsilon$, with $B \subseteq \{\mathbf{a}: ||\mathbf{a}|| \leq r^*\}$ such that there exists no Lebesgue measure on it, because then it is possible that there doesn't exist a radius, $r'$ for which $\mathcal{D}(\{\mathbf{a}: ||a|| \leq r`\})=\varepsilon$. \\
+  Maybe we should try something like: \\
+  \TODO Please check: \\
   Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of said circle.
   Let $S|_x  = \mathbf{x}_1,\ldots \mathbf{x}_m$ with $\mathbf{x} \in \R^2$ be the sampled domain points in $S$. 
   %Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k||  \leq r^* $. 
-  Let $r'$ be a radius such that
+  If $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||\leq r^{*}\}) \leq \varepsilon $, 
+  then the error will always at most $\varepsilon$ and then we're already done.\\
+  So, without loss of generality, we can assume this is not the case.
+  Let $r' \leq r^*$ be a radius such that
   \begin{equation*}
-    \mathcal{D}(\{\mathbf{a} \in \R^2 : r'\leq||\mathbf{a}|| \leq r^*\}) = \varepsilon
+   r' = \inf_{r<r*} \{\mathcal{D}(\{r \in \R, \mathbf{a} \in \R^2: r \leq \nrm{\mathbf{a}} \leq r^*\}) < \varepsilon \}.
   \end{equation*}
-  Then it holds that if there exists a positive point $\mathbf{x} \in S|_x$, such that $r' \leq ||\mathbf{x}||\leq r^*$, then it holds that $L_{\mathcal{D},f}(h_S)\leq \varepsilon$.\\
-Note that if $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||-r^{*}\}) < \varepsilon $, there exists no $r'$, such that $\mathcal{D}(\{\mathbf{a}:r'\leq||\mathbf{a}|| \leq r^*\}) = \varepsilon$, but in that case the error will always be smaller than $\varepsilon$.\\
-  The probabilty that for a given point $\mathbf{x} \in S|_{x}$ in $r^*$, it holds that $r' \leq ||\mathbf{x}||\leq r^*$, equals $\varepsilon$. This means that the chance that there exists no such point is at most $(1-\varepsilon)^m \leq e^{-\varepsilon m}$. Let
+  Now let $C$ be annulus between the circle with radius $r'$ and the circle with radius $r^*$, i.e.
+  \begin{equation*}
+    C = \{\mathbf{a} \in \R^2: r' \leq \nrm{\mathbf{a}} \leq r^* \}
+  \end{equation*}
+  Then we have that by definition of $r'$ that
+  \begin{equation*}
+    \mathcal{D}(\mathbf{a} \in \R^2: r' \leq \nrm{\mathbf{a}}\leq r*) = \mathcal{D}(C) \geq \varepsilon
+  \end{equation*}
+  We see that probability of a given point $\mathbf{x} \in S|_x$, that is in $C$ is at least $\varepsilon$. This means that the probability that none of the examples in $S|_x$ is in $C$, is at most $(1-\varepsilon)^m \leq e^{-\varepsilon m}$. Let
 
 \begin{equation*}
   m \geq \frac{\log(1/\delta)}{\varepsilon},
@@ -132,21 +178,6 @@ then we can see that $e^{-\varepsilon m} \leq e^{-\varepsilon \frac{\log(1/\delt
   \begin{equation*}
     m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\varepsilon} \right\rceil
   \end{equation*}
-  \TODO Please check \TODO
-  
-  Take $A$ to be an algorithm that returns an indicator function that points at the the smallest circle, enclosing all positive examples. Let $r(S)$ denote the radius of said circle.
-  Let $S|_x  = \mathbf{x}_1,\ldots \mathbf{x}_m$ with $\mathbf{x} \in \R^2$ be the sampled domain points in $S$. 
-  %Let $p$ denote the indices of the positive examples in $S|_x$, now $r(S) = \max_{k\in p}||x_k||  \leq r^* $. 
-  If $\mathcal{D}(\{\mathbf{a}:||\mathbf{a}||\leq r^{*}\}) \leq \varepsilon $, 
-  then the error will always at most $\varepsilon$.
-  So, we can assume this is not the case.
-  Let $r'$ be a radius such that
-  \begin{equation*}
-    \mathcal{D}(\{\mathbf{a} \in \R^2 : r' \leq \nrm{\mathbf{a}} \leq r^*\}) \leq \varepsilon, \text{ and }
-    \inf_{r<r'}\mathcal{D}(\{\mathbf{a} \in \R^2 : r \leq \nrm{\mathbf{a}} \leq r^*\}) \geq \varepsilon.
-  \end{equation*}
-  \TODO
-  
 \end{solution}
 
 
