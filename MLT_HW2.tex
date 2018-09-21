@@ -55,10 +55,10 @@
 % \renewcommand\qedsymbol{\rule{1ex}{1ex}}
 
 % course specifics
-\newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
-\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}}
-\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}}
-\newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+
 \newcommand{\sgn}{\mathrm{sgn}}
 
 % Solutions use a modified proof environment
@@ -253,22 +253,40 @@ It follows that
 
 \section*{Exercise 4.1}
 In this exercise, we show that the $(\epsilon , \delta )$ requirement on the convergence of errors in our definition of PAC learning, is, in fact, quite close to a simpler looking requirement about averages (or expectations). Prove that the following two statements are equivalent (for any learning algorithm $A$, any probability distribution $\mathcal{D}$, and any loss function whose range is $[0,1]$):
-\subsection*{1}
-For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
+\begin{enumerate}
+ \item \label{it:convergence_probability} For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
 \begin{equation*}
-\P_{S \sim \mathcal{D}}[L_{\mathcal{D}}(A(S))>\epsilon]<\delta
+\P_{S \sim \mathcal{D}^m}(L_{\mathcal{D}}(A(S))>\epsilon)<\delta.
 \end{equation*}
+\item \label{it:convergence_expectation} \begin{equation*}
+\lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}(L_{\mathcal{D}}(A(S))) = 0.
+\end{equation*}
+\end{enumerate}
 \begin{solution}
-  \TODO Doet niemand
-\end{solution}
+Consider the measure space $((\mathcal{X}\times\mathcal{Y})^\infty, \Fa^{\infty}, \mathcal{D}^\infty)$.
+For each sequence $S=(x_i,y_i)_{i \in \N} \in (\mathcal{X}\times\mathcal{Y})^\infty$
+let $S_m=(x_i,y_i)_{i=1}^{m}$ denote the truncated sequence of length $m$.
+Define for each $m \in \N$ the random variable $L_m:(\mathcal{X}\times\mathcal{Y})^\infty \to [0,1]$ by
+\begin{equation*}
+ L_m(S)=L_{\mathcal{D}}(A(S_m)).
+\end{equation*}
 
-\subsection*{2}
-For every $\epsilon , \delta > 0$, there exists $m(\epsilon , \delta)$ such that $\forall m \leq m(\epsilon , \delta)$
+First assume that statement (\ref{it:convergence_expectation}) holds. 
+Note that we then have that 
+\begin{align*}
+ \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}(L_{\mathcal{D}}(A(S))) &= 
+ \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{\infty}}(L_{\mathcal{D}}(A(S_m))) \\
+ & = \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{\infty}}(L_m(S)).
+\end{align*}
+This means that the sequence $(L_m)_{m \in \N}$ converges in $L^1$-norm to $0$.
+For any sequence of random variables convergence in $L^1$ implies convergence in probability, this gives us that
 \begin{equation*}
-\lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}[L_{\mathcal{D}}(A(S))] =0
+ \lim_{m\to \infty}\mathcal{D}^{\infty}(L_m>\varepsilon)=0.
 \end{equation*}
-\begin{solution}
-  \TODO Doet niemand
+From this statement (\ref{it:convergence_probability}) follows.
+
+For almost surely bounded sequences of random variables, we have that convergence in probability also implies convergence in 
+$L^1$. Since $(L_m)_{m\in \N}$ takes values in $[0,1]$ it is surely bounded, hence $L_m \stackrel{\mathcal{D}^{\infty}}{\to} 0$ implies that $L_m \stackrel{L^1}{\to} 0$. So, if we assume that (\ref{it:convergence_probability}) holds, then (\ref{it:convergence_expectation}) holds as well.
 \end{solution}
 
 \section*{Exercise 4.2}
