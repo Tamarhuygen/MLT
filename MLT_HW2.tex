@@ -38,6 +38,7 @@
 \DeclarePairedDelimiter\paren()
 \DeclarePairedDelimiter{\ip}\langle\rangle
 \DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
 
 % Power set
 \newcommand{\Ps}{\ensuremath{\mathcal{P}}}
@@ -258,21 +259,72 @@ $L^1$. Since $(L_m)_{m\in \N}$ takes values in $[0,1]$ it is surely bounded, hen
 \textbf{Bounded loss functions:}
 In corollary 4.6 we assumed that the range of the loss function is $[0,1]$. Prove that if the range of the loss function is $[a,b]$ then the sample complexity satisfies
 \begin{equation*}
-  m_{\mathcal{H}}(\varepsilon , \delta) \leq m_{\mathcal{H}}^{\text{UC}}(\varepsilon /2, \delta)
-  \leq \left\lceil \frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\varepsilon^2} \right\rceil .
+  m_{\mathcal{H}}(\epsilon , \delta) \leq m_{\mathcal{H}}^{\text{UC}}(\epsilon /2, \delta)
+  \leq \ceil*{\frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\epsilon^2}} .
 \end{equation*}
 \begin{solution}
-  \TODO Doet Twan
+Note that $L_S(h)=\tfrac{1}{m}\sum_{z \in S}\ell(h,z)$ and $L_{\mathcal{D}}(h)=\Ev_{S \sim \mathcal{D}^m}(L_S(h))$.
+Denote $\mu_h=\Ev_{z \sim \mathcal{D}}(\ell(z, h))$, then we also have that $\mu_h=L_{\mathcal{D}}(h)$.
+Hence, by Hoeffding's inequality, we have for all $\varepsilon > 0$ that
+\begin{align*}
+  \mathcal{D}^m(\cbrac{S \text{ is not }\tfrac{\varepsilon}{2}-\text{representative}}) 
+  &=\mathcal{D}^{m}\paren*{\bigcup_{h \in \mathcal{H}}\abs*{\tfrac{1}{m}\sum_{z \in S}\ell(h,z)-\mu_h}>\tfrac{\varepsilon}{2}} \\
+  &\leq \sum_{h \in \mathcal{H}}\mathcal{D}^{m}\paren*{\abs*{\tfrac{1}{m}\sum_{z \in S}\ell(h,z)-\mu_h}>\tfrac{\varepsilon}{2}} \\
+  &\leq \sum_{h \in \mathcal{H}} 2e^{-\frac{m\varepsilon^2}{2(b-a)^2}} \\
+  &= \abs{\mathcal{H}} 2e^{-\frac{m\varepsilon^2}{2(b-a)^2}}.
+  \end{align*}
+
+ For each $m \geq  \frac{2(b-a)^2}{\varepsilon^2}\log(\frac{2\abs{H}}{\delta})$ it holds that
+ $\abs{\mathcal{H}} 2e^{-\frac{m\varepsilon^2}{2(b-a)^2}} \leq \delta$.
+ Hence we have that 
+ \begin{equation*}
+ m_{\mathcal{H}}^{UC}(\tfrac{\varepsilon}{2},\delta) \leq \ceil*{\frac{2(b-a)^2}{\varepsilon^2}\log\paren*{\frac{2\abs{H}}{\delta}}}.
+ \end{equation*}
+
+ 
+  
+% \begin{align*}
+%  \abs{H}2e^{-\frac{m\varepsilon^2}{2(b-a)^2}}&=\delta \\
+%  e^{-\frac{m\varepsilon^2}{2(b-a)^2}}&=\frac{\delta}{2\abs{H}} \\
+%  -\frac{m\varepsilon^2}{2(b-a)^2}&=\log(\frac{\delta}{2\abs{H}}) \\
+%  \frac{m\varepsilon^2}{2(b-a)^2}&=\log(\frac{2\abs{H}}{\delta}) \\
+%  m&=\frac{2(b-a)^2}{\varepsilon^2}\log(\frac{2\abs{H}}{\delta}).
+% \end{align*}
 \end{solution}
 
 \section*{Exercise 5}
 Prove that when the expected losses $L_{\mathcal{D}}(h)$ are bounded, we have
 \begin{equation*}
   L_{\mathcal{D}}(h_S) - \inf_{h\in \mathcal{H}}L_{\mathcal{D}}(h)
-  \leq 2 \sup_{h\in \mathcal{H}}|L_S(h)-L_{\mathcal{D}}(h)|.
+  \leq 2 \sup_{h\in \mathcal{H}}\abs{L_S(h)-L_{\mathcal{D}}(h)}.
 \end{equation*}
 \begin{solution}
-    \TODO Doet Twan
+We assume that $A:\bigcup_{m=1}^{\infty}(\mathcal{X}\times\mathcal{Y})^m \to \mathcal{H}, S \mapsto h_S$
+is an $\mathrm{ERM}_{\mathcal{H}}$ learner.
+
+Denote $\varepsilon = \sup_{h\in \mathcal{H}}\abs{L_S(h)-L_{\mathcal{D}}(h)}$.
+Then by definition the training set $S$ is $\varepsilon$-representative.
+Hence, the statement follows by applying lemma 4.2.
+
+
+% \TODO Show statement does not hold without ERM assumption.
+%     Let $\mathcal{X}=\cbrac{0,1}$ and $\mathcal{Y}=\cbrac{0,1}$. 
+%     Define the probability measure $\mathcal{D}$ on $\mathcal{X}\times \mathcal{Y}$ by $\mathcal{D}(\cbrac{(1,1)})=1$.
+%     Consider the hypothesis class
+%     \begin{equation*}
+%      \mathcal{H}=\cbrac{h_1(x)=1, h_0(x)=0}
+%     \end{equation*}
+%     consisting of the two constant functions from $\mathcal{X}\to\mathcal{Y}$.
+%     Let the loss function be given by
+%     \begin{equation*}
+%      L_{\mathcal{D}}(h)=\D(\cbrac{x,y} \in \mathcal{X}\times \mathcal{Y} \c y=h(x))
+%     \end{equation*}
+%     and the sample loss by
+%     \begin{equation*}
+%      L_{S}(h)=\tfrac{1}{m}\abs{\cbrac{i \in [m] \c h(x_i)=y_i}},
+%     \end{equation*}
+%     where $m=\abs{S}$. 
+%     \TODO
 \end{solution}
 \end{document}
 
