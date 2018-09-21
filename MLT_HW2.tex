@@ -55,10 +55,10 @@
 % \renewcommand\qedsymbol{\rule{1ex}{1ex}}
 
 % course specifics
-\newcommand{\Neighbour}{\ensuremath{\mathcal{N}}}
-\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}}
-\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}}
-\newcommand{\StochDom}{\ensuremath{\stackrel{\mathcal{D}}{\preceq}}}
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+
 \newcommand{\sgn}{\mathrm{sgn}}
 
 % Solutions use a modified proof environment
@@ -86,7 +86,7 @@
 \begin{document}
 \begin{center}
 
-  {\huge\bf Measure learning theory}\\
+  {\huge\bf Machine learning theory}\\
   {\large\sc Homeworkset 2 }\\ \vspace{1em}
   \firstName \textsc{ \lastName}, {\sc s}\studId \\
   \email\text{}\\ \smallskip
@@ -103,8 +103,8 @@ Let $\mathcal{H}$ be a hypothesis class for a binary classification task. Suppos
 Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parameters. That is, show that given $\delta \in (0,1)$, and given $0<\varepsilon_1 \leq \varepsilon_2<1$, we have that $m_{\mathcal{H}}(\varepsilon_1, \delta) \geq m_{\mathcal{H}}(\varepsilon_2, \delta)$. Similarly, show that given $\varepsilon \in (0,1)$, and given $0<\delta_1 \leq \delta_2 <1$, we have that $m_{\mathcal{H}}(\varepsilon, \delta_1) \geq m_{\mathcal{H}}(\varepsilon, \delta_2)$.
 \begin{solution}
 When $\mathcal{H}$ is PAC learnable, then it holds that for a given $\delta$ it holds that there exists a function $m_{\mathcal{H}}$
+\TODO Doet Tamar
 
-  
   Notes:
 Intu\"itively this is immediately clear; the less examples there are in the sample, the smaller the probability that the learner has a given accuracy, or with a given probability have smaller accuracy.
   
@@ -207,35 +207,89 @@ Furthermore, if $A$ is a successful agnostic PAC learner for $\mathcal{H}$, then
 In the case of PAC learning, we can do the realizability assumption and assume that there exists an $h^* \in \mathcal{H}$ such that $L_{D,f}(h^*) = 0$. In the case of PAC learnability, 
   
     
-  \TODO
+  \TODO Doet Tamar
 \end{solution}
 
 
 \section*{Exercise 3.7}
 \textbf{The Bayes optimal predictor:} Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $f_{\mathcal{D}}$ is optimal, in the sense that for every classifier $g$ from $\mathcal{X}$ to $\paren*{0,1}$, $L_{\mathcal{D}}(f_{\mathcal{D}}) \leq L_{\mathcal{D}}(g)$.
 \begin{solution}
-  \TODO
+Let $g:\mathcal{X} \to \cbrac{0,1}$ be given.
+Let $A=\cbrac{x \in \mathcal{X} \c f_{\mathcal{D}}(x)=1}$ and $B=\cbrac{x \in \mathcal{X} \c g(x)=1}$.
+By the definition of $f_{\mathcal{D}}$, we then have for all $U\se A$ that
+\begin{align*}
+ \mathcal{D}(U\times\cbrac{1}) & \geq \tfrac{1}{2}\mathcal{D}(U \times \cbrac{0,1}) \\
+ & \geq \mathcal{D}(U\times\cbrac{0})
+\end{align*}
+and for all $W \se A^C$ with $W \neq \varnothing$ that
+\begin{align*}
+ \mathcal{D}(W\times\cbrac{0}) &> \tfrac{1}{2}\mathcal{D}(W \times \cbrac{0,1}) \\
+ &> \mathcal{D}(W\times\cbrac{1}).
+\end{align*}
+We then have that
+\begin{align*}
+ L_{\mathcal{D}}(g)-L_{\mathcal{D}}(f_{\mathcal{D}}) &=
+ \mathcal{D}(\cbrac{(x,y)\in \mathcal{X}\times\cbrac{0,1} \c g(x)\neq y})- 
+ \mathcal{D}(\cbrac{(x,y)\in \mathcal{X}\times\cbrac{0,1} \c f_{\mathcal{D}}(x)\neq y}) \\
+ &= \mathcal{D}(B\times\cbrac{0})+\mathcal{D}(B^C\times\cbrac{1}) - 
+ \mathcal{D}(A\times\cbrac{0})-\mathcal{D}(A^C\times\cbrac{1}) \\
+ &=  \mathcal{D}((B\setminus A)\times\cbrac{0})+ \mathcal{D}((B^C\setminus A^C)\times\cbrac{1})
+- \mathcal{D}((A\setminus B)\times\cbrac{0})- \mathcal{D}((A^C\setminus B^C)\times\cbrac{1}) \\
+&=  \mathcal{D}((B\setminus A)\times\cbrac{0})+ \mathcal{D}((A\setminus B)\times\cbrac{1})
+- \mathcal{D}((A\setminus B)\times\cbrac{0})- \mathcal{D}((B\setminus A)\times\cbrac{1}).
+\end{align*}
+As $(B\setminus A) \se A^C$ and $(A\setminus B) \se A$ we have that
+\begin{equation*}
+\mathcal{D}((B\setminus A)\times\cbrac{0}) \geq \mathcal{D}((B\setminus A)\times\cbrac{1})  
+\end{equation*}
+and 
+\begin{equation*}
+\mathcal{D}((A\setminus B)\times\cbrac{1}) \geq \mathcal{D}((A\setminus B)\times\cbrac{0}).  
+\end{equation*}
+It follows that
+\begin{align*}
+ L_{\mathcal{D}}(g)-L_{\mathcal{D}}(f_{\mathcal{D}}) \geq 0.
+\end{align*}
 \end{solution}
 
 
 \section*{Exercise 4.1}
 In this exercise, we show that the $(\varepsilon , \delta )$ requirement on the convergence of errors in our definition of PAC learning, is, in fact, quite close to a simpler looking requirement about averages (or expectations). Prove that the following two statements are equivalent (for any learning algorithm $A$, any probability distribution $\mathcal{D}$, and any loss function whose range is $[0,1]$):
-\subsection*{1}
-For every $\varepsilon , \delta > 0$, there exists $m(\varepsilon , \delta)$ such that $\forall m \leq m(\varepsilon , \delta)$
+\begin{enumerate}
+ \item \label{it:convergence_probability} For every $\varepsilon , \delta > 0$, there exists $m(\varepsilon , \delta)$ such that $\forall m \leq m(\varepsilon , \delta)$
 \begin{equation*}
-\P_{S \sim \mathcal{D}}[L_{\mathcal{D}}(A(S))>\varepsilon]<\delta
+\P_{S \sim \mathcal{D}^m}(L_{\mathcal{D}}(A(S))>\varepsilon)<\delta.
 \end{equation*}
-\begin{solution}
-  \TODO
-\end{solution}
+\item \label{it:convergence_expectation} \begin{equation*}
+\lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}(L_{\mathcal{D}}(A(S))) = 0.
 
-\subsection*{2}
-For every $\varepsilon , \delta > 0$, there exists $m(\varepsilon , \delta)$ such that $\forall m \leq m(\varepsilon , \delta)$
-\begin{equation*}
-\lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}[L_{\mathcal{D}}(A(S))] =0
 \end{equation*}
+\end{enumerate}
 \begin{solution}
-  \TODO
+Consider the measure space $((\mathcal{X}\times\mathcal{Y})^\infty, \Fa^{\infty}, \mathcal{D}^\infty)$.
+For each sequence $S=(x_i,y_i)_{i \in \N} \in (\mathcal{X}\times\mathcal{Y})^\infty$
+let $S_m=(x_i,y_i)_{i=1}^{m}$ denote the truncated sequence of length $m$.
+Define for each $m \in \N$ the random variable $L_m:(\mathcal{X}\times\mathcal{Y})^\infty \to [0,1]$ by
+\begin{equation*}
+ L_m(S)=L_{\mathcal{D}}(A(S_m)).
+\end{equation*}
+
+First assume that statement (\ref{it:convergence_expectation}) holds. 
+Note that we then have that 
+\begin{align*}
+ \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{m}}(L_{\mathcal{D}}(A(S))) &= 
+ \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{\infty}}(L_{\mathcal{D}}(A(S_m))) \\
+ & = \lim_{m\to \infty}\Ev_{S\sim \mathcal{D}^{\infty}}(L_m(S)).
+\end{align*}
+This means that the sequence $(L_m)_{m \in \N}$ converges in $L^1$-norm to $0$.
+For any sequence of random variables convergence in $L^1$ implies convergence in probability, this gives us that
+\begin{equation*}
+ \lim_{m\to \infty}\mathcal{D}^{\infty}(L_m>\varepsilon)=0.
+\end{equation*}
+From this statement (\ref{it:convergence_probability}) follows.
+
+For almost surely bounded sequences of random variables, we have that convergence in probability also implies convergence in 
+$L^1$. Since $(L_m)_{m\in \N}$ takes values in $[0,1]$ it is surely bounded, hence $L_m \stackrel{\mathcal{D}^{\infty}}{\to} 0$ implies that $L_m \stackrel{L^1}{\to} 0$. So, if we assume that (\ref{it:convergence_probability}) holds, then (\ref{it:convergence_expectation}) holds as well.
 \end{solution}
 
 \section*{Exercise 4.2}
@@ -246,7 +300,7 @@ In corollary 4.6 we assumed that the range of the loss function is $[0,1]$. Prov
   \leq \left\lceil \frac{2\log (2|\mathcal{H}|/\delta) (b-a)^2}{\varepsilon^2} \right\rceil .
 \end{equation*}
 \begin{solution}
-  \TODO
+  \TODO Doet Twan
 \end{solution}
 
 \section*{Exercise 5}
@@ -256,7 +310,7 @@ Prove that when the expected losses $L_{\mathcal{D}}(h)$ are bounded, we have
   \leq 2 \sup_{h\in \mathcal{H}}|L_S(h)-L_{\mathcal{D}}(h)|.
 \end{equation*}
 \begin{solution}
-    \TODO
+    \TODO Doet Twan
 \end{solution}
 \end{document}
 
