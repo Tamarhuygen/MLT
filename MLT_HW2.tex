@@ -106,6 +106,8 @@ Show that $m_{\mathcal{H}}$ is monotonically nonincreasing in each of its parame
 When $\mathcal{H}$ is PAC learnable, then it holds that for a given $\delta$ it holds that there exists a function $m_{\mathcal{H}}(\varepsilon_1,\delta ):(0,1)^2 \rightarrow \N$, and a learning algorithm, with the property that when the learning algorithm is running on $m \geq m_{\mathcal{H}}$ samples, the algorithm returns a hypothesis $h$ such that, with probability of at least $1- \delta$, $L_{(\mathcal{D},f)}(h)\leq \varepsilon$. We can see that for hold for a given $\delta$ and $0 \leq \varepsilon_1 \leq \varepsilon_2 \leq 1$, that if $L_{(\mathcal{D},f)}(h)\leq \varepsilon_1$, then it holds that $L_{(\mathcal{D},f)}(h)\leq \varepsilon_2$, and since $m_{\mathcal{H}}$ is the minimum number of examples in the sample for which this holds, we can see that $m_{\mathcal{H}}(\epsilon_1, \delta) \geq m_{\mathcal{H}}(\epsilon_2, \delta)$. Also for a given $\varepsilon$ and $0\leq \delta_1 \leq \delta_2 \leq 0$ it holds that if $\P_{x\sim \mathcal{D}}(L_{(\mathcal{D},f)}(h)\leq \varepsilon) \geq 1-\delta_1$, then it holds that $\P_{x\sim \mathcal{D}}(L_{(\mathcal{D},f)}(h)\leq \varepsilon) \geq 1-\delta_2$, and because $m_{\mathcal{H}}$ is the minimum amount of examples in the sample for which this holds, we can see that $m_{\mathcal{H}}(\epsilon, \delta_1) \geq m_{\mathcal{H}}(\epsilon, \delta_2)$
 
 \TODO Please check \TODO
+
+\TODO Sorry, ben bang dat ik niet echt kan lezen wat hier staat. :s Misschien iets minder 'it holds' en wat meer 'we have', 'it follows', 'which means' en dergelijke. Ook minder lange zinnen zijn wenseljik. \TODO
 \end{solution}
 
 \section*{Exercise 3.3}
@@ -179,6 +181,11 @@ then we can see that $e^{-\varepsilon m} \leq e^{-\varepsilon \frac{\log(1/\delt
   \begin{equation*}
     m_{\mathcal{H}}\leq \left\lceil \frac{\log(1/\delta )}{\varepsilon} \right\rceil
   \end{equation*}
+  
+  \TODO De definitie van $r'$ klopt niet. De $r < r*$ moet weg en misschien kunnen we $r \in \R_{\geq 0}$ nemen voor de duidelijkheid. 
+  Verder lopen ook hier de zinnen niet echt lekker. 
+  Ook misschien nog uitleggen dat misclassificatie alleen gebeurt in de half-open annulus 
+  $\cbrac{\mathbf{a} \in \R^2 \c r'<\nrm{\mathbf{a}\leq r^*}}$. \TODO
 \end{solution}
 
 
@@ -203,6 +210,8 @@ Furthermore, if $A$ is a successful agnostic PAC learner for $\mathcal{H}$, then
   This by definition means that $\mathcal{H}$ is PAC learnable, and $A$ is a successful PAC learner.
     
   \TODO Please check, because this seems to hold for any $\mathcal{H}$, but in the question they specifically say binary classifiers, or is that because they have $\varepsilon, \delta \in (0,1)$ in the definition? \TODO
+  
+  \TODO Denk dat de binary classification aanname inderdaad niet nodig is. Je bewijs klopt iig gewoon. Misschien de leesbaarheid wat aanpassen. De eerste zin is 43985 regels lang. :s Verder is het niet 'to do an assumption' maar 'to make an assumption'. \TODO
 \end{solution}
 
 
