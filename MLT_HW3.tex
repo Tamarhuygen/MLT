@@ -1,0 +1,175 @@
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo} % Nice text font
+\usepackage{euler} % Very nice mathmode font
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+\newcommand{\cH}{\ensuremath{\mathcal{H}}}
+\newcommand{\cD}{\ensuremath{\mathcal{D}}}
+\newcommand{\cX}{\ensuremath{\mathcal{X}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309 (Leiden)}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\newcommand{\firstNameII}  {Tamar}
+\newcommand{\lastNameII}   {Huygen}
+\newcommand{\studIdII}     {10907483 (UvA)}
+\newcommand{\studIdIII}    {2556474 (VU)}
+\newcommand{\emailII}     {tamar@huygen.nl}
+
+\begin{document}
+\begin{center}
+
+  {\huge\bf Machine learning theory}\\
+  {\large\sc Homeworkset 3 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId \\
+  \email\text{}\\ \smallskip
+  \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
+  \emailII \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+\end{center}
+
+\section*{Exercise 6.1}
+\subsection*{1}
+Show that following monotonicity property of VC-dimension: For every two hypothesis classes if $\cH' \subseteq \cH$ then $\text{VCdim}\paren*{\cH'}\leq \text{VCdim}\paren*{\cH'}$.
+\begin{solution}
+ \TODO
+\end{solution}
+\section*{Exercise 6.2}
+Given some finite domain set, $\cX$, and a number $k \leq \abs{\cX}$, figure out the VC-dimension of each of the following classes (and prove your claims):
+\subsection*{1}
+$\cH^{\cX}_{=k} = \cbrac{h \in \cbrac{0,1}^{\cX}: \abs{\cbrac{x: h(x) = 1}}=k}$. That is, the set of all functions that assign the value $1$ to exactly $k$ elements of $\cX$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{2}
+$\cH_{at-most-k} = \cbrac{h \in \cbrac{0,1}^{\cX}: \abs{\cbrac{x: h(x) = 1}} \leq k} \text{ or }  \abs{\cbrac{x: h(x) = 0}}\leq k$.
+\begin{solution}
+\TODO
+\end{solution}
+\section*{Exercise 6.3}
+Let $\cX$ be a Boolean hypercube $\cbrac{0,1}^n$. For a set $I \subseteq \cbrac{1,2,\ldots ,n}$ we define a \textit{parity function $h_I$} as follows. On a binary vector $\mathbf{x} = (x_1,x_2,\ldots ,x_n) \in \cbrac{0,1}^n$,
+\begin{equation*}
+  h_I(\mathbf{x}) = \paren*{\sum_{i \in I}x_i} \mod 2.
+\end{equation*}
+(That is, $h_I$ computes the parity of bits in $I$.) What is the VC-dimension of the class of all such parity functions, $\cH_{n\text{-parity}} = \cbrac{h_I:I \subseteq \cbrac{1,2, \dots ,n}}$?
+\begin{solution}
+\TODO
+\end{solution}
+\section*{Exercise 6.6}
+From question 3.4: \\
+In this question we study the hypothesis class of \textit{Boolean conjunctions} defined as follows. The instance space is $\cX = \cbrac{0,1}^d$ and the label set is $\mathcal{Y}=\cbrac{0,1}$. A literal over the variables $x_1, \ldots ,x_d$ is a simple Boolean function that takes the form $\mathbf{f}(\mathbf{x}) = x_i$, for some $i \in [d]$, or $\mathbf{f}(\mathbf{x}) = 1-x_i$ for some $i \in [d]$. We use the notation $\bar{x}_i$ as shorthand for $1-x_i$. A conjunction is any product of literals. In Boolean logic, the product is denoted using a $\land$ sign. For example, the function $h(\mathbf{x}) = x_1 \cdot (1-x_2)$ is written as $x_1 \land x_2$.\\
+\textbf{VC-dimension of Boolean conjunctions:} Let $\cH^d_{con}$ be the class of boolean conjunctions over the variables $x_1, \ldots , x_d$ $(d \geq 2)$. We already know that this class is finite and thus (agnostic) PAC learnable. In this question we calculate $\text{VCdim}(\cH^d_{con})$.
+\subsection*{1}
+Show that $\abs{\cH^d_{con}} \leq 3^d + 1$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{2}
+Conclude that $\text{VCdim}(\cH) \leq d \log 3$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{3}
+Show that $\cH^d_{con}$ shatters the set of unit vectors $\cbrac{\mathbf{e}_i:i \leq d}$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{4}
+Show that $\text{VCdim}(\cH_{con}^d) \leq d$.\\
+Hint: Assume by contradiction that there exists a set $C = \cbrac{c_1, \ldots , c_{d+1}}$ that is shattered by $\cH^d_{con}$. Let $h_1, \ldots h_{d+1}$ be hypotheses in $\cH^d_{con}$ that satisfy
+\begin{equation*}
+  \forall i,j \in [d+1], h_i(c_j) = \begin{cases} 0 & i=j \\
+    1 & otherwise\end{cases}.
+\end{equation*}
+For each $i \in [d+1]$, $h_i$ (or more accurately, the conjunction that corresponds to $h_i$) contains some literal $l_i$ which is false on $c_i$ and true on some $c_j$ for each $j \neq i$. Use the Pigeonhole principle to show that there must be a pair $i < j \leq d+1$ such that $l_i$ and $l_j$ use the same $x_k$ and use that fact to derive a contradiction to the requirements from the conjunctions $h_i$, $h_j$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{5}
+Consider the class $\cH^d_{mcon}$ of monotone Boolean conjunctions over $\cbrac{0,1}^d$. Monotonicity here means that the conjunctions do not contain negations. As in $\cH^d_{con}$, the empty conjunction is interpreted as the all-positive hypothesis. We augment $\cH^d_{mcon}$ with the all-negative hypothesis $h^-$.\\
+Show that $\text{VCdim}(\cH_{mcon}^d) = d$.
+\begin{solution}
+\TODO
+\end{solution}
+
+\end{document}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
