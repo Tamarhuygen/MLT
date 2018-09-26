@@ -98,12 +98,14 @@
   \today \\\bigskip
   \hrule
   \bigskip
-\end{center}
+ \end{center}
 
 \section*{Exercise 6.1}
 \subsection*{1}
-Show that following monotonicity property of VC-dimension: For every two hypothesis classes if $\cH' \subseteq \cH$ then $\text{VCdim}\paren*{\cH'}\leq \text{VCdim}\paren*{\cH'}$.
+Show that following monotonicity property of VC-dimension: For every two hypothesis classes if $\cH' \subseteq \cH$ then $\text{VCdim}\paren*{\cH'}\leq \text{VCdim}\paren*{\cH}$.
 \begin{solution}
+  Suppose $\text{VCdim}(\cH') < \infty$, then by definition of $\text{VCdim}$ there exists a subset $C \subseteq \cX$ with a maximal size that is still shatered by $\cH'$ and $\text{VCdim}(\cH') = \abs{C}$. By the definition of shattering, we know that the restriction of $\cH'$ on $C$ is the set of all functions from $C$ to $\cbrac{0,1}$. Because $\cH' \subseteq \cH$, we know that all these functions are also in the restriction from $\cH$ on $C$. This means that $C$ is also shattered by $\cH$. So now we have that the maximal size of the subset of $\cX$ that is shattered by $\cH$ is greater or equal than $\abs{C}$. So we have that $\text{VCdim}(\cH') = \abs{C} \leq \text{VCdim}(\cH)$. \\
+  In the case that $\text{VCdim}(\cH') = \infty$, $\cH'$ can shatter sets of arbitrary large size. And because $\cH' \subseteq \cH$, $\cH$ can also shatter sets of arbitrary large size, so then  $\text{VCdim}(\cH ) = \infty$
  \TODO
 \end{solution}
 \section*{Exercise 6.2}
