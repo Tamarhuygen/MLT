@@ -104,15 +104,19 @@
 \subsection*{1}
 Show that following monotonicity property of VC-dimension: For every two hypothesis classes if $\cH' \subseteq \cH$ then $\text{VCdim}\paren*{\cH'}\leq \text{VCdim}\paren*{\cH}$.
 \begin{solution}
-  Suppose $\text{VCdim}(\cH') < \infty$, then by definition of $\text{VCdim}$ there exists a subset $C \subseteq \cX$ with a maximal size that is still shatered by $\cH'$ and $\text{VCdim}(\cH') = \abs{C}$. By the definition of shattering, we know that the restriction of $\cH'$ on $C$ is the set of all functions from $C$ to $\cbrac{0,1}$. Because $\cH' \subseteq \cH$, we know that all these functions are also in the restriction from $\cH$ on $C$. This means that $C$ is also shattered by $\cH$. So now we have that the maximal size of the subset of $\cX$ that is shattered by $\cH$ is greater or equal than $\abs{C}$. So we have that $\text{VCdim}(\cH') = \abs{C} \leq \text{VCdim}(\cH)$. \\
-  In the case that $\text{VCdim}(\cH') = \infty$, $\cH'$ can shatter sets of arbitrary large size. And because $\cH' \subseteq \cH$, $\cH$ can also shatter sets of arbitrary large size, so then  $\text{VCdim}(\cH ) = \infty$
+  Suppose $\text{VCdim}(\cH') < \infty$, then by definition of $\text{VCdim}$ then for all subsets $C \subseteq \cX$ with size $\abs{C} = VCdim(\cH')$, it holds that they are shattered by $\cH'$. By the definition of shattering, we know that the restriction of $\cH'$ on $C$ is the set of all functions from $C$ to $\cbrac{0,1}$. Because $\cH' \subseteq \cH$, we know that all these functions are also in the restriction from $\cH$ on $C$. This means that $C$ is also shattered by $\cH$. So now we have that the maximal size of the subset of $\cX$ that is shattered by $\cH$ is greater or equal than $\abs{C}$. So we have that $\text{VCdim}(\cH') = \abs{C} \leq \text{VCdim}(\cH)$. \\
+  In the case that $\text{VCdim}(\cH') = \infty$, $\cH'$ can shatter sets of arbitrary large size. And because $\cH' \subseteq \cH$, $\cH$ can also shatter sets of arbitrary large size, so then  $\text{VCdim}(\cH ) = \infty$.
  \TODO
 \end{solution}
 \section*{Exercise 6.2}
 Given some finite domain set, $\cX$, and a number $k \leq \abs{\cX}$, figure out the VC-dimension of each of the following classes (and prove your claims):
 \subsection*{1}
+Consider $C \subseteq \cX$ with $\abs{C} = \min(k,\abs{\cX}-k)$. To prove $\cH^{\cX}_{=k}$ shatters $C$ and there exists a set  $C' \subseteq \cX$ with $\abs{C} = \min(k,\abs{\cX}-k)+1$ that is not shattered by $\cH^{\cX}_{=k}$.\\
+Suppose $\min(k,\abs{\cX}-k) = k$. Then $\abs{\cX} \geq 2k$.  Now for each $x \in C$, there exists 
+
 $\cH^{\cX}_{=k} = \cbrac{h \in \cbrac{0,1}^{\cX}: \abs{\cbrac{x: h(x) = 1}}=k}$. That is, the set of all functions that assign the value $1$ to exactly $k$ elements of $\cX$.
 \begin{solution}
+  When $k = \abs{\cX}$, any set $C \subseteq \cX$ with $\abs{C} \geq 1$, can't be shattered by $\cH^{\cX}_{=k}$, because then $\cH^{\cX}_{=k}= \cbrac{h =\cX \to \cbrac{0,1}: h(x) = 1 }$, and so 
 \TODO
 \end{solution}
 \subsection*{2}
