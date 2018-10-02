@@ -1,0 +1,176 @@
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo} % Nice text font
+\usepackage{euler} % Very nice mathmode font
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+\newcommand{\cH}{\ensuremath{\mathcal{H}}}
+\newcommand{\cD}{\ensuremath{\mathcal{D}}}
+\newcommand{\cX}{\ensuremath{\mathcal{X}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309 (Leiden)}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\newcommand{\firstNameII}  {Tamar}
+\newcommand{\lastNameII}   {Huygen}
+\newcommand{\studIdII}     {10907483 (UvA)}
+\newcommand{\studIdIII}    {2556474 (VU)}
+\newcommand{\emailII}     {tamar@huygen.nl}
+
+\begin{document}
+\begin{center}
+
+  {\huge\bf Machine learning theory}\\
+  {\large\sc Homeworkset 3 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId \\
+  \email\text{}\\ \smallskip
+  \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
+  \emailII \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+ \end{center}
+
+ \section*{Exercise 6.7}
+ We have shown that for a finite hypothesis class $\cH$, $\text{VCdim}(\cH) \leq \left\lfloor \log \paren*{\abs{\cH}} \right\rfloor$. However, this is just an upper bound. The VC-dimension of a class can be much lower than that:
+ \subsection*{1}
+ Find an example of a class $\cH$ of functions over the real interval $\cX = [1,0]$ such that $\cH$ is infinite while $\text{VCdim}(\cH) = 1$.
+ \begin{solution}
+   Threshold functions?
+ \TODO
+\end{solution}
+\subsection*{2}
+Give an example of a finite hypothesis class $\cH$ of functions over the real interval $\cX = [0,1]$, where $\text{VCdim}(\cH) = \left\lfloor \log \paren*{\abs{\cH}} \right\rfloor$.
+\begin{solution}
+  
+ \TODO
+\end{solution}
+\section*{Exercise 6.8}
+It is often the case that the VC-dimension of a hypothesis class equals (or can be bounded above by) the number of parameters one needs to set in order to define each hypothesis in the class. For instance, if $\cH$ is the class of axis aligned rectangles in $\R^d$, then $\text{VCdim}(\cH) = 2d$, which is equal to the number of parameters used to define a rectangle in $\R^d$. Here is an example that shows that this is not always the case. We will see that a hypothesis class might be very complex and not even learnable, although it has a small number of parameters.
+
+Consider the domain $\cX = \R$, and the hypothesis class
+\begin{equation*}
+  \cH = \cbrac{x \mapsto \left\lceil \sin\paren*{\theta x} \right\rceil : \theta \in \R }
+\end{equation*}
+(here, we take $\lceil -1 \rceil = 0$). Prove that $\text{VCdim}(\cH) = \infty$.\\
+\textit{Hint:} There is more than one way to prove the required result. One option is by applying the following lemma: If $0 . x_1 x_2 x_3 \ldots$, is the binary expansion of $x \in (0,1)$, then for any natural number $m$, $\lceil \sin \paren*{2^m \pi x} \rceil = \paren*{1-x_m}$, provided that $\exists k \leq m$ s.t. $x_k =1$.
+\begin{solution}
+
+\TODO
+\end{solution}
+\section*{Exercise 6.9}
+Let $\cH$ be the class of signed intervals, that is, \\
+$\cH = \cbrac{h_{a,b,s}:a \leq b, s \in \cbrac{-1,1}}$ where
+\begin{equation*}
+  h_{a,b,s}\paren*{x} =
+  \begin{cases} 
+    s &\mbox{if } x \in [a,b] \\
+    -s &\mbox{if } x \notin [a,b]
+  \end{cases}
+\end{equation*}
+Calculate $\text{VCdim}(\cH)$.
+\begin{solution}
+\TODO
+\end{solution}
+\section*{Exercise 6.11}
+\textbf{VC of union:} Let $\cH_1, \ldots , \cH_r$ be the hypothesis classes over some fixed domain set $\cX$. Let $d = \max_i \text{VCdim}(\cH_i)$ and assume for simplicity that $d \geq 3$.
+\subsection*{1}
+Prove that
+\begin{equation*}
+  \text{VCdim}\paren*{\bigcup_{i=1}^r\cH_i}\leq 4d \log \paren*{2d} + 2 \log \paren*{r}.
+\end{equation*}
+\textit{Hint:} Take the set of $k$ examples and assume that they are shattered by the union class. Therefore, the union class can produce all $2^k$ possible labelings on these examples. Use Sauer's lemma to show that the union class cannot produce more than $rk^d$  labelings. Therefore $2^k < rk^d$. Now use Lemma A.2.
+
+Lemma A.2:\\
+Let $a \geq 1$ and $b>0$. Then: $x \geq 4a \log \paren*{2a} +2b \implies x \geq \log \paren*{x}+b$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{2}
+Prove that for $r = 2$ it holds that
+\begin{equation*}
+  \text{VCdim}\paren*{\cH_1 \cup \cH_2}\leq 2d +1.
+\end{equation*}
+\begin{solution}
+\TODO
+\end{solution}
+
+
+\end{document}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

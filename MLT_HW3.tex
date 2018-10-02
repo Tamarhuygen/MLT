@@ -104,24 +104,33 @@
 \subsection*{1}
 Show that following monotonicity property of VC-dimension: For every two hypothesis classes if $\cH' \subseteq \cH$ then $\text{VCdim}\paren*{\cH'}\leq \text{VCdim}\paren*{\cH}$.
 \begin{solution}
-  Suppose $\text{VCdim}(\cH') < \infty$, then by definition of $\text{VCdim}$ then for all subsets $C \subseteq \cX$ with size $\abs{C} = VCdim(\cH')$, it holds that they are shattered by $\cH'$. By the definition of shattering, we know that the restriction of $\cH'$ on $C$ is the set of all functions from $C$ to $\cbrac{0,1}$. Because $\cH' \subseteq \cH$, we know that all these functions are also in the restriction from $\cH$ on $C$. This means that $C$ is also shattered by $\cH$. So now we have that the maximal size of the subset of $\cX$ that is shattered by $\cH$ is greater or equal than $\abs{C}$. So we have that $\text{VCdim}(\cH') = \abs{C} \leq \text{VCdim}(\cH)$. \\
+  Suppose $\text{VCdim}(\cH') < \infty$, then by definition of $\text{VCdim}$, there exists a subset $C \subseteq \cX$ with size $\abs{C} = VCdim(\cH')$, that is shattered by $\cH'$. By the definition of shattering, we know that the restriction of $\cH'$ on $C$ is the set of all functions from $C$ to $\cbrac{0,1}$. Because $\cH' \subseteq \cH$, we know that all these functions are also in the restriction from $\cH$ on $C$. This means that $C$ is also shattered by $\cH$. So now we have that the maximal size of the subset of $\cX$ that is shattered by $\cH$ is greater or equal than $\abs{C}$. So we have that $\text{VCdim}(\cH') = \abs{C} \leq \text{VCdim}(\cH)$. \\
   In the case that $\text{VCdim}(\cH') = \infty$, $\cH'$ can shatter sets of arbitrary large size. And because $\cH' \subseteq \cH$, $\cH$ can also shatter sets of arbitrary large size, so then  $\text{VCdim}(\cH ) = \infty$.
  \TODO
 \end{solution}
 \section*{Exercise 6.2}
 Given some finite domain set, $\cX$, and a number $k \leq \abs{\cX}$, figure out the VC-dimension of each of the following classes (and prove your claims):
 \subsection*{1}
-Consider $C \subseteq \cX$ with $\abs{C} = \min(k,\abs{\cX}-k)$. To prove $\cH^{\cX}_{=k}$ shatters $C$ and there exists a set  $C' \subseteq \cX$ with $\abs{C} = \min(k,\abs{\cX}-k)+1$ that is not shattered by $\cH^{\cX}_{=k}$.\\
-Suppose $\min(k,\abs{\cX}-k) = k$. Then $\abs{\cX} \geq 2k$.  Now for each $x \in C$, there exists 
-
 $\cH^{\cX}_{=k} = \cbrac{h \in \cbrac{0,1}^{\cX}: \abs{\cbrac{x: h(x) = 1}}=k}$. That is, the set of all functions that assign the value $1$ to exactly $k$ elements of $\cX$.
 \begin{solution}
-  When $k = \abs{\cX}$, any set $C \subseteq \cX$ with $\abs{C} \geq 1$, can't be shattered by $\cH^{\cX}_{=k}$, because then $\cH^{\cX}_{=k}= \cbrac{h =\cX \to \cbrac{0,1}: h(x) = 1 }$, and so 
+Claim: $\text{VCdim}(\cH^{\cX}_{=k}) = \min(k, \abs{\cX} - k)$.\\
+To prove there exists a subset $C \subseteq \cX$ with  $\abs{C} = \min(k,\abs{\cX}-k)$ that is shattered by $\cH^{\cX}_{=k}$ and there exists no subset  $C' \subseteq \cX$ with $\abs{C'} > \min(k,\abs{\cX}-k)+1$ that is shattered by $\cH^{\cX}_{=k}$.\\
+Suppose $\min(k,\abs{\cX}-k) = k$. Then $\abs{\cX} \geq 2k$. In $\cH^{\cX}_{=k}$ are all the functions that assign $1$ to $k$ points from $\cX$ and then there are at least $k$ other points in $\cX$ those functions assign $0$ to, so when we pick a subset $C \in \cX$, with $\abs{C} = k$, we have that every function $g: C \to \cbrac{0,1}$ is element of the restriction from $\cH^{\cX}_{=k}$ to $C$. So $\cH^{\cX}_{=k}$ shatters every subset $C \in \cX$, with $\abs{C} = k$. So we have that $\text{VCdim}(\cH^{\cX}_{=k}) \geq k$.\\
+Now consider any subset $C' \subseteq \cX$ with $\abs{C'} \geq k+1$. Now we can see that the hypothesis $h':C' \to \cbrac{1}$ that assigns $1$ to all elements of $C'$ does not exist in the restriction from $\cH^{\cX}_{=k}$ to $C'$, because $\abs{x: h'(x)=1} \geq k+1>k$. So there exists no subset $C' \subseteq \cX$ with size $\abs{C'}\geq k+1$ that is shattered by $\cH^{\cX}_{=k}$. So we have that $\text{VCdim}(\cH^{\cX}_{=k}) \leq k$, combined with our earlier result, we have that $\text{VCdim}(\cH^{\cX}_{=k}) = k$.\\
+Now suppose $\min(k,\abs{\cX}-k) = \abs{\cX} - k$. Then $\abs{\cX} \leq 2k$. Let $C \subseteq \cX$ with $\abs{C} = \abs{\cX}-k$. Now in $\cH^{\cX}_{=k}$ are all functions that assign $1$ to $k$ points in $\cX$ and $0$ to $\abs{\cX}-k$ other points in $\cX$. Now if we pick a $C \subseteq \cX$ with size $\abs{C} = \abs{\cX}-k $, then every possible function $g: C \to \cbrac{0,1}$ is in the restriction from $\cH^{\cX}_{=k}$ to $C$. So we have that $\text{VCdim}(\cH^{\cX}_{=k}) \geq \abs{\cX} - k$.\\
+Now consider any $C' \subseteq \cX$ with $\abs{C'} \geq \abs{\cX}-k+1$. The hypothesis $h':C' \to \cbrac{0}$ does not exist in the restriction from $\cH^{\cX}_{=k}$ to $C'$, because in $\cH^{\cX}_{=k}$ are all functions that assign $1$ to exactly $k$ points in $\cX$ and then there are $\abs{\cX} - k$ points left in $\cX$ the hypothesis can assign $0$ to. So when we have $\abs{C'} \geq \abs{\cX}-k+1$, they can't all be assigned $0$. So there exists no subset $C'$ with $\abs{C'} \geq \abs{\cX}-k+1$ that is shattered by $\cH^{\cX}_{=k}$ and we have that $\text{VCdim}(\cH^{\cX}_{=k}) \leq \abs{\cX} - k$. Combined with earlier results this gives us $\text{VCdim}(\cH^{\cX}_{=k}) = \min(k, \abs{\cX} - k)$.
 \TODO
 \end{solution}
 \subsection*{2}
 $\cH_{at-most-k} = \cbrac{h \in \cbrac{0,1}^{\cX}: \abs{\cbrac{x: h(x) = 1}} \leq k} \text{ or }  \abs{\cbrac{x: h(x) = 0}}\leq k$.
 \begin{solution}
+  Claim: $\text{VCdim}(\cH_{at-most-k}) = \min(2k+1, \abs{\cX})$.\\
+  To prove: There exists a subset $C \subseteq \cX$ with size $\abs{C} = \min(2k+1, \abs{\cX})$ that is shattered by $\cH_{at-most-k}$ and there exists no subset $C' \subseteq \cX$ with size $\abs{C'} >  \min(2k+1, \abs{\cX})$ that is shattered by $\cH_{at-most-k}$.\\
+  Assume $\abs{\cX} \geq 2k+1$.
+  Consider $C \subseteq \cX$, with $\abs{C}=2k+1$. Now in $\cH_{at-most-k}$ are all hypothesis that have $\abs{\cbrac{x \in C: h(x) = 1}} \leq k$ and then $\abs{\cbrac{x \in C: h(x) = 0}} \geq k+1$ and all hypothesis that have $\abs{\cbrac{x \in C: h(x) = 0}} \leq k$ and then $\abs{\cbrac{x \in C: h(x) = 1}} \geq k+1$, so all hypotheses $h: C \to \cbrac{1,0}$ are present in $\cH_{at-most-k}$, so $C$ is shattered by $\cH_{at-most-k}$.\\
+  Now consider any subset $C' \subseteq \cX$ with $\abs{C'} \geq 2k+2$. Now the hypotheses that assigns $1$ to at least $k+1$ points and $0$ to at least $k+1$ other points are not in $\cH_{at-most-k}$, because those hypothesis have $\abs{\cbrac{x: h(x) = 1}} > k \text{ and }  \abs{\cbrac{x: h(x) = 0}} > k$. So There exists no subset $C'$ with $\abs{C'} \geq 2k+2$ that shatters $\cH_{at-most-k}$.\\
+When $\abs{\cX} < 2k+1$, all subsets of $\cX$ are shattered by $\cH_{at-most-k}$, so then the $\text{VCdim}(\cH_{at-most-k}) = \abs{\cX}$.
+So we have that $\text{VCdim}(\cH_{at-most-k}) = \min(2k+1, \abs{\cX})$. 
 \TODO
 \end{solution}
 \section*{Exercise 6.3}
@@ -131,11 +140,13 @@ Let $\cX$ be a Boolean hypercube $\cbrac{0,1}^n$. For a set $I \subseteq \cbrac{
 \end{equation*}
 (That is, $h_I$ computes the parity of bits in $I$.) What is the VC-dimension of the class of all such parity functions, $\cH_{n\text{-parity}} = \cbrac{h_I:I \subseteq \cbrac{1,2, \dots ,n}}$?
 \begin{solution}
+  $\text{VCdim}(\cH_{n\text{-parity}}) \geq n$ You can take unit vectors. What happens with $x = e_1 +e_2$? \\
+  You can always take the subset of 
 \TODO
 \end{solution}
 \section*{Exercise 6.6}
 From question 3.4: \\
-In this question we study the hypothesis class of \textit{Boolean conjunctions} defined as follows. The instance space is $\cX = \cbrac{0,1}^d$ and the label set is $\mathcal{Y}=\cbrac{0,1}$. A literal over the variables $x_1, \ldots ,x_d$ is a simple Boolean function that takes the form $\mathbf{f}(\mathbf{x}) = x_i$, for some $i \in [d]$, or $\mathbf{f}(\mathbf{x}) = 1-x_i$ for some $i \in [d]$. We use the notation $\bar{x}_i$ as shorthand for $1-x_i$. A conjunction is any product of literals. In Boolean logic, the product is denoted using a $\land$ sign. For example, the function $h(\mathbf{x}) = x_1 \cdot (1-x_2)$ is written as $x_1 \land x_2$.\\
+In this question we study the hypothesis class of \textit{Boolean conjunctions} defined as follows. The instance space is $\cX = \cbrac{0,1}^d$ and the label set is $\mathcal{Y}=\cbrac{0,1}$. A literal over the variables $x_1, \ldots ,x_d$ is a simple Boolean function that takes the form $\mathbf{f}(\mathbf{x}) = x_i$, for some $i \in [d]$, or $\mathbf{f}(\mathbf{x}) = 1-x_i$ for some $i \in [d]$. We use the notation $\overline{x}_i$ as shorthand for $1-x_i$. A conjunction is any product of literals. In Boolean logic, the product is denoted using a $\land$ sign. For example, the function $h(\mathbf{x}) = x_1 \cdot (1-x_2)$ is written as $x_1 \land \overline{x}_2$.\\
 \textbf{VC-dimension of Boolean conjunctions:} Let $\cH^d_{con}$ be the class of boolean conjunctions over the variables $x_1, \ldots , x_d$ $(d \geq 2)$. We already know that this class is finite and thus (agnostic) PAC learnable. In this question we calculate $\text{VCdim}(\cH^d_{con})$.
 \subsection*{1}
 Show that $\abs{\cH^d_{con}} \leq 3^d + 1$.
