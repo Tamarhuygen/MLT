@@ -90,11 +90,7 @@
 \begin{center}
 
   {\huge\bf Machine learning theory}\\
-<<<<<<< HEAD
-  {\large\sc Homeworkset 3 }\\ \vspace{1em}
-=======
   {\large\sc Homeworkset 4 }\\ \vspace{1em}
->>>>>>> 6b3413a0c683c63cacb8b5841b7a3046c76659ef
   \firstName \textsc{ \lastName}, {\sc s}\studId \\
   \email\text{}\\ \smallskip
   \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
@@ -104,21 +100,23 @@
   \bigskip
  \end{center}
 
-<<<<<<< HEAD
  \section*{Exercise 6.7}
  We have shown that for a finite hypothesis class $\cH$, $\text{VCdim}(\cH) \leq \left\lfloor \log \paren*{\abs{\cH}} \right\rfloor$. However, this is just an upper bound. The VC-dimension of a class can be much lower than that:
  \subsection*{1}
  Find an example of a class $\cH$ of functions over the real interval $\cX = [1,0]$ such that $\cH$ is infinite while $\text{VCdim}(\cH) = 1$.
- \begin{solution}
+\begin{solution}
+ Take $\cH_{=1}^{[0,1]}$ from exercise 6.2. That is, $\cH_{=1}^{[0,1]}$ denotes the collection of functions 
+ $h:[0,1]\to \cbrac{0,1}$ such that $\abs{\cbrac{x \in [0,1] \c h(x)=1}}=1$.\\
    Threshold functions?
  \TODO
 \end{solution}
 \subsection*{2}
 Give an example of a finite hypothesis class $\cH$ of functions over the real interval $\cX = [0,1]$, where $\text{VCdim}(\cH) = \left\lfloor \log \paren*{\abs{\cH}} \right\rfloor$.
-\begin{solution}
-  
- \TODO
-\end{solution}
+ \begin{solution}
+   Let $\cH$ denote any hypotheses class with $\abs{\cH}=1$. Then $\mathrm{VCdim}(\cH)=0$ and $\log_2(\abs{\cH})=0$.\\
+   \TODO
+ \end{solution}
+ 
 \section*{Exercise 6.8}
 It is often the case that the VC-dimension of a hypothesis class equals (or can be bounded above by) the number of parameters one needs to set in order to define each hypothesis in the class. For instance, if $\cH$ is the class of axis aligned rectangles in $\R^d$, then $\text{VCdim}(\cH) = 2d$, which is equal to the number of parameters used to define a rectangle in $\R^d$. Here is an example that shows that this is not always the case. We will see that a hypothesis class might be very complex and not even learnable, although it has a small number of parameters.
 
@@ -143,9 +141,23 @@ $\cH = \cbrac{h_{a,b,s}:a \leq b, s \in \cbrac{-1,1}}$ where
   \end{cases}
 \end{equation*}
 Calculate $\text{VCdim}(\cH)$.
-\begin{solution}
-\TODO
-\end{solution}
+ \begin{solution}
+  We will show that $\mathrm{VCdim}(\cH)=3$. Consider the set $C=\cbrac{1,2,3}$. Let $f:C \to \cbrac{-1,1}$ be a function.
+  Take $s = f(2)$, $a=\min{x \in C \c f(x)=f(2)}$ and $b=\max{x \in C \c f(x)=f(2)}$. Then we have that $h_{a,b,s}|_{C}=f$,
+  so $C$ is shattered by $\cH$. Let $D=\cbrac{x_1,x_2,x_3,x_4}$ be given. Without loss of generality, we can assume that $x_1<x_2<x_3<x_4$. Define $g:D\to\cbrac{-1,1}$ by
+  \begin{equation*}
+   g(x)=
+   \begin{cases}
+    1 & \text{ if }x\in \cbrac{x_1,x_3}, \\
+    -1 & \text{ if }x\in \cbrac{x_2,x_4}.
+   \end{cases}
+  \end{equation*}
+Suppose ad absurdum that there exists an $h_{a,b,s} \in \cH$ with $h_{a,b,s}|_{D}=g$. Then if $x_2 \in [a,b]$ it follows that $x_3  \notin [a,b]$ and $x_4 \in [a,b]$, which gives a contradiction. However, we also have that if $x_2 \notin [a,b]$
+it follows that $x_1  \in [a,b]$ and $x_3 \in [a,b]$, which gives a contradiction. 
+Both cases give a contradiction, hence no such $h_{a,b,s}$ exists.
+
+It follows that no subset of $\R$ with four elements is shattered by $\cH$.  
+ \end{solution}
 \section*{Exercise 6.11}
 \textbf{VC of union:} Let $\cH_1, \ldots , \cH_r$ be the hypothesis classes over some fixed domain set $\cX$. Let $d = \max_i \text{VCdim}(\cH_i)$ and assume for simplicity that $d \geq 3$.
 \subsection*{1}
@@ -169,47 +181,6 @@ Prove that for $r = 2$ it holds that
 \TODO
 \end{solution}
 
-
-=======
- 
- \section*{Exercise 6.7}
- \subsection*{(1)}
- \begin{solution}
- Take $\cH_{=1}^{[0,1]}$ from exercise 6.2. That is, $\cH_{=1}^{[0,1]}$ denotes the collection of functions 
- $h:[0,1]\to \cbrac{0,1}$ such that $\abs{\cbrac{x \in [0,1] \c h(x)=1}}=1$.
- \end{solution}
-
- \subsection*{(2)}
- \begin{solution}
- Let $\cH$ denote any hypotheses class with $\abs{\cH}=1$. Then $\mathrm{VCdim}(\cH)=0$ and $\log_2(\abs{\cH})=0$.
- \end{solution}
- 
- \section*{Exercise 6.8}
- 
- \section*{Exercise 6.9}
- \begin{solution}
-  We will show that $\mathrm{VCdim}(\cH)=3$. Consider the set $C=\cbrac{1,2,3}$. Let $f:C \to \cbrac{-1,1}$ be a function.
-  Take $s = f(2)$, $a=\min{x \in C \c f(x)=f(2)}$ and $b=\max{x \in C \c f(x)=f(2)}$. Then we have that $h_{a,b,s}|_{C}=f$,
-  so $C$ is shattered by $\cH$. Let $D=\cbrac{x_1,x_2,x_3,x_4}$ be given. Without loss of generality, we can assume that $x_1<x_2<x_3<x_4$. Define $g:D\to\cbrac{-1,1}$ by
-  \begin{equation*}
-   g(x)=
-   \begin{cases}
-    1 & \text{ if }x\in \cbrac{x_1,x_3}, \\
-    -1 & \text{ if }x\in \cbrac{x_2,x_4}.
-   \end{cases}
-  \end{equation*}
-Suppose ad absurdum that there exists an $h_{a,b,s} \in \cH$ with $h_{a,b,s}|_{D}=g$. Then if $x_2 \in [a,b]$ it follows that $x_3  \notin [a,b]$ and $x_4 \in [a,b]$, which gives a contradiction. However, we also have that if $x_2 \notin [a,b]$
-it follows that $x_1  \in [a,b]$ and $x_3 \in [a,b]$, which gives a contradiction. 
-Both cases give a contradiction, hence no such $h_{a,b,s}$ exists.
-
-It follows that no subset of $\R$ with four elements is shattered by $\cH$.  
- \end{solution}
-
- 
- \section*{Exercise 6.11}
- 
- 
->>>>>>> 6b3413a0c683c63cacb8b5841b7a3046c76659ef
 \end{document}
 
 
