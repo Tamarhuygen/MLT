@@ -127,7 +127,7 @@ Consider the domain $\cX = \R$, and the hypothesis class
 (here, we take $\lceil -1 \rceil = 0$). Prove that $\text{VCdim}(\cH) = \infty$.\\
 \textit{Hint:} There is more than one way to prove the required result. One option is by applying the following lemma: If $0 . x_1 x_2 x_3 \ldots$, is the binary expansion of $x \in (0,1)$, then for any natural number $m$, $\lceil \sin \paren*{2^m \pi x} \rceil = \paren*{1-x_m}$, provided that $\exists k \leq m$ s.t. $x_k =1$.
 \begin{solution}
-Let $\sum_{n=1}^{\infty} \frac{x_n}{2^n}$ be the binary expansion of a real number $x \in \limits{0,1}$. And let $C$ a subset of $\limits{0,1}$, of size $m$ such that the binary expansions of the first $m$ binary digits are all possible $2^m$ combinations of zero and one. Let the $y = \limits{y^1,y^2, \ldots, y^m} =  \cbrac{0,1}^m$ be an arbitrary labeling. Now for each $x^j \in C$ there exists an number $i \in [m]$ and an $h \in \cH$ such that $h(x_i^j) = \lceil \sin \paren*{2^l \pi x}\rceil = 1-x_i^j = y_i $ So if we take $\theta = 2^i \pi$, we have that $\cH$ shatters $C$. And since $C$ can be of arbitrary large size, we have shown that $\text{VCdim}(\cH) = \infty$.
+Let $\sum_{n=1}^{\infty} \frac{x_n}{2^n}$ be the binary expansion of a real number $x \in \paren*{0,1}$. And let $C$ be a subset of $\paren*{0,1}$, of size $m$, such that the binary expansions of the first $m$ binary digits are all possible $2^m$ combinations of zero and one. Let the $y = \paren*{y^1,y^2, \ldots, y^m} =  \cbrac{0,1}^m$ be an arbitrary labeling. Now for each $x^j \in C$ there exists a number $i \in [m]$ and an $h \in \cH$ such that $h(x_i^j) = \lceil \sin \paren*{2^l \pi x}\rceil = 1-x_i^j = y_i $ So if we take $\theta = 2^i \pi$, we have that $\cH$ shatters $C$. And since $C$ can be of arbitrary large size, we have shown that $\text{VCdim}(\cH) = \infty$.
 \TODO
 \end{solution}
 \section*{Exercise 6.9}
@@ -156,7 +156,9 @@ Suppose ad absurdum that there exists an $h_{a,b,s} \in \cH$ with $h_{a,b,s}|_{D
 it follows that $x_1  \in [a,b]$ and $x_3 \in [a,b]$, which gives a contradiction. 
 Both cases give a contradiction, hence no such $h_{a,b,s}$ exists.
 
-It follows that no subset of $\R$ with four elements is shattered by $\cH$.  
+It follows that no subset of $\R$ with four elements is shattered by $\cH$.
+\TODO
+% Moeten we niet ook nog laten zien dat er geen set bestaat met meer dan 4 elementen die wordt geshattert door $\cH$? Ik snap dat dat intiutief al duidelijk is, maar de hele opgave is eigenlijk al intuitief duidelijk.
  \end{solution}
 \section*{Exercise 6.11}
 \textbf{VC of union:} Let $\cH_1, \ldots , \cH_r$ be the hypothesis classes over some fixed domain set $\cX$. Let $d = \max_i \text{VCdim}(\cH_i)$ and assume for simplicity that $d \geq 3$.
