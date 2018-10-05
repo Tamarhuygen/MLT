@@ -127,7 +127,7 @@ Consider the domain $\cX = \R$, and the hypothesis class
 (here, we take $\lceil -1 \rceil = 0$). Prove that $\text{VCdim}(\cH) = \infty$.\\
 \textit{Hint:} There is more than one way to prove the required result. One option is by applying the following lemma: If $0 . x_1 x_2 x_3 \ldots$, is the binary expansion of $x \in (0,1)$, then for any natural number $m$, $\lceil \sin \paren*{2^m \pi x} \rceil = \paren*{1-x_m}$, provided that $\exists k \leq m$ s.t. $x_k =1$.
 \begin{solution}
-Let $\sum_{n=1}^{\infty} \frac{x_n}{2^n}$ be the binary expansion of a real number $x \in \limits{0,1}$. And let $C$ a subset of $\limits{0,1}$, of size $m$ such that the binary expansions of the first $m$ binary digits are all possible $2^m$ combinations of zero and one. Let the $y = \limits{y^1,y^2, \ldots, y^m} =  \cbrac{0,1}^m$ be an arbitrary labeling. Now for each $x^j \in C$ there exists an number $i \in [m]$ and an $h \in \cH$ such that $h(x_i^j) = \lceil \sin \paren*{2^l \pi x}\rceil = 1-x_i^j = y_i $ So if we take $\theta = 2^i \pi$, we have that $\cH$ shatters $C$. And since $C$ can be of arbitrary large size, we have shown that $\text{VCdim}(\cH) = \infty$.
+Let $\sum_{n=1}^{\infty} \frac{x_n}{2^n}$ be the binary expansion of a real number $x \in \paren{0,1}$. And let $C$ a subset of $\paren{0,1}$, of size $m$ such that the binary expansions of the first $m$ binary digits are all possible $2^m$ combinations of zero and one. Let the $y = \paren{y^1,y^2, \ldots, y^m} =  \cbrac{0,1}^m$ be an arbitrary labeling. Now for each $x^j \in C$ there exists an number $i \in [m]$ and an $h \in \cH$ such that $h(x_i^j) = \lceil \sin \paren*{2^l \pi x}\rceil = 1-x_i^j = y_i $ So if we take $\theta = 2^i \pi$, we have that $\cH$ shatters $C$. And since $C$ can be of arbitrary large size, we have shown that $\text{VCdim}(\cH) = \infty$.
 \TODO
 \end{solution}
 \section*{Exercise 6.9}
@@ -143,7 +143,7 @@ $\cH = \cbrac{h_{a,b,s}:a \leq b, s \in \cbrac{-1,1}}$ where
 Calculate $\text{VCdim}(\cH)$.
  \begin{solution}
   We will show that $\mathrm{VCdim}(\cH)=3$. Consider the set $C=\cbrac{1,2,3}$. Let $f:C \to \cbrac{-1,1}$ be a function.
-  Take $s = f(2)$, $a=\min{x \in C \c f(x)=f(2)}$ and $b=\max{x \in C \c f(x)=f(2)}$. Then we have that $h_{a,b,s}|_{C}=f$,
+  Take $s = f(2)$, $a=\min\cbrac{x \in C \c f(x)=f(2)}$ and $b=\max\cbrac{x \in C \c f(x)=f(2)}$. Then we have that $h_{a,b,s}|_{C}=f$,
   so $C$ is shattered by $\cH$. Let $D=\cbrac{x_1,x_2,x_3,x_4}$ be given. Without loss of generality, we can assume that $x_1<x_2<x_3<x_4$. Define $g:D\to\cbrac{-1,1}$ by
   \begin{equation*}
    g(x)=
@@ -178,7 +178,24 @@ Prove that for $r = 2$ it holds that
   \text{VCdim}\paren*{\cH_1 \cup \cH_2}\leq 2d +1.
 \end{equation*}
 \begin{solution}
-\TODO
+We will consider $\cH_1$ and $\cH_2$ to be two collections of sets.
+Let $C$ be a set with $\abs{C}=2d+2$. Define $\cH_{1,C}=\cbrac{A \cap C \c A \in \cH_1}$
+and $\cH_{2,C}=\cbrac{A \cap C \c A \in \cH_2}$. 
+Since both $\cH_1$ and $\cH_2$ have VC-dimension of at most $d$, we have by Sauer's lemma that 
+\begin{equation*}
+ \abs{\cH_{1,C}} \leq \sum_{k=0}^{d}\binom{2d+2}{k}, \ \text{ and } \ \abs{\cH_{2,C}} \leq \sum_{k=0}^{d}\binom{2d+2}{k}.
+\end{equation*}
+Let $(\cH_{1}\cup \cH_{2})_C=\cbrac{A \cap C \c A \in \cH_1 \cup \cH_2}$. Then $C$ is shattered by the union $\cH_1 \cup \cH_2$
+if $(\cH_{1}\cup \cH_{2})_C$ contains all subsets of $C$.
+It holds that
+\begin{align*}
+ \abs{(\cH_{1}\cup \cH_{2})_C} &= \abs{\cH_{1,C} \cup \cH_{2,C}} \\
+ &\leq \abs{\cH_{1,C}} + \abs{\cH_{2,C}} \\
+ &\leq 2\sum_{k=0}^{d}\binom{2d+2}{k} \\
+ &< 2^{2d+2}.
+\end{align*}
+As $C$ contains $2^{2d+2}$ subsets, it follows that $C$ is not shattered by the union $\cH_1 \cup \cH_2$.
+Hence, the VC-dimension of the union is at most $2d+1$.
 \end{solution}
 
 \end{document}
