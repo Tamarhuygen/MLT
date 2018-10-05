@@ -17,6 +17,9 @@
 \usepackage[osf]{mathpazo} % Nice text font
 \usepackage{euler} % Very nice mathmode font
 
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
 
 % bold
 \newcommand{\F}{\ensuremath{\mathbb{F}}}
@@ -187,7 +190,7 @@ Since both $\cH_1$ and $\cH_2$ have VC-dimension of at most $d$, we have by Saue
 \end{equation*}
 Let $(\cH_{1}\cup \cH_{2})_C=\cbrac{A \cap C \c A \in \cH_1 \cup \cH_2}$. Then $C$ is shattered by the union $\cH_1 \cup \cH_2$
 if $(\cH_{1}\cup \cH_{2})_C$ contains all subsets of $C$.
-It holds that
+By \cref{lem:pascal} it holds that
 \begin{align*}
  \abs{(\cH_{1}\cup \cH_{2})_C} &= \abs{\cH_{1,C} \cup \cH_{2,C}} \\
  &\leq \abs{\cH_{1,C}} + \abs{\cH_{2,C}} \\
@@ -197,6 +200,33 @@ It holds that
 As $C$ contains $2^{2d+2}$ subsets, it follows that $C$ is not shattered by the union $\cH_1 \cup \cH_2$.
 Hence, the VC-dimension of the union is at most $2d+1$.
 \end{solution}
+
+
+\begin{lemma}\label{lem:pascal}
+ For any $d \in \N_0$ it holds that
+ \begin{equation*}
+  \sum_{k=0}^{d}\binom{2d+2}{k}<2^{2d+1}.
+ \end{equation*}
+\end{lemma}
+\begin{proof}
+ We will apply induction to $d$. For $d=0$ we have that $\binom{2}{0}=1<2=2^1$, so the statement holds.
+ Let $d\geq 1$ and assume that the statement holds for all $d' \in \N_0$ with $d'<d$.
+ We then have by Pascal's formula that
+ \begin{align*}
+  \sum_{k=0}^{d}\binom{2d+2}{k} &= 1+\sum_{k=1}^{d}\binom{2d+1}{k}+\binom{2d+1}{k-1} \\
+  &= 2+\sum_{k=1}^{d}\binom{2d}{k}+\binom{2d}{k-1}+\sum_{k=1}^{d-1}\binom{2d}{k}+\binom{2d}{k-1} \\
+  &= 2+\binom{2d}{d}+\binom{2d}{d-1}+2\sum_{k=1}^{d-1}\binom{2d}{k}+\binom{2d}{k-1} \\
+  &= 2+\binom{2d}{d}+\binom{2d}{d-1}+2\sum_{k=1}^{d-1}\binom{2d}{k}+2\sum_{k=0}^{d-2}\binom{2d}{k} \\
+  &= \binom{2d}{d}+\binom{2d}{d-1}-2\binom{2d}{d}+2\sum_{k=0}^{d-1}\binom{2d}{k}+2\sum_{k=0}^{d-1}\binom{2d}{k} \\
+  &= \binom{2d}{d-1}-\binom{2d}{d}+4\sum_{k=0}^{d-1}\binom{2d}{k} \\
+  &= \binom{2d}{d-1}-\binom{2d}{d}+4\sum_{k=0}^{d-1}\binom{2(d-1)+2}{k} \\
+  &< \binom{2d}{d-1}-\binom{2d}{d}+4\cdot 2^{2(d-1)+1} \\
+  &= \binom{2d}{d-1}-\binom{2d}{d}+ 2^{2d+1} \\
+  &< 2^{2d+1}.
+ \end{align*}
+ This completes the proof.
+\end{proof}
+
 
 \end{document}
 
