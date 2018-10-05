@@ -115,6 +115,15 @@ Give an example of a finite hypothesis class $\cH$ of functions over the real in
  \begin{solution}
    Let $\cH$ denote any hypotheses class with $\abs{\cH}=1$. Then $\mathrm{VCdim}(\cH)=0$ and $\log_2(\abs{\cH})=0$.\\
    \TODO
+   Let $s_1,s_2 \in \cbrac{0,1}$ and let $ \cH$ be the hypothesis class that consists of all functions $h: [0,1] \mapsto \cbrac{s_1,s_1}$ that have
+   \begin{equation*}
+     h(x) = \begin{cases}
+         s_1 & \mbox{if } x \leq \frac{1}{2} \\
+         s_2 & \mbox{if } x > \frac{1}{2}
+       \end{cases}
+     \end{equation*}
+     We can see that any set of two points taken from $[1.0]$ is shattered by $\cH$, but with any set of three points or more, we cannot give the same labeling to the outer two points, but a different one to the middle point(s). So $\text{VCdim} = 2$.
+   We can see that $\abs{\cH} = 4$ and $\text{VCdim}(\cH) = 2 = \lfloor \log_2\paren*{\abs{\cH}} \rfloor$.
  \end{solution}
  
 \section*{Exercise 6.8}
@@ -170,8 +179,25 @@ Prove that
 \textit{Hint:} Take the set of $k$ examples and assume that they are shattered by the union class. Therefore, the union class can produce all $2^k$ possible labelings on these examples. Use Sauer's lemma to show that the union class cannot produce more than $rk^d$  labelings. Therefore $2^k < rk^d$. Now use Lemma A.2.
 
 Lemma A.2:\\
-Let $a \geq 1$ and $b>0$. Then: $x \geq 4a \log \paren*{2a} +2b \implies x \geq \log \paren*{x}+b$.
+Let $a \geq 1$ and $b>0$. Then: $x \geq 4a \log \paren{2a} +2b \implies x \geq a \log \paren{x}+b$.
 \begin{solution}
+  To prove this, we make use of the hint and take a set of k examples and assume they are shattered by the union class.\\
+  Now for the growth function of $k$ it holds that:
+  \begin{equation*}
+    \tau_{\cup^r_{i=1} \cH_i}\paren*{k} = \max_{C\subseteq \cX : \abs{C} = k} \abs*{\paren*{\bigcup_{i=1}^r \cH_i}_C}.
+  \end{equation*}
+  The amount of functions each subset $\cH_i$ contributes to this maximum is lesser or equal to the growth function of that subset, that is:
+  \begin{equation*}
+    \max_{C\subseteq \cX : \abs{C} = k} \abs*{\paren*{\bigcup_{i=1}^r \cH_i}_C} \leq \sum_{i = 1}^r \max_{C\subseteq \cX : \abs{C} = k} \abs{\cH_{i,C}}.
+  \end{equation*}
+  According to Sauer's lemma, we have that:
+  \begin{equation*}
+    \sum_{i = 1}^r \max_{C\subseteq \cX : \abs{C} = k} \abs{\cH_{i,C}} \leq \sum_{i=1}^r \sum_{j=1}^d {k \choose j} \leq rk^d
+  \end{equation*}
+  Now indeed because the union class shatters the set of $k$ examples, we have that the union class can produce all $2^k$ labelings and thus it holds that $2^k < rk^d$. Hoe de f moeten we nu dat lemma gebruiken? Die implicatie en die $\geq$ staan de verkeerde kant op, of kun je die dan juist op een slimme manier omdraaien?
+  \begin{align*}
+    2^k < rk^d & \iff k < \frac{\log r k^d}{\log(2)}
+  \end{align*}
 \TODO
 \end{solution}
 \subsection*{2}
