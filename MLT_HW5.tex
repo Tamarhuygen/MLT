@@ -1,0 +1,177 @@
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo} % Nice text font
+\usepackage{euler} % Very nice mathmode font
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\E}{\ensuremath{\mathcal{E}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+\newcommand{\cH}{\ensuremath{\mathcal{H}}}
+\newcommand{\cD}{\ensuremath{\mathcal{D}}}
+\newcommand{\cX}{\ensuremath{\mathcal{X}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\newcommand{\firstName}  {Twan}
+\newcommand{\lastName}   {Koperberg}
+\newcommand{\studId}     {0713309 (Leiden)}
+\renewcommand{\email}    {twankop@gmail.com}
+
+\newcommand{\firstNameII}  {Tamar}
+\newcommand{\lastNameII}   {Huygen}
+\newcommand{\studIdII}     {10907483 (UvA)}
+\newcommand{\studIdIII}    {2556474 (VU)}
+\newcommand{\emailII}     {tamar@huygen.nl}
+
+\begin{document}
+\begin{center}
+
+  {\huge\bf Machine learning theory}\\
+  {\large\sc Homeworkset 5 }\\ \vspace{1em}
+  \firstName \textsc{ \lastName}, {\sc s}\studId \\
+  \email\text{}\\ \smallskip
+  \firstNameII \textsc{ \lastNameII}, \studIdII, \studIdIII\\
+  \emailII \\ \bigskip
+  \today \\\bigskip
+  \hrule
+  \bigskip
+\end{center}
+
+
+ \section*{Exercise 7.3}
+ \subsection*{1}
+ Consider a hypothesis class $\cH = \bigcup_{n=1}^\infty \cH_n$, where for every $n \in \N$, $\cH_n$ is finite. Find a weighting function $w : \cH \mapsto [0,1]$ such that $\sum_{h \in \cH} w(h) \leq 1$ and so that for all $h \in \cH$, $w(h)$ is determined by $n(h) = \min \cbrac{n:h \in \cH_n}$ and by $\abs*{\cH_{n(h)}}$.\\
+ \textit{Clarification:} your $w(h)$ does not have to depend on $n(h)$ and $\abs*{\cH_{n(h)}}$ \textit{only}.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{2}
+Define such a function $w$ when for all $n$ $\cH_n$ is countable (possibly infinite).
+ \begin{solution}
+\TODO
+ \end{solution}
+ 
+\section*{Exercise 7.5}
+In this question we wish to show a No-Free-Lunch result for nonuniform learnability: namely, that, over any infinite domain, the class of \textit{all} functions is not learnable even under the relaxed nonuniform variation of learning.
+
+Recall that an algorithm, $A$, \textit{nonuniformly learns} a hypothesis class $\cH$ if there exists a function $m_{\cH}^{\text{NUL}}:(0,1)^2 \times \cH \mapsto \N$ such that, for every $\varepsilon, \delta \in (0,1)$ and for every $h \in \cH$, if $m \geq m_{\cH}^{\text{NUL}}(\varepsilon, \delta, h)$ then for every distribution $\cD$, with probability of at least $1-\delta$ over the choice of $S \sim \cD^m$, it holds that
+\begin{equation*}
+  L_{\cD}\paren*{A\paren*{S}} \leq L_{\cD}\paren*{h} + \varepsilon.
+\end{equation*}
+If such an algorithm exists then we say that $\cH$ is \textit{nonuniformly learnable}.
+\subsection*{1}
+Let $A$ be a nonuniform learner for a class $\cH$. For each $n \in \N$ define $\cH_n^A = \cbrac{ h \in \cH : m^{\text{NUL}}(0.1,0.1,h)\leq n}$. Prove that each such class $\cH_n$ has a finite VC-dimension.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{2}
+Prove that if a class $\cH$ is nonuniformly learnable then there are classes $\cH_n$ so that $\cH = \bigcup_{n \in \N}\cH_n$ and, for every $n \in \N$, $\text{VCdim}(\cH_n)$ is finite.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{3}
+Let $\cH$ be a class that shatters an infinite set. Then, for every sequence of classes $\paren*{\cH_n : n \in \N}$ such that $\cH = \bigcup_{n \in \N} \cH_n$, there exists some $n$ for which $\text{VCdim} \paren*{\cH_n} = \infty$.\\
+\textit{Hint:} Given a class $\cH$ that shatters some infinite set $K$, and a sequence of classes $\paren*{\cH_n : n \in \N}$, each having a finite VC-dimension, start by defining subsets $K_n \subseteq K$ such that, for all $n$, $\abs*{K_n} > \text{VCdim} \paren*{\cH_n}$ and for any $n \neq m$, $K_n \cap K_m = \emptyset$. Now pick for each such $K_n$ a function $f_n : K_n \mapsto \cbrac{0,1}$ so that no $h \in \cH_n$ agrees with $f_n$ on the domain $K_n$. Finally, define $f : X \mapsto \cbrac{0,1}$ by combining these $f_n$'s and prove that $f \in \paren*{\cH \setminus \bigcup_{n \in \N} \cH_n}$.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{4}
+Construct a class $\cH_1$ of functions from the unit interval $[0,1]$ to $\cbrac{0,1}$ that is nonuniformly learnable, but not PAC learnable.
+\begin{solution}
+\TODO
+\end{solution}
+\subsection*{5}
+Construct a class $\cH_2$ of functions from the unit interval $[0,1]$ to $\cbrac{0,1}$ that is not nonuniformly learnable.
+\begin{solution}
+\TODO
+\end{solution}
+
+\section*{Exercise 4}
+Prove the Symmetrization Lemma (= double sample trick):\\
+For any $\varepsilon >0$ such that $n \varepsilon^2 \geq 2$,
+\begin{equation*}
+  \P_n\left[ \sup_{f \in \mathcal{F}} (R(f) - R_n(f)) \geq \varepsilon \right] \leq 2 \P_{2n}\left[ \sup_{f \in \mathcal{F}} (R'_n(f) - R_n(f)) \geq \frac{\varepsilon}{2} \right],
+\end{equation*}
+where $R$ is the risk, $R_n$ empirical risk for the sample $Z_1, \ldots, Z_n$ and $R'_n$ emperical risk for the ghost sample $Z'_1, \ldots , Z'_n$.
+ \begin{solution}
+\TODO
+ \end{solution}
+
+
+\end{document}
+
+
+
+
+%%% End:
