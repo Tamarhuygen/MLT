@@ -114,12 +114,14 @@
  Consider a hypothesis class $\cH = \bigcup_{n=1}^\infty \cH_n$, where for every $n \in \N$, $\cH_n$ is finite. Find a weighting function $w : \cH \mapsto [0,1]$ such that $\sum_{h \in \cH} w(h) \leq 1$ and so that for all $h \in \cH$, $w(h)$ is determined by $n(h) = \min \cbrac{n:h \in \cH_n}$ and by $\abs*{\cH_{n(h)}}$.\\
  \textit{Clarification:} your $w(h)$ does not have to depend on $n(h)$ and $\abs*{\cH_{n(h)}}$ \textit{only}.
 \begin{solution}
-\TODO
+  \TODO
+  Finite hypothesis classes: Functions where exactly $n$ points map to 1. Size $\abs{\cH_n}$? Functions that divide $[0,1]$ into $n$ equal area's and each function assigns 1 to a different combination of these intervals. 
 \end{solution}
 \subsection*{2}
 Define such a function $w$ when for all $n$ $\cH_n$ is countable (possibly infinite).
  \begin{solution}
-\TODO
+   \TODO
+   \textit{Tamar:} Random thoughts... Somewhere in the book they mention the hypothesis classes of all polynomials where $n$ is the degree of the polynomial. If we can show that all $\cH_n$ are uniform convergenct, we can have that $\cH$ is nonuniform learnable. We can choose the weight function as $\frac{1}{2^n}$.
  \end{solution}
  
 \section*{Exercise 7.5}
@@ -133,28 +135,44 @@ If such an algorithm exists then we say that $\cH$ is \textit{nonuniformly learn
 \subsection*{1}
 Let $A$ be a nonuniform learner for a class $\cH$. For each $n \in \N$ define $\cH_n^A = \cbrac{ h \in \cH : m^{\text{NUL}}(0.1,0.1,h)\leq n}$. Prove that each such class $\cH_n$ has a finite VC-dimension.
 \begin{solution}
-\TODO
+  According to the definition of uniform convergence, a hypothesis class $\cH$ is uniform convergent if for every $\varepsilon, \delta \in (0,1)$ and distribution $\cD$, there exists a learning algorithm $A$, and a sample complexity $m_{\cH}^{\text{UC}}$, such that if $m \geq m_{\cH}^{\text{UC}}$, with probability $1- \delta$ over the choice of $S\sim \cD^m$ it holds that
+  \begin{equation*}
+    \forall h \in \cH, L_{\cD}(A(S)) \leq L_{\cD}(h) + \varepsilon.
+  \end{equation*}
+  So according to this definition, if we take $\varepsilon = 0.1$ and $\delta = 0.1$, and if we can find such a $m_{\cH_n}^{\text{UC}}(0.1,0.1) < \infty$ for each $n \in \N$, then each $\cH_n$ has the uniform convergence property.
+  According to the definition of $m_{\cH_n}^{\text{NUL}}$, we have for every $h \in \cH_n$, if $m \geq m_{\cH}^{NUL}(0.1, 0.1, h)$ then for every distribution $\cD$, with probability of at least $0.9$ over the choice of $S \sim \cD^M$ we have that $L_{\cD}(A(S)) \leq L_{\cD}(h) + 0.1$.\\
+  Because we have that for all $h \in \cH_n$ it holds that $m_{\cH_n}^{NUL}(0.1,0.1,h) \leq n$, and the definitions of $m_{\cH_n}^{NUL}(0.1,0.1,h)$ and $m_{\cH_n}^{\text{UC}}$, it holds that
+  \begin{equation*}
+    m^{UC}_{\cH_n}(0.1,0.1) \leq \max_{h \in \cH_n}m^{NUL}(0.1,0.1,h) \leq n.
+  \end{equation*}
+  So for all $n \in \N$ and for all $\cH_n$, we have found a sample complexity $m_{\cH_n}^{\text{UC}}(0.1,0.1)$, so for all $n \in \N$, $\cH_n$ has the uniform convergence property and from the fundamental theory of PAC learning, it follows that $\cH_n$ has a finite VC-dimension.
+  
+\TODO 
 \end{solution}
 \subsection*{2}
 Prove that if a class $\cH$ is nonuniformly learnable then there are classes $\cH_n$ so that $\cH = \bigcup_{n \in \N}\cH_n$ and, for every $n \in \N$, $\text{VCdim}(\cH_n)$ is finite.
 \begin{solution}
-\TODO
+ According to theorem 7.2 in the book, A hypothesis class of binary classifiers is nonuniform learnable if and only if it is a countable union of agnostic PAC learnable hypothesis classes. According to the Fundamental theorem of PAC learning, if a hypothesis class is (agnostic) PAC learnable, it's VC-dimension is finite. 
+\TODO 
 \end{solution}
+
 \subsection*{3}
 Let $\cH$ be a class that shatters an infinite set. Then, for every sequence of classes $\paren*{\cH_n : n \in \N}$ such that $\cH = \bigcup_{n \in \N} \cH_n$, there exists some $n$ for which $\text{VCdim} \paren*{\cH_n} = \infty$.\\
 \textit{Hint:} Given a class $\cH$ that shatters some infinite set $K$, and a sequence of classes $\paren*{\cH_n : n \in \N}$, each having a finite VC-dimension, start by defining subsets $K_n \subseteq K$ such that, for all $n$, $\abs*{K_n} > \text{VCdim} \paren*{\cH_n}$ and for any $n \neq m$, $K_n \cap K_m = \emptyset$. Now pick for each such $K_n$ a function $f_n : K_n \mapsto \cbrac{0,1}$ so that no $h \in \cH_n$ agrees with $f_n$ on the domain $K_n$. Finally, define $f : X \mapsto \cbrac{0,1}$ by combining these $f_n$'s and prove that $f \in \paren*{\cH \setminus \bigcup_{n \in \N} \cH_n}$.
 \begin{solution}
+We will follow the hint and define for each $n \in \N$ subset $K_n \subseteq K$ in the following way: Because $\abs*{K} = infty$, we can always define a function $g : \N \mapsto K$. Now let $m_0 = [\text{VCdim}(\cH_n)+1]$ and for all $n in \N$ let $m_{n+1} = \cbrac{c \in \N: \max(m_n)< c \leq \max(m_n)+\text{VCdim}(\cH_n)+1}$. Now we define $K_n = {k \in K, c in m_n: g(c) = k}$. Now we have that $\abs*{K_n} > \text{VCdim}(\cH_n)$ and for any $n \neq m$, $K_n \cap K_m = \emptyset$. Because for all $n \in \N$, $K_n$ is not shattered by $\cH_n$, we can always find a labeling on the elements of $K_n$ that is not provided by $\cH_n$. We can define $f_n : K_n \mapsto \cbrac{0,1}$ as the function that maps $K_n$ to this labeling. Now no $h \in \cH_n$ agrees with $f_n$ on the domain $K_n$. \\
+Now we define $f:\cX \mapsto \cbrac{0,1}$ 
 \TODO
 \end{solution}
 \subsection*{4}
 Construct a class $\cH_1$ of functions from the unit interval $[0,1]$ to $\cbrac{0,1}$ that is nonuniformly learnable, but not PAC learnable.
 \begin{solution}
-\TODO
+\TODO Example 7.1 in the book?
 \end{solution}
 \subsection*{5}
 Construct a class $\cH_2$ of functions from the unit interval $[0,1]$ to $\cbrac{0,1}$ that is not nonuniformly learnable.
 \begin{solution}
-\TODO
+\TODO $\cH^{all}$? otherwise a union class with an $n$ such that $\text{VCdim}(\cH_n) = \infty$?
 \end{solution}
 
 \section*{Exercise 4}
@@ -174,4 +192,9 @@ where $R$ is the risk, $R_n$ empirical risk for the sample $Z_1, \ldots, Z_n$ an
 
 
 
+%%% End:
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
 %%% End:
