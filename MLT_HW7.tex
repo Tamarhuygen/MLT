@@ -1,0 +1,192 @@
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo} % Nice text font
+\usepackage{euler} % Very nice mathmode font
+\usepackage[many]{tcolorbox}    
+
+
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
+\def \E {{\mathbb E}}
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+\def \P {{\mathbb P}}
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+\newcommand{\cH}{\ensuremath{\mathcal{H}}}
+\newcommand{\cD}{\ensuremath{\mathcal{D}}}
+\newcommand{\cX}{\ensuremath{\mathcal{X}}}
+\newcommand{\cY}{\ensuremath{\mathcal{Y}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+                
+\newtcolorbox{definitionbox}[1]{%
+    tikznode boxed title,
+    enhanced,
+    arc=0mm,
+    interior style={white},
+    attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    colbacktitle=white,coltitle=black,
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    title={#1}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\begin{document}
+\begin{center}
+    {\huge\bf Machine learning theory}\\
+    {\large\sc Homework set 6 }\\ \vspace{1em}
+    {Aras} \textsc{ {Selvi}} \\
+    {Daniel} \textsc{ {Figueroa}}\\
+    {Fredrik} \textsc{ {Gustafsson}}\\
+    {Lasse} \textsc{ {Vuursteen}}\\
+    {Martijn} \textsc{ {Bouman}}\\
+    {Ruud} \textsc{ {Nimour}}\\
+    {Tamar} \textsc{ {Huygen}}\\
+    {Twan} \textsc{ {Koperberg}}\\
+    {Vincent} \textsc{ {Hennink}}\\ 
+    \bigskip
+    \today \bigskip
+    \hrule
+    \bigskip
+\end{center}
+
+\section{Notation and Definitions}
+\begin{definitionbox}{Definition 1 (Mix-loss Game).}
+\textbf{Protocol:} For $t = 1,2, \ldots$
+\begin{itemize}
+    \item Learner chooses a distribution $\mathbf{w}_t \in \triangle_K$ on K experts.
+    \item Adversary reveals loss vector $\mathbf{l}_t \in (-\infty , \infty]^K$.
+    \item Learner's loss is the mix loss $-\ln \paren*{\sum_{k=1}^K} w_t^k e^{-l_t^k}$.
+\end{itemize}
+%End for.\\
+\textbf{Objective:} Regret w.r.t. best expert after $T$ rounds:
+\begin{equation*}
+    R_T = \sum^T_{t=1} - \ln \paren*{\sum_{k=1}^K w_t^k e^{-l_t^k}} - \min_k \sum_{t=1}^T l_t^k .
+\end{equation*}
+\end{definitionbox}
+\begin{definitionbox}{Definition 2 (dot-loss Game).}
+\textbf{Protocol:} For $t = 1,2, \ldots$
+\begin{itemize}
+    \item Learner chooses a distribution $\mathbf{w}_t \in \triangle_K$ on K experts.
+    \item Adversary reveals loss vector $\mathbf{l}_t \in [0,1]^K$.
+    \item Learner's loss is the dot product $\ip{\mathbf{w}_t , \mathbf{l}_t}$.
+\end{itemize}
+%End for.\\
+\textbf{Objective:} Regret w.r.t. best expert after $T$ rounds:
+\begin{equation*}
+    R_T = \sum^T_{t=1} \ip{\mathbf{w}_t , \mathbf{l}_t} - \min_k \sum_{t=1}^T l_t^k .
+\end{equation*}
+\end{definitionbox}
+
+\section{Exercises}
+\subsection*{1. Variational (Mirror Descent) form of the AA}
+The Aggregating Algorithm plays $w_1^k = \frac{1}{K}$ and updates as
+\begin{align*}
+    w_{t+1}^k &= \frac{w_t^k e^{-l_t^k}}{\sum_{j=i}^K w_t^j e^{-l_t^j}}. &&\mbox{(AA, incremental)}
+\end{align*}
+Let us define the \textit{Kullback-leibler divergence} aka \textit{relative entropy} (notion of distance between probability distributions) from $\mathbf{p} \in \triangle_K$ to $\mathbf{q} \in \triangle_K$ by
+\begin{equation*}
+    \mbox{KL}(\mathbf{p}, \mathbf{q}) = \sum_{k=1}^K p_k \ln \frac{p_k}{q_k}.
+\end{equation*}
+Fix $\mathbf{w}_t \in \triangle_K$ and $\mathbf{l}_t \in \R^K$. Consider the minimisation problem 
+\begin{equation} \label{eq:min}
+    \min_{\mathbf{w} \in \triangle_K} \mathbf{w}^T\mathbf{l}_t + \mbox{KL}(\mathbf{w}, \mathbf{w_t})
+\end{equation}
+\subsubsection*{a}
+Show that the minimiser of problem (\ref{eq:min}) is $\mathbf{w_{t+1}}$.
+\subsubsection*{b}
+Show that the value of problem (\ref{eq:min}) is the mix loss.
+
+\subsubsection*{Big picture:}
+We can see another motivation for the AA. It chooses te weights $\mathbf{w}_{t+1}$ to balance the fit on the new losses $\mathbf{l}_t$ with proximity to the previous weights $w_t$, which encode all information learned from the past. 
+
+\subsection*{2. Adapting to $T$ for dot loss.}
+We saw in the lecture that the Hedge algorithm (for the dot-loss game) with learning rate $\eta = \sqrt{\frac{8\ln K}{T}}$ has regret after $T$ rounds bounded by $\sqrt{T/ 2 \ln K}$. In practice, we may not know $T$ in advance, or we may even desire an algorithm that has good guarantees for all $T$ simultaiously, i.e. that keeps on operating forever.
+
+Consider the following exponential (base $3$) restarting schedule to accomplish this. We run Hedge for $1$ round, with $\eta$ tuned for $1$ round. After that, we restart Hedge for $3$ rounds with $\eta$ tuned for $3$ rounds. After that, we restart Hedge again after $9$ rounds with $\eta$ tuned for $9$ rounds, and so on.
+
+Prove that the overall accumulated regret of Hedge with this scheme is bounded above by a universal constant times $\sqrt{T \ln K}$. (Your argument should work for $T$ that are not a power of $3$).
+
+\subsection*{3. Dot loss lower bound.}
+Consider the $K = 2$ expert version of the $T$-round dot loss game (Definition ). In this exercise we will prove that the worst-case expected regret is at least of order $\sqrt{T}$. Consider an adversary that for each $t = 1, \ldots, T$ assigns loss vector $\mathbf{l}_t = (0,1)$ or $\mathbf{l}_t = (1,0)$ i.i.d. uniformly at random.
+\subsubsection*{a}
+\begin{enumerate}[i]
+    \item Show that the expected loss of any learner is $T/2$.
+    \item Show that $2(1/2 - l^k_t)$ is Rademacher for each $k \in \cbrac{1,2}$.
+    \item Show that $\sum_{t=1}^T (1/2 - l_t^2) = - \sum_{t=1}^T(1/2 - l_t^1)$.
+\end{enumerate}
+\subsubsection*{b} Argue that the expected loss of the best expert is bounded above by \\ 
+$\Ev \left[ \min_k \sum_{t=1}^T l_t^k \right] \leq T/2 - c \sqrt{T}$ for some $c>0$. You can use the following fact: Let $X_1, \ldots , X_T$ be i.i.d. Rademacher random variables. Then
+\begin{equation*}
+    \Ev \abs*{\sum_{t=1}^T X_t} \in \left[ \sqrt{\frac{2(T-1)}{\pi}}, \sqrt{\frac{2(T+1)}{\pi}} \right].
+\end{equation*}
+\end{document}
+
+%%% End:
