@@ -76,6 +76,9 @@
 \newcommand{\cY}{\ensuremath{\mathcal{Y}}}
 \newcommand{\sgn}{\mathrm{sgn}}
 
+\newcommand{\bw}{\ensuremath{\mathbf{w}}} % weight vector
+\newcommand{\bl}{\ensuremath{\mathbf{l}}} % loss vector
+
 % Solutions use a modified proof environment
 \newenvironment{solution}
                {\let\oldqedsymbol=\qedsymbol
@@ -123,7 +126,7 @@
 \begin{itemize}
     \item Learner chooses a distribution $\mathbf{w}_t \in \triangle_K$ on K experts.
     \item Adversary reveals loss vector $\mathbf{l}_t \in (-\infty , \infty]^K$.
-    \item Learner's loss is the mix loss $-\ln \paren*{\sum_{k=1}^K} w_t^k e^{-l_t^k}$.
+    \item Learner's loss is the mix loss $-\ln \paren*{\sum_{k=1}^K w_t^k e^{-l_t^k}}$.
 \end{itemize}
 %End for.\\
 \textbf{Objective:} Regret w.r.t. best expert after $T$ rounds:
@@ -149,7 +152,7 @@
 \subsection*{1. Variational (Mirror Descent) form of the AA}
 The Aggregating Algorithm plays $w_1^k = \frac{1}{K}$ and updates as
 \begin{align*}
-    w_{t+1}^k &= \frac{w_t^k e^{-l_t^k}}{\sum_{j=i}^K w_t^j e^{-l_t^j}}. &&\mbox{(AA, incremental)}
+    w_{t+1}^k &= \frac{w_t^k e^{-l_t^k}}{\sum_{j=1}^K w_t^j e^{-l_t^j}}. &&\mbox{(AA, incremental)}
 \end{align*}
 Let us define the \textit{Kullback-leibler divergence} aka \textit{relative entropy} (notion of distance between probability distributions) from $\mathbf{p} \in \triangle_K$ to $\mathbf{q} \in \triangle_K$ by
 \begin{equation*}
@@ -163,6 +166,20 @@ Fix $\mathbf{w}_t \in \triangle_K$ and $\mathbf{l}_t \in \R^K$. Consider the min
 Show that the minimiser of problem (\ref{eq:min}) is $\mathbf{w_{t+1}}$.
 \subsubsection*{b}
 Show that the value of problem (\ref{eq:min}) is the mix loss.
+\begin{solution} 
+ By part (\textit{a}), we have that
+ \begin{align*}
+  \min_{\bw \in \triangle_{K}} \ip{\bw,\bl_t} + \mathrm{KL}(\bw,\bw_t) 
+  &= \ip{\bw_{t+1},\bl_t} + \mathrm{KL}(\bw_{t+1},\bw_t) \\
+  &= \ip{\bw_{t+1},\bl_t} + \sum_{k=1}^K w_{t+1}^{k} \log\paren*{\frac{w_{t+1}^{k}}{w_{t}^{k}}} \\
+  &= \sum_{k=1}^K w_{t+1}^{k} \paren*{\log\paren*{\frac{w_{t+1}^{k}}{w_{t}^{k}}} + l_t^k} \\
+  &= \sum_{k=1}^K w_{t+1}^{k} \paren*{\log\paren*{\frac{e^{-l_t^k}}{\sum_{j=1}^K w_t^j e^{-l_t^j}}} + l_t^k} \\
+  &= -\log\paren*{\sum_{j=1}^K w_t^j e^{-l_t^j}}\sum_{k=1}^K w_{t+1}^{k}  \\
+  &= -\log\paren*{\sum_{j=1}^K w_t^j e^{-l_t^j}},
+ \end{align*}
+which is the mix-loss
+\end{solution}
+
 
 \subsubsection*{Big picture:}
 We can see another motivation for the AA. It chooses te weights $\mathbf{w}_{t+1}$ to balance the fit on the new losses $\mathbf{l}_t$ with proximity to the previous weights $w_t$, which encode all information learned from the past. 
@@ -173,6 +190,33 @@ We saw in the lecture that the Hedge algorithm (for the dot-loss game) with lear
 Consider the following exponential (base $3$) restarting schedule to accomplish this. We run Hedge for $1$ round, with $\eta$ tuned for $1$ round. After that, we restart Hedge for $3$ rounds with $\eta$ tuned for $3$ rounds. After that, we restart Hedge again after $9$ rounds with $\eta$ tuned for $9$ rounds, and so on.
 
 Prove that the overall accumulated regret of Hedge with this scheme is bounded above by a universal constant times $\sqrt{T \ln K}$. (Your argument should work for $T$ that are not a power of $3$).
+
+\begin{solution}
+ Let $R^{H}_T$ denote the regret of the Hedge algoritm at time $T$.
+ Let $R^{A}_T$ denote the total regret incurred by the above algorithm until time $T$.
+ We will apply induction to $T$. For each $T \in \N$ we have that $R_T \leq \sqrt{\tfrac{t}{2}\log(K)}$.
+ So, for $T=1$ we have that 
+ \begin{align*}
+  R^A_1 &= R^H_1 \\
+  & \leq \sqrt{\tfrac{1}{2}\log(K)} \\
+  & \leq \sqrt{\log(K)}.
+  \end{align*}
+Thus for $T=1$ the statement holds.
+
+Let $T > 1$ be given and assume the statement holds for all smaller $T$.
+ Let $H_{n,m}$ denote the $n$-th generalized harmonic number of order $m$, i.e.
+ \begin{equation*}
+  H_{n,m}=\sum_{k=1}^{n}\frac{1}{k^m}.
+ \end{equation*}
+ Then we have that
+ \begin{align*}
+  R^{A}_{T} &\leq \sum_{n=0}^{\ceil{\log_3(2T + 1)} - 1} \sum_{t=1}^{3^n} \sqrt{\tfrac{t}{2}\log(K)} \\
+  &=\sqrt{\frac{\log(K)}{2}} \sum_{n=0}^{\ceil{\log_3(2T + 1)} - 1} \sum_{t=1}^{3^n} \sqrt{t} \\
+  &=\sqrt{\frac{\log(K)}{2}} \sum_{n=0}^{\ceil{\log_3(2T + 1)} - 1} H_{3^n,2} \\
+ \end{align*}
+ \TODO
+\end{solution}
+
 
 \subsection*{3. Dot loss lower bound.}
 Consider the $K = 2$ expert version of the $T$-round dot loss game (Definition ). In this exercise we will prove that the worst-case expected regret is at least of order $\sqrt{T}$. Consider an adversary that for each $t = 1, \ldots, T$ assigns loss vector $\mathbf{l}_t = (0,1)$ or $\mathbf{l}_t = (1,0)$ i.i.d. uniformly at random.
