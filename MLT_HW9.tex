@@ -27,7 +27,7 @@
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}
 
-\def \E {{\mathbb E}}
+
 % bold
 \newcommand{\F}{\ensuremath{\mathbb{F}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
@@ -36,7 +36,7 @@
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
 % 
-\def \P {{\mathbb P}}
+
 % calligraphic
 \newcommand{\A}{\ensuremath{\mathcal{A}}}
 \newcommand{\I}{\ensuremath{\mathcal{I}}}
@@ -149,7 +149,7 @@
 You can use the following bound, known as Chernoff's bound for Gausssians.
 For $X_1,\ldots ,X_n$ i.i.d. unit-variance Gaussian random variables, the empirical estimate $\hat{\mu}_n = \frac{1}{n} \sum _{i=1}^n X_i$ satisfies
 \begin{align*}
-    & \P(\hat{\mu}_n - \mu \geq \varepsilon) \leq e^{-n\varepsilon^2/2} && \mbox{and} && \P(\hat{\mu}_n - \mu \leq -\varepsilon) \leq e^{-n\varepsilon^2/2}.
+    & \P(\hat{\mu}_n - \mu \geq \varepsilon) \leq e^{-\tfrac{n}{2}\varepsilon^2} && \mbox{and} && \P(\hat{\mu}_n - \mu \leq -\varepsilon) \leq e^{-\tfrac{n}{2}\varepsilon^2}.
 \end{align*}
 This is Equation (2.3) in the Bubeck \& Cesa-Bianchi monograph, with $\psi (\lambda) = \lambda^2/2$ and $\psi^* (\varepsilon) = \varepsilon^2/2$.
 \section{Exercises}
@@ -164,9 +164,34 @@ $\psi^*(\varepsilon) = \frac{\varepsilon^2}{2}$.
 \subsubsection*{b}
 $(\psi^*)^{-1}(z) = \pm \sqrt{2z}$.
 \subsection*{Bigger Picture} the purpose of this exercise is to make the Bubeck/Cesa-Bianchi reading material on UCB more readable
+
 \subsection*{2. The Blooper Reel}
 \begin{itemize}
     \item \textbf{Deterministic fails for Adversarial Bandits} Show that any deterministic algorithm (UCB included) has linear regret in the adversarial bandit setting. Hint: you can use the argument on the top of page 23.
+\end{itemize}  
+\begin{solution}
+We assume that the adversary chooses the losses $\ell_{t}^{i}$ at time $t$ dependent on the distribution $p_t \in \triangle_K$ chosen at time $t$ by the learner. The learner chooses an action deterministically at each time step, 
+i.e. $p_t \in \cbrac{\delta_i \c i \in [K]}$ for all $t$, 
+where $\delta_i$ denotes the Dirac measure on $[K]$ with $\delta_i(\cbrac{i})=1$.
+Now set
+\begin{equation*}
+ \ell_{t}^{i}=
+ \begin{cases}
+  1 & \text{ if }p_t=\delta_i \\
+  0 & \text{ otherwise}.
+ \end{cases}
+\end{equation*}
+Then for each deterministic strategy we have for the pseudo-regret at time $T$ that 
+\begin{align*}
+ \bar{R}_T &= \Ev\paren*{\sum_{t \in [T]} \ell_{t}^{I_t}}-\min_{k \in [K]}\sum_{t \in [T]}\ell_{t}^{k} \\
+ &= T-\min_{k \in [K]}\sum_{t \in [T]}\ell_{t}^{k} \\
+ &\geq T-\frac{T}{k} \\
+ &= \frac{k-1}{k}T.
+\end{align*}
+So, the learner will incur at least a pseudo-regret that is linear in $T$.
+\end{solution}
+
+\begin{itemize}
     \item \textbf{ERM fails for Stochastic Bandits} \\
     Consider a $K$-armed stochastic bandit model with unit-variance Gaussian rewards with means $\mu_1,\ldots ,\mu_K$. In round $t$ the learner chooses arm $I_t \in [K]$ and receives reward $X_t \sim \mathcal{N}(\mu_{I_t}, 1)$, where $\mu_i$ is the (unknown) reward of arm $i$. Now let's fix te following algorithm, which is inspired by Empirical Risk Minimisation:
     \subsubsection*{a} First, pull every arm once (that is, $I_t = t$ for $t \leq K$).
