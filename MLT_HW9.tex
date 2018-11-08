@@ -195,16 +195,16 @@ So, the learner will incur at least a pseudo-regret that is linear in $T$.
     \item \textbf{ERM fails for Stochastic Bandits} \\
     Consider a $K$-armed stochastic bandit model with unit-variance Gaussian rewards with means $\mu_1,\ldots ,\mu_K$. In round $t$ the learner chooses arm $I_t \in [K]$ and receives reward $X_t \sim \mathcal{N}(\mu_{I_t}, 1)$, where $\mu_i$ is the (unknown) reward of arm $i$. Now let's fix te following algorithm, which is inspired by Empirical Risk Minimisation:
     \subsubsection*{a} First, pull every arm once (that is, $I_t = t$ for $t \leq K$).
-    \subsubsection*{b} Then after eacch number $t \geq K$ of rounds, from the empirical estimates
+    \subsubsection*{b} Then after each number $t \geq K$ of rounds, form the empirical estimates
     \begin{equation*}
         \hat{\mu}_i(t) = \frac{\sum_{s=1}^t \Ind_{\cbrac{I_s = i}} X_s}{\sum_{s=1}^t \Ind_{\cbrac{I_s =i}}}
     \end{equation*}
     and play $I_{t+1} = \argmax_i \hat{\mu}_i(t)$.\\
     For $K = 2$ show that this algorithm has pseudo-regret
     \begin{equation*}
-        \bar{R}_n = n\mu^* - \Ev \left[ \sum_{t=1}^n \mu_{I_t} \right]
+        \bar{R}_T = T\mu^* - \Ev\paren*{\sum_{t \in [T]} \mu_{I_t}}
     \end{equation*}
-    that is \textit{linear} in $n$.\\
+    that is \textit{linear} in $T$.\\
     Hint: you can use the following outline. Assume $\mu_1 > \mu_2$. Pick some threshold $\varepsilon >0$ (which you will optimize in an later step).
     \begin{itemize}
         \item[--] Argue that with constant probability (independent of $n$) the reward drawn from the best arm in the first phase is below $\mu_2 - \varepsilon$.
@@ -213,6 +213,32 @@ So, the learner will incur at least a pseudo-regret that is linear in $T$.
     \end{itemize}
     Conclude that with some small probability the sample from the best arm is very low, and the samples from the second-best arm are all typical, so the algorithm keeps pulling arm 2 only. Deduce that the pseudo-regret is hence linear in $n$.
 \end{itemize}
+\begin{solution}
+Without loss of generality, we can assume that $\mu_1 > \mu_2$, so that $\mu^*=\mu_1$.
+For each time step $t$ let $Y_t^1 \sim N(\mu_1, 1)$ denote the reward of arm $1$ and $Y_t^2 \sim N(\mu_2, 1)$ the reward of arm $2$. Note that all $Y_t^1$ and $Y_t^2$ are independent. We now take $X_t=Y_t^1 \Ind_{\cbrac{I_t=1}}+Y_t^2 \Ind_{\cbrac{I_t=2}}$.
+So, we have that $X_1 = Y_1$ and $X_2=Y_2$. Take $p=\P(X_1 < \mu_2)$ and note that $p > 0$.
+For each $T \geq 2$ let $B_T$ denote the event that the reward of the first arm at time step $t=1$ is less than $\mu_2$ and 
+that for each $2 \geq t \leq T$ the reward of arm $2$ at time $t$ is at least $\mu_2$. That is
+\begin{equation*}
+ B_T= \cbrac{Y^1_1 < \mu_2} \cap \bigcap_{t=2,\ldots,T}\cbrac{Y_t^2 > \mu_2}.
+\end{equation*}
+By independence we have that $\P(B_T)=p\paren*{\tfrac{1}{2}}^{T-1}$.
+Note that $\bigcap_{t=2,\ldots,T}\cbrac{I_t=2} \se B_T$. 
+So if event $B_T$ happens, then we only pick the second arm between time steps $t=2$ and $t=T$.
+It follows that 
+\begin{align*}
+ \bar{R}_T &= T \mu_1 - \Ev\paren*{\sum_{t \in [T]} \mu_{I_t}} \\
+ &= T \mu_1 - \Ev\paren*{\Ind_{B_T}\sum_{t \in [T]} \mu_{I_t}}-\Ev\paren*{\Ind_{B_T^C}\sum_{t \in [T]} \mu_{I_t}} \\
+ &\geq T \mu_1 - \Ev\paren*{\Ind_{B_T}\sum_{t \in [T]} \mu_{I_t}}-T\mu_1(1-\P(B_T)) \\
+ &= \P(B_T)T \mu_1 - \Ev\paren*{\Ind_{B_T}\sum_{t \in [T]} \mu_{I_t}} \\
+ &= \P(B_T)T \mu_1 - \P(B_T)(\mu_1+(T-1)\mu_{2})  \\
+ &= \P(B_T) (\mu_1-\mu_2)T - \P(B_T)(\mu_1-\mu_2).
+\end{align*}
+So, the regret increases linearly in $T$.
+\end{solution}
+
+
+
 \subsection*{3. Adversarial Semi-bandit}
 We consider an adversarial bandit model with $K^2$ arms indexed by $i \in [K]$ and $j \in [K]$. For each arm $(i,j)$, the loss at time $t$ is $a_t^i + b_t^j$, where $a_t^i \in [0,1]$ and $b_t^i \in [0,1]$ are chosen by the adversary before the start of the interaction. Then each round the learner picks an arm $(I_t, J_t) \in [K]^2$ and observes $a_t^{I_t}$ and $b_t^{J_t}$ \textit{separately} (and incurs their sum as loss).
 \subsubsection*{a} Consider running a single instance of EXP$3$ on all $K^2$ arms (with loss range $[0,2]$). Show that the expected pseudo-regret compared to the best arm $(i^*, j^*)$ is bounded by
