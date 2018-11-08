@@ -1,0 +1,203 @@
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts}
+\usepackage{mathtools} 
+
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo} % Nice text font
+\usepackage{euler} % Very nice mathmode font
+\usepackage[many]{tcolorbox}    
+
+
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
+\def \E {{\mathbb E}}
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+\def \P {{\mathbb P}}
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+\newcommand{\cH}{\ensuremath{\mathcal{H}}}
+\newcommand{\cD}{\ensuremath{\mathcal{D}}}
+\newcommand{\cX}{\ensuremath{\mathcal{X}}}
+\newcommand{\cY}{\ensuremath{\mathcal{Y}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+\newcommand{\bw}{\ensuremath{\mathbf{w}}} % weight vector
+\newcommand{\bl}{\ensuremath{\mathbf{l}}} % loss vector
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+                
+\newtcolorbox{definitionbox}[1]{%
+    tikznode boxed title,
+    enhanced,
+    arc=0mm,
+    interior style={white},
+    attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    colbacktitle=white,coltitle=black,
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    title={#1}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\begin{document}
+\begin{center}
+    {\huge\bf Machine learning theory}\\
+    {\large\sc Homework set 9 }\\ \vspace{1em}
+    {Aras} \textsc{ {Selvi}} \\
+    {Daniel} \textsc{ {Figueroa}}\\
+    {Fredrik} \textsc{ {Gustafsson}}\\
+    {Lasse} \textsc{ {Vuursteen}}\\
+    {Martijn} \textsc{ {Bouman}}\\
+    {Ruud} \textsc{ {Nimour}}\\
+    {Tamar} \textsc{ {Huygen}}\\
+    {Twan} \textsc{ {Koperberg}}\\
+    {Vincent} \textsc{ {Hennink}}\\ 
+    \bigskip
+    \today \bigskip
+    \hrule
+    \bigskip
+\end{center}
+
+\section{Background}
+\begin{definitionbox}{Definition 1 (Adversarial Bandit Setting).}
+  \textbf{Protocol:}\\
+  Adversary chooses $l_{t,k} \in [0,1]$ for all $t \leq T$, $k \leq K$.\\
+  For $t = 1,2, \ldots$
+\begin{itemize}
+    \item Learner picks arm $I_t$ (tipically by sampling $I_t \sim \mathbf{p}_t$)
+    \item Learner observes and incurs \textit{loss} $l_{t, I_{t}}$
+\end{itemize}
+\textbf{Objective:} Expected Regret w.r.t. best expert after $T$ rounds:
+\begin{equation*}
+    \bar{R}_T = \Ev_{I_1 , \ldots , I_T} \cbrac*{\sum^T_{t=1} l_t^k} - \min \sum_{t=1}^T l_t^k .
+\end{equation*}
+\end{definitionbox}
+\begin{definitionbox}{Definition 2 (Stochastic Bandit setting).}
+  Environment: distributions ($\nu_1 , \ldots \nu_K$) of arm rewards.\\
+\textbf{Protocol:} For $t = 1,2, \ldots$
+\begin{itemize}
+    \item Learner picks arm $I_t$
+    \item Learner observes and receives \textit{reward} $X_t \sim \nu_{I_t}$
+\end{itemize}
+\textbf{Objective:} Pseudo-Regret w.r.t. best expert after $T$ rounds:
+\begin{equation*}
+    \bar{R}_T = T \max_{k} \Ev_{X \sim \nu_k} \left[ X \right] - \Ev_{I_1 , \ldots , I_T} \cbrac*{ \sum^T_{t=1} X_t} .
+\end{equation*}
+\end{definitionbox}
+\subsection{Confidence Intervals}
+You can use the following bound, known as Chernoff's bound for Gausssians.
+For $X_1,\ldots ,X_n$ i.i.d. unit-variance Gaussian random variables, the empirical estimate $\hat{\mu}_n = \frac{1}{n} \sum _{i=1}^n X_i$ satisfies
+\begin{align*}
+    & \P(\hat{\mu}_n - \mu \geq \varepsilon) \leq e^{-n\varepsilon^2/2} && \mbox{and} && \P(\hat{\mu}_n - \mu \leq -\varepsilon) \leq e^{-n\varepsilon^2/2}.
+\end{align*}
+This is Equation (2.3) in the Bubeck \& Cesa-Bianchi monograph, with $\psi (\lambda) = \lambda^2/2$ and $\psi^* (\varepsilon) = \varepsilon^2/2$.
+\section{Exercises}
+\subsection*{1. Legendre-Fenchel for Gaussian Chernoff}
+Let $\psi(\lambda) = \frac{\lambda^2}{2}$. The legendre-Fenchel transform of $\psi$ is given by
+\begin{equation*}
+    \psi^*(\varepsilon) = \sup_{\lambda \in \R}\lambda \varepsilon - \psi(\lambda).
+\end{equation*}
+Show that
+\subsubsection*{a}
+$\psi^*(\varepsilon) = \frac{\varepsilon^2}{2}$.
+\subsubsection*{b}
+$(\psi^*)^{-1}(z) = \pm \sqrt{2z}$.
+\subsection*{Bigger Picture} the purpose of this exercise is to make the Bubeck/Cesa-Bianchi reading material on UCB more readable
+\subsection*{2. The Blooper Reel}
+\begin{itemize}
+    \item \textbf{Deterministic fails for Adversarial Bandits} Show that any deterministic algorithm (UCB included) has linear regret in the adversarial bandit setting. Hint: you can use the argument on the top of page 23.
+    \item \textbf{ERM fails for Stochastic Bandits} \\
+    Consider a $K$-armed stochastic bandit model with unit-variance Gaussian rewards with means $\mu_1,\ldots ,\mu_K$. In round $t$ the learner chooses arm $I_t \in [K]$ and receives reward $X_t \sim \mathcal{N}(\mu_{I_t}, 1)$, where $\mu_i$ is the (unknown) reward of arm $i$. Now let's fix te following algorithm, which is inspired by Empirical Risk Minimisation:
+    \subsubsection*{a} First, pull every arm once (that is, $I_t = t$ for $t \leq K$).
+    \subsubsection*{b} Then after eacch number $t \geq K$ of rounds, from the empirical estimates
+    \begin{equation*}
+        \hat{\mu}_i(t) = \frac{\sum_{s=1}^t \Ind_{\cbrac{I_s = i}} X_s}{\sum_{s=1}^t \Ind_{\cbrac{I_s =i}}}
+    \end{equation*}
+    and play $I_{t+1} = \argmax_i \hat{\mu}_i(t)$.\\
+    For $K = 2$ show that this algorithm has pseudo-regret
+    \begin{equation*}
+        \bar{R}_n = n\mu^* - \Ev \left[ \sum_{t=1}^n \mu_{I_t} \right]
+    \end{equation*}
+    that is \textit{linear} in $n$.\\
+    Hint: you can use the following outline. Assume $\mu_1 > \mu_2$. Pick some threshold $\varepsilon >0$ (which you will optimize in an later step).
+    \begin{itemize}
+        \item[--] Argue that with constant probability (independent of $n$) the reward drawn from the best arm in the first phase is below $\mu_2 - \varepsilon$.
+        \item[--] Bound the probability that for a single time step $t$ we have $\hat{\mu}_2(t) < \mu_2 - \varepsilon$.
+        \item[--] Now pick $\varepsilon$ large enough so that the previous probability bound is non-trivial (i.e. is $<1$).
+    \end{itemize}
+    Conclude that with some small probability the sample from the best arm is very low, and the samples from the second-best arm are all typical, so the algorithm keeps pulling arm 2 only. Deduce that the pseudo-regret is hence linear in $n$.
+\end{itemize}
+\subsection*{3. Adversarial Semi-bandit}
+We consider an adversarial bandit model with $K^2$ arms indexed by $i \in [K]$ and $j \in [K]$. For each arm $(i,j)$, the loss at time $t$ is $a_t^i + b_t^j$, where $a_t^i \in [0,1]$ and $b_t^i \in [0,1]$ are chosen by the adversary before the start of the interaction. Then each round the learner picks an arm $(I_t, J_t) \in [K]^2$ and observes $a_t^{I_t}$ and $b_t^{J_t}$ \textit{separately} (and incurs their sum as loss).
+\subsubsection*{a} Consider running a single instance of EXP$3$ on all $K^2$ arms (with loss range $[0,2]$). Show that the expected pseudo-regret compared to the best arm $(i^*, j^*)$ is bounded by
+\begin{equation*}
+    \bar{R}_n \leq 2 \sqrt{2nK^2\ln\paren*{K^2}}.
+\end{equation*}
+\subsubsection*{b} Now we will use the $a_t^i$ and $b_t^j$ observations separately. Consider running two $K$-arm instances of EXP$3$, one with $i \mapsto a_t^i$ as the loss and one with $j \mapsto b_t^j$ as the loss. Have the first algorithm control $I_t$ and the second $J_t$. Show that the overall expected pseudo-regret is bounded by 
+\begin{equation*}
+    \bar{R}_n \leq 2 \sqrt{2nK\ln K}.
+\end{equation*}
+\subsubsection*{Bigger Picture} We see that we win a factor $\sqrt{K}$ by taking the structure of observations into account. There are many interesting intermediate observation models where we see interpolation between the full invormation regret $\sqrt{T \ln K}$ and the full bandit regret $\sqrt{KT}$.
+\end{document}
+%%% End:
