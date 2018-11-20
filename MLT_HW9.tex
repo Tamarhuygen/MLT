@@ -27,7 +27,6 @@
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}
 
-\def \E {{\mathbb E}}
 % bold
 \newcommand{\F}{\ensuremath{\mathbb{F}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
@@ -36,7 +35,6 @@
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
 % 
-\def \P {{\mathbb P}}
 % calligraphic
 \newcommand{\A}{\ensuremath{\mathcal{A}}}
 \newcommand{\I}{\ensuremath{\mathcal{I}}}
@@ -130,7 +128,7 @@
 \end{itemize}
 \textbf{Objective:} Expected Regret w.r.t. best expert after $T$ rounds:
 \begin{equation*}
-    \bar{R}_T = \Ev_{I_1 , \ldots , I_T} \cbrac*{\sum^T_{t=1} l_t^k} - \min \sum_{t=1}^T l_t^k .
+    \bar{R}_T = \Ev_{I_1 , \ldots , I_T} \cbrac*{\sum^T_{t=1} l_t^k} - \min_k \sum_{t=1}^T l_t^k .
 \end{equation*}
 \end{definitionbox}
 \begin{definitionbox}{Definition 2 (Stochastic Bandit setting).}
@@ -183,21 +181,54 @@ $(\psi^*)^{-1}(z) = \pm \sqrt{2z}$.
     Hint: you can use the following outline. Assume $\mu_1 > \mu_2$. Pick some threshold $\varepsilon >0$ (which you will optimize in an later step).
     \begin{itemize}
         \item[--] Argue that with constant probability (independent of $n$) the reward drawn from the best arm in the first phase is below $\mu_2 - \varepsilon$.
-        \item[--] Bound the probability that for a single time step $t$ we have $\hat{\mu}_2(t) < \mu_2 - \varepsilon$.
+        \item[--] Bound the probability that for a single time step $t$ we have $\hat{\mu}_2(t) < \mu_2 - \varepsilon$ using Chernoff's bound.
+        \item[--] Use the union bound to bound the probability that $\exists t \geq 2 : \hat{\mu}_2(t) < \mu_2 - \varepsilon$
         \item[--] Now pick $\varepsilon$ large enough so that the previous probability bound is non-trivial (i.e. is $<1$).
     \end{itemize}
     Conclude that with some small probability the sample from the best arm is very low, and the samples from the second-best arm are all typical, so the algorithm keeps pulling arm 2 only. Deduce that the pseudo-regret is hence linear in $n$.
 \end{itemize}
 \subsection*{3. Adversarial Semi-bandit}
-We consider an adversarial bandit model with $K^2$ arms indexed by $i \in [K]$ and $j \in [K]$. For each arm $(i,j)$, the loss at time $t$ is $a_t^i + b_t^j$, where $a_t^i \in [0,1]$ and $b_t^i \in [0,1]$ are chosen by the adversary before the start of the interaction. Then each round the learner picks an arm $(I_t, J_t) \in [K]^2$ and observes $a_t^{I_t}$ and $b_t^{J_t}$ \textit{separately} (and incurs their sum as loss).
+We consider an adversarial bandit model with $K^2$ arms indexed by $i \in [K]$ and $j \in [K]$. For each arm $(i,j)$, the loss at time $t$ is $a_t^i + b_t^j$, where $a_t^i \in [0,1]$ and $b_t^j \in [0,1]$ are chosen by the adversary before the start of the interaction. Then each round the learner picks an arm $(I_t, J_t) \in [K]^2$ and observes $a_t^{I_t}$ and $b_t^{J_t}$ \textit{separately} (and incurs their sum as loss).
 \subsubsection*{a} Consider running a single instance of EXP$3$ on all $K^2$ arms (with loss range $[0,2]$). Show that the expected pseudo-regret compared to the best arm $(i^*, j^*)$ is bounded by
 \begin{equation*}
     \bar{R}_n \leq 2 \sqrt{2nK^2\ln\paren*{K^2}}.
 \end{equation*}
+\begin{solution}
+  Note that the regret as defined in Definition 1, is defined with a loss in range $[0,1]$.
+  Now we have that there are $K^2$ arms instead of $K$ arms and we can just fill in $K^2$ for the number of arms and the loss is in range $[0,2]$ instead of $[0,1]$.
+  This means that if we define the loss as $l'_t^{(i,j)} =  \frac{1}{2}a_t^i + \frac{1}{2} b_t^j $, the range of $l'_t^{(i,j)}$ is $[0,1]$. Now we can see that for the regret it holds that
+  \begin{align*}
+    \bar{R}'_n  &= \Ev_{(I_1,J_1), \ldots , (I_n,J_n)}\cbrac*{\sum_{t=1}^n l'_{t, (I_t, J_t)}} - \min_{(i,j)} \sum_{t=1}^n l'_t^{(i,j)}\\
+                &= \Ev_{(I_1,J_1), \ldots , (I_n,J_n)}\cbrac*{\sum_{t=1}^n \frac{1}{2}l_{t, (I_t, J_t)}} - \min_{(i,j)} \sum_{t=1}^n \frac{1}{2}l_t^{(i,j)}\\
+                &= \frac{1}{2} \paren*{\Ev_{(I_1,J_1), \ldots , (I_n,J_n)}\cbrac*{\sum_{t=1}^n l_{t, (I_t, J_t)}} - \min_{(i,j)} \sum_{t=1}^n l_t^{(i,j)}}\\
+                &= \frac{1}{2} \bar{R}_n
+  \end{align*}
+
+  Recall that in the adversarial bandit setting, with $K$ arms and $n$ time steps, the pseudo-regret of the EXP$3$ strategy is bounded by $\sqrt{2nK \ln K}$.
+  Now we have $K^2$ arms instead of $K$ arms, combined with the previous result this gives:
+  \begin{align*}
+    \frac{1}{2} \bar{R}_n = \bar{R}'_n & \leq \sqrt{2nK^2 \ln K^2}\\
+    \implies \bar{R}_n & \leq 2 \sqrt{2nK^2\ln\paren*{K^2}}.
+  \end{align*}
+\end{solution}    
 \subsubsection*{b} Now we will use the $a_t^i$ and $b_t^j$ observations separately. Consider running two $K$-arm instances of EXP$3$, one with $i \mapsto a_t^i$ as the loss and one with $j \mapsto b_t^j$ as the loss. Have the first algorithm control $I_t$ and the second $J_t$. Show that the overall expected pseudo-regret is bounded by 
 \begin{equation*}
     \bar{R}_n \leq 2 \sqrt{2nK\ln K}.
 \end{equation*}
+\begin{solution}
+  Let $\bar{R}_{a,n}$ be the pseudo-regret of the $K$-arm instance with loss $i \mapsto a_t^i$ and let $\bar{R}_{b,n}$ be the pseudo-regret of the $K$-arm instance with loss $j \mapsto b_t^j$.
+  The overall pseudo-regret is equal to the sum of both pseudo-regrets: $\bar{R}_n = \bar{R}_{a,n} + \bar{R}_{b,n}$. We know that $\bar{R}_{a,n}$ and $\bar{R}_{b,n}$ are both bounded by $\sqrt{2nK \ln K}$. So
+  \begin{equation*}
+    \bar{R}_n = \bar{R}_{a,n} + \bar{R}_{b,n} \leq \sqrt{2nK \ln K} + \sqrt{2nK \ln K} = 2\sqrt{2nK \ln K}.
+\end{equation*}
+\end{solution}
 \subsubsection*{Bigger Picture} We see that we win a factor $\sqrt{K}$ by taking the structure of observations into account. There are many interesting intermediate observation models where we see interpolation between the full invormation regret $\sqrt{T \ln K}$ and the full bandit regret $\sqrt{KT}$.
 \end{document}
+%%% End:
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
 %%% End:
