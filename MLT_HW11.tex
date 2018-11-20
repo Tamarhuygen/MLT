@@ -210,6 +210,34 @@ Now consider a discretisation $\bar{\cU}$ of $\cU$ using a uniformly spaced grid
 \begin{solution}
   \TODO
 \end{solution}
-\end{enumerate}  
+\end{enumerate}
+
+\section{Training Exercises (These are zero points, only when we have time left)}
+\subsection*{3. Adapting to the gradient norms.}
+We proved that OGD with learning rate $\eta$ satisfies
+\begin{equation*}
+  R_T \leq \frac{D^2}{2 \eta} + \frac{\eta}{2} \sum_{t=1}^T \nrm{\nabla f_t (\bw_t)}^2.
+\end{equation*}
+\subsubsection*{a}
+What are the minimum and minimiser of the above bound in $\eta$?
+
+\subsubsection*{b}
+Discuss why the $\eta$ you found in question 3.a is not available at the start of the game. Explain why the $\eta$ you found is a decreasing function in the number of rounds
+
+\subsubsection*{c}
+Develop a (doubling-based) algorithm that matches the regret value for you found in 3.a up to a constant multiplicative factor.
+
+\subsection*{4. GD on the Simplex}
+Prediction on the probability simplex with linear loss functions is an instance of OCO.
+\subsubsection*{a}
+Compute the regret bound for Gradient Descent. What are $G$ (gradient norm bound) and $D$ (diameter bound)? What is the overall regret bound?
+\subsubsection*{b}
+Compare with the regret bound for Hedge. Which is better? Why?
+
+\subsection*{5. Randomized Online To Batch Conversion}
+Consider an online algorithm with regret bounded by $R_T \leq B(T)$. Show that the randomized estimator $\hat{\bw}_T$, defined by $\hat{\bw}_T = \bw_t$ with probability $\frac{1}{T}$, ensures the expected excess risk bound
+\begin{equation*}
+  \Ev_{f_1, \ldots f_T} \Ev_{\hat{\bw}_T} \Ev_f \left[ f(\hat{\bw_T}) - f(\bu^*) \right] \leq \frac{B(T)}{T}.
+\end{equation*}
 \end{document}
 %%% End:
