@@ -1,0 +1,215 @@
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+
+\documentclass[10pt, a4paper, twoside]{amsart}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage{amsmath, amssymb, amsthm, amsfonts, mathrsfs, amsfonts, amsbsy}
+\usepackage{mathtools} 
+\usepackage{enumerate}
+
+\usepackage[noabbrev]{cleveref}
+
+%\usepackage{subfig}
+\usepackage{pgf,tikz}
+%\usetikzlibrary{arrows}
+
+%\usepackage{natbib}
+\usepackage[osf]{mathpazo} % Nice text font
+\usepackage{euler} % Very nice mathmode font
+\usepackage[many]{tcolorbox}    
+
+
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+
+% bold
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+% 
+% calligraphic
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\I}{\ensuremath{\mathcal{I}}}
+
+% Delimiters (requires mathtools package)
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\brac[]
+\DeclarePairedDelimiter\cbrac\{\}
+\DeclarePairedDelimiter\paren()
+\DeclarePairedDelimiter{\ip}\langle\rangle
+\DeclarePairedDelimiter{\nrm}\lVert\rVert
+\DeclarePairedDelimiter{\ceil}\lceil\rceil
+
+% Power set
+\newcommand{\Ps}{\ensuremath{\mathcal{P}}}
+
+ 
+% other things ...
+\renewcommand{\c}{\ensuremath{\colon}}
+\newcommand{\se}{\ensuremath{\subseteq}}
+\renewcommand{\d}{\ensuremath{\ d}}
+\newcommand{\Ind}{\ensuremath{\mathbb{1}}}
+\newcommand{\im}{\ensuremath{\mathbf{i}}}
+
+\newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+% \renewcommand\qedsymbol{\rule{1ex}{1ex}}
+
+% course specifics
+\renewcommand{\P}{\operatorname*{\ensuremath{\mathbf{P}}}} % probability measure
+\newcommand{\Ev}{\operatorname*{\ensuremath{\mathbf{E}}}} %expected value
+\newcommand{\Fa}{\ensuremath{\mathcal{F}}} %sigma-algebra
+\newcommand{\cH}{\ensuremath{\mathcal{H}}}
+\newcommand{\cD}{\ensuremath{\mathcal{D}}}
+\newcommand{\cX}{\ensuremath{\mathcal{X}}}
+\newcommand{\cY}{\ensuremath{\mathcal{Y}}}
+\newcommand{\cU}{\ensuremath{\mathcal{U}}}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+\newcommand{\bw}{\ensuremath{\mathbf{w}}} % weight vector
+\newcommand{\bu}{\ensuremath{\mathbf{u}}} % weight vector
+\newcommand{\bl}{\ensuremath{\mathbf{l}}} % loss vector
+
+% Solutions use a modified proof environment
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+                
+\newtcolorbox{definitionbox}[1]{%
+    tikznode boxed title,
+    enhanced,
+    arc=0mm,
+    interior style={white},
+    attach boxed title to top center= {yshift=-\tcboxedtitleheight/2},
+    fonttitle=\bfseries,
+    colbacktitle=white,coltitle=black,
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    title={#1}}
+
+
+\newcommand{\TODO}{\textcolor{red}{\textbf{!!!!!! }}}
+
+\begin{document}
+\begin{center}
+    {\huge\bf Machine learning theory}\\
+    {\large\sc Homework set 11 }\\ \vspace{1em}
+    {Aras} \textsc{ {Selvi}} \\
+    {Daniel} \textsc{ {Figueroa}}\\
+    {Fredrik} \textsc{ {Gustafsson}}\\
+    {Lasse} \textsc{ {Vuursteen}}\\
+    {Martijn} \textsc{ {Bouman}}\\
+    {Ruud} \textsc{ {Nimour}}\\
+    {Tamar} \textsc{ {Huygen}}\\
+    {Twan} \textsc{ {Koperberg}}\\
+    {Vincent} \textsc{ {Hennink}}\\ 
+    \bigskip
+    \today \bigskip
+    \hrule
+    \bigskip
+\end{center}
+
+\section{Notation and Definitions}
+\begin{definitionbox}{Definition 1 (Online Convex Optimisation).}
+  \textbf{Protocol:}\\
+  For $t = 1,2, \ldots$
+  \begin{itemize}
+    \item Learner chooses a point $\bw_t \in \cU$
+    \item Adversary reveals loss function $f_t : \cU \to \R $.
+    \item Learner's loss is $f_{t}(\bw_t)$.
+  \end{itemize}
+  \textbf{Objective:} Regret w.r.t. best point after $T$ rounds:
+\begin{equation*}
+  R_T = \max_{u \in \cU}\sum_{t=1}T \paren*{f_t(\bw_t) - f_t(\bu)}
+\end{equation*}
+\end{definitionbox}
+Throughout assume that for all $\bu \in \cU$:
+\begin{align*}
+  \nrm{\nabla f_t(\bu)} \leq G && \mbox{and} && \nrm{\bu}\leq D
+\end{align*}
+Hint: convexity of $f_t$ implies for all $\bw_t , \bu \in \cU$
+\begin{equation*}
+  f_t(\bw_t) - f_t (\bu) \leq \ip{\bw_t - \bu, \nabla f_t(\bw_t)} % In the exercises it actually says $\ip{\bw_t, \bu, \nabla f_t(\bw_t)}$ but I think that is a typo.
+\end{equation*}
+
+\section{Exercises}
+\subsection*{1. Mirror Descent and Continuous Exponential Weights}
+In this exercise we look at Online Gradient Descent on $\cU = \R^d$, i.e. without any projections. Then Online Gradient Descent plays iterates $\bw_1 = \mathbf{0}$ and
+\begin{equation} \label{eq:OGD}
+  \bw_{t+1} = \bw_t - \eta \nabla f_t (\bw_t).
+\end{equation}
+\subsubsection*{a}
+Show that the OGD iterate $\bw_{t+1}$ is the minimiser of the problem
+\begin{equation*}
+  \min_{\bw \in \R^d} \ip{\bw, \nabla f_t (\bw)} + \frac{1}{2 \eta} \nrm{\bw - \bw_t}^2.
+\end{equation*}
+\begin{solution}
+  \TODO
+\end{solution}
+\subsubsection*{b}
+Next we look at Exponential Weights (with learning rate $\eta$) on the continuous space $\R^d$. We start with the spherical Gaussian prior density
+\begin{equation*}
+  p_1(\bu) = (2 \pi )^{-\frac{d}{2}} e^{- \frac{\nrm{\bu}^2}{2}}
+\end{equation*}
+and we update the density using the exponential weights update
+\begin{equation*}
+  p_{t+1}(\bu) = \frac{p_t(\bu) e^{- \eta \ip{\bu, \nabla f_t(\bw_t)}}}{\text{normalisation}}
+\end{equation*}
+where we charge each point $\bu \in \R$ the linearized loss $\ip{\bu, \nabla f_t(\bw_t)}$ (and not the actual loss $f_t(\bu)$). Let $\pmb{\mu}_t = \int_{\R^d} \bu p_t (\bu) \mathrm{d}\bu$ be the mean of $p_t$. Let $\bw_t$ be the iterates of Online Gradient Descent (equation \ref{eq:OGD}). Show that $\pmb{\mu}_t = \bw_t$ for all $t$.
+\begin{solution}
+  \TODO
+\end{solution}
+
+\subsection*{2. Strongly Convex Online To Batch Conversion}
+\subsubsection*{a} Consider loss functions of the form $f_t (u) = \frac{1}{2}(u - y_t)^2$ for $u, y_t \in \R$. Show that $f_t$ is strongly convex for a degree $\alpha =1$.
+\begin{solution}
+  \TODO
+\end{solution}
+\subsubsection*{b} Construct an estimator $\hat{w}_T(y_1, \ldots , y_T)$ (by online to batch conversion) and show that its excess risk is at most
+\begin{equation*}
+  \Ev_{y_1, \ldots , y_T,y} \left[ \frac{1}{2}(\hat{w}_T(y_1, \ldots , y_t) - y)^2 - \frac{1}{2}(u^* - y)^2 \right] \leq \frac{1+ \ln T}{2T}
+\end{equation*}
+\begin{solution}
+  \TODO
+\end{solution}
+\subsubsection*{c} Show that Online Gradient Descent for $1$-strongly convex losses result in iterates
+\begin{equation*}
+  w_{t+1} = \frac{\sum_{s=1}^ty_s}{t}.
+\end{equation*}
+\begin{solution}
+  \TODO
+\end{solution}
+\subsubsection*{d} Show that, in this case, the \textit{final iterate} estimator $\hat{w}_T(y_1,\ldots , y_T) = w_{T+1}$, results in excess risk at most
+\begin{equation*}
+  \Ev_{y_1, \ldots y_T,y}\left[\frac{1}{2} (\hat{w}_T (y_1, \ldots , y_T) - y)^2 - \frac{1}{2} (u^* - y)^2 \right] \leq \frac{\text{Var}(y)}{T}.
+\end{equation*}
+\begin{solution}
+  \TODO
+\end{solution}
+\subsubsection*{e. The Power of Discretisation} Consider online convex optimisation on the unit interval $\cU = [-1,1]$ (i.e. in one dimension). Make the (standard) assumption that $\nrm{f'_t(u)} \leq G$ for each $u \in \cU$.\\
+Now consider a discretisation $\bar{\cU}$ of $\cU$ using a uniformly spaced grid of $K$ points.
+\begin{enumerate}[i]
+\item Consider running the Hedge algorithm with $K$ experts, one for each point in $\bar{\cU}$. What would be the regret compared to the best point in $\bar{\cU}$? Be careful about the dependence in $G$.
+\begin{solution}
+  \TODO
+\end{solution}
+\item Bound the maximum difference in loss between a point $u \in \cU$ and the closest discretisation point $\bar{u} \in \bar{\cU}$.
+\begin{solution}
+  \TODO
+\end{solution}
+\item Which number $K$ optimises the total regret?
+\begin{solution}
+  \TODO
+\end{solution}
+\end{enumerate}  
+\end{document}
+%%% End:
